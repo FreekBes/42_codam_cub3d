@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/24 19:33:44 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/24 19:37:58 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ static t_map	*new_map(void)
 
 static char	*skip_spaces(char *c)
 {
-	while (*c == ' ')
+	while (*c && *c == ' ')
 		c++;
 	return (c);
 }
 
 static char	*skip_non_spaces(char *c)
 {
-	while (*c != ' ')
+	while (*c && *c != ' ')
 		c++;
 	return (c);
 }
@@ -40,11 +40,15 @@ static t_col_rgba	*parse_color(char **c)
 
 	color = (t_col_rgba *)malloc(sizeof(t_col_rgba));
 	color->r = ft_atoi(*c);
-	*c = ft_strchr(*c, ',') + 1;
-	*c = skip_spaces(*c);
+	*c = ft_strchr(*c, ',');
+	if (!*c)
+		return (NULL);
+	*c = skip_spaces(*c + 1);
 	color->g = ft_atoi(*c);
-	*c = ft_strchr(*c, ',') + 1;
-	*c = skip_spaces(*c);
+	*c = ft_strchr(*c, ',');
+	if (!*c)
+		return (NULL);
+	*c = skip_spaces(*c + 1);
 	color->b = ft_atoi(*c);
 	color->a = 255;
 	return (color);

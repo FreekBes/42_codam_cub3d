@@ -9,7 +9,7 @@ CFLAGS =	-Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(OBJS) lib/libft/libft.a lib/mlx/libmlx.a
-	$(CC) $(SRCS) lib/libft/libft.a lib/mlx/libmlx.a -framework OpenGL -framework AppKit -o $(NAME)
+	$(CC) $(SRCS) lib/libft/libft.a lib/mlx/libmlx.a -framework OpenGL -framework AppKit -fsanitize=address -o $(NAME)
 
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
