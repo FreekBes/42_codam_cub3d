@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/26 14:35:23 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/11 02:54:47 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/24 17:29:18 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdint.h>
+
+# define BUFFER_SIZE 1024
 
 typedef struct s_list
 {
@@ -78,5 +80,7 @@ unsigned int	ft_abs(int n);
 int				ft_biggest(int a, int b);
 char			*ft_itoa_base(unsigned int n, char *base);
 char			*ft_ptoa(intptr_t ptr);
+int				ft_get_next_line(int fd, char **line);
+size_t			ft_strnlen(const char *s, size_t maxlen);
 
 #endif
