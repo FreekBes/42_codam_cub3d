@@ -1,6 +1,6 @@
 NAME =		cub3D
 
-SRCS =		main.c src/parser/map_parser.c
+SRCS =		main.c src/parser/map_parser.c src/renderer/window.c
 
 OBJS =		$(SRCS:.c=.o)
 
