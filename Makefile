@@ -4,7 +4,7 @@ SRCS =		main.c src/parser/map_parser.c src/renderer/window.c
 
 OBJS =		$(SRCS:.c=.o)
 
-CFLAGS =	-Wall -Wextra -Werror
+CFLAGS =
 
 all: $(NAME)
 

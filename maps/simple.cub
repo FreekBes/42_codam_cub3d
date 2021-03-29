@@ -1,4 +1,4 @@
-R 800 360
+R 852 480
 NO ./textures/red_bricks.bmp
 SO ./textures/bricks.bmp
 WE ./textures/wood.bmp

@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/29 21:07:19 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/29 21:35:06 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,20 @@ static void	print_map(t_map map)
 	printf("\n");
 }
 
+static int	destroy_mlx(t_mlx_ctx *mlx_ctx, char *error_msg)
+{
+	if (error_msg)
+		print_error(error_msg);
+	free_mlx_context(mlx_ctx);
+	exit(0);
+	return (0);
+}
+
+static int	exit_hook(t_mlx_ctx *mlx_ctx)
+{
+	return (destroy_mlx(mlx_ctx, NULL));
+}
+
 int	main(int argc, char **argv)
 {
 	t_map		*map;
@@ -67,9 +81,9 @@ int	main(int argc, char **argv)
 	print_map(*map);
 	mlx_ctx = get_mlx_context(map, argv[0]);
 	if (!mlx_ctx)
-		return (print_error("Failed to open MLX window"));
+		destroy_mlx(mlx_ctx, "Failed to open MLX window");
+	mlx_hook(mlx_ctx->win, 17, 0, &exit_hook, mlx_ctx);
 	mlx_loop(mlx_ctx->core);
 	free_map(map);
-	free_mlx_context(mlx_ctx);
-	exit(0);
+	destroy_mlx(mlx_ctx, NULL);
 }

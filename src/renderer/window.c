@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/29 20:24:02 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/29 21:08:39 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/29 21:34:55 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ static void	create_img(t_mlx_ctx *ctx, t_map *map)
 
 void	*free_mlx_context(t_mlx_ctx *ctx)
 {
-	if (ctx->win)
-		mlx_destroy_window(ctx->core, ctx->win);
 	if (ctx->img)
 	{
-		if (ctx->img->img_ptr)
-			mlx_destroy_image(ctx->core, ctx->img->img_ptr);
-		free(ctx->img);
+		//if (ctx->img->img_ptr)
+			//mlx_destroy_image(ctx->core, ctx->img->img_ptr);
+		//free(ctx->img);
 	}
+	if (ctx->win)
+		mlx_destroy_window(ctx->core, ctx->win);
 	free(ctx);
 	return (NULL);
 }
