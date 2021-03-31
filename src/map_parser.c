@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/31 15:23:31 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/31 16:02:51 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char	*skip_non_spaces(char *c)
 	return (c);
 }
 
-static t_col_rgba	*parse_color(char **c)
+static t_col_rgba	*parse_color_map(char **c)
 {
 	t_col_rgba	*color;
 
@@ -50,7 +50,7 @@ static t_col_rgba	*parse_color(char **c)
 		return (NULL);
 	*c = skip_spaces(*c + 1);
 	color->b = ft_atoi(*c);
-	color->a = 255;
+	color->a = 0;
 	return (color);
 }
 
@@ -78,9 +78,9 @@ static void	parse_line(t_map **map, char *line)
 	else if (id[0] == 'S')
 		(*map)->tex_sprite = ft_strdup(c);
 	else if (id[0] == 'F')
-		(*map)->col_floor = parse_color(&c);
+		(*map)->col_floor = parse_color_map(&c);
 	else if (id[0] == 'C')
-		(*map)->col_ceiling = parse_color(&c);
+		(*map)->col_ceiling = parse_color_map(&c);
 }
 
 t_map	*parse_map(char *map_file)

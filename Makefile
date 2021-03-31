@@ -1,6 +1,6 @@
 NAME =		cub3D
 
-SRCS =		main.c src/map_parser.c src/window.c
+SRCS =		main.c src/printer.c src/map_parser.c src/window.c src/drawer.c src/colors.c
 
 OBJS =		$(SRCS:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/29 21:19:01 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/31 15:56:20 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,19 @@ typedef struct s_mlx_ctx
 	t_img			*img;
 }					t_mlx_ctx;
 
+typedef struct s_game
+{
+	t_mlx_ctx		*mlx;
+	t_map			*map;
+}					t_game;
+
+int					print_error(char *msg);
+void				print_color(t_col_rgba color);
+void				print_map(t_map map);
 t_map				*parse_map(char *map_file);
 t_mlx_ctx			*get_mlx_context(t_map *map, char *win_title);
 void				*free_mlx_context(t_mlx_ctx *ctx);
+unsigned int		color_to_uint(t_col_rgba color);
+void				put_pixel(t_img *img, int x, int y, unsigned int color);
 
 #endif

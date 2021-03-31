@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/29 20:24:02 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/31 15:23:36 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/31 15:24:46 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	*free_mlx_context(t_mlx_ctx *ctx)
 {
 	if (ctx->img)
 	{
-		//if (ctx->img->img_ptr)
-			//mlx_destroy_image(ctx->core, ctx->img->img_ptr);
-		//free(ctx->img);
+		if (ctx->img->img_ptr)
+			mlx_destroy_image(ctx->core, ctx->img->img_ptr);
+		free(ctx->img);
 	}
 	if (ctx->win)
 		mlx_destroy_window(ctx->core, ctx->win);

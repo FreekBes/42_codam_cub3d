@@ -5,7 +5,7 @@ WE ./textures/wood.bmp
 EA ./textures/concrete.bmp
 S ./textures/sprite.bmp
 F   220, 100,0
-C    225,   30  ,0
+C   255,255,255
 
 11111111111
 10000000001
