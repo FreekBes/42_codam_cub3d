@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/26 14:35:23 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/24 17:29:18 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/31 19:48:07 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,6 @@ char			*ft_itoa_base(unsigned int n, char *base);
 char			*ft_ptoa(intptr_t ptr);
 int				ft_get_next_line(int fd, char **line);
 size_t			ft_strnlen(const char *s, size_t maxlen);
+void			*ft_free(void *freeable);
 
 #endif
