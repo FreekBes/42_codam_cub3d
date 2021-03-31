@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/31 16:54:50 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/31 19:52:00 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ typedef struct s_rect
 
 typedef struct s_map
 {
+	char			*lvl;
+	unsigned int	lvl_w;
+	unsigned int	lvl_h;
 	unsigned int	res_x;
 	unsigned int	res_y;
 	char			*tex_no;
