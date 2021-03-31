@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/31 15:56:20 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/31 16:54:50 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,15 @@ typedef struct s_col_rgba
 	unsigned char	a;
 }					t_col_rgba;
 
+typedef struct s_rect
+{
+	unsigned int	x;
+	unsigned int	y;
+	unsigned int	w;
+	unsigned int	h;
+	unsigned int	c;
+}					t_rect;
+
 typedef struct s_map
 {
 	unsigned int	res_x;
@@ -39,8 +48,8 @@ typedef struct s_map
 	char			*tex_we;
 	char			*tex_ea;
 	char			*tex_sprite;
-	t_col_rgba		*col_floor;
-	t_col_rgba		*col_ceiling;
+	unsigned int	col_floor;
+	unsigned int	col_ceiling;
 }					t_map;
 
 typedef struct s_img
@@ -71,7 +80,8 @@ void				print_map(t_map map);
 t_map				*parse_map(char *map_file);
 t_mlx_ctx			*get_mlx_context(t_map *map, char *win_title);
 void				*free_mlx_context(t_mlx_ctx *ctx);
-unsigned int		color_to_uint(t_col_rgba color);
+unsigned int		color_to_uint(t_col_rgba *color);
 void				put_pixel(t_img *img, int x, int y, unsigned int color);
+void				put_rect(t_img *img, t_rect *rect);
 
 #endif

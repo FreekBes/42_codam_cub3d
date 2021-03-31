@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/31 16:02:51 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/31 16:54:07 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,24 @@ static char	*skip_non_spaces(char *c)
 	return (c);
 }
 
-static t_col_rgba	*parse_color_map(char **c)
+static unsigned int	parse_color_map(char **c)
 {
-	t_col_rgba	*color;
+	t_col_rgba		t_col;
+	unsigned int	col;
 
-	color = (t_col_rgba *)malloc(sizeof(t_col_rgba));
-	color->r = ft_atoi(*c);
+	t_col.r = ft_atoi(*c);
 	*c = ft_strchr(*c, ',');
 	if (!*c)
-		return (NULL);
+		return (0);
 	*c = skip_spaces(*c + 1);
-	color->g = ft_atoi(*c);
+	t_col.g = ft_atoi(*c);
 	*c = ft_strchr(*c, ',');
 	if (!*c)
-		return (NULL);
+		return (0);
 	*c = skip_spaces(*c + 1);
-	color->b = ft_atoi(*c);
-	color->a = 0;
-	return (color);
+	t_col.b = ft_atoi(*c);
+	t_col.a = 0;
+	return (color_to_uint(&t_col));
 }
 
 static void	parse_line(t_map **map, char *line)

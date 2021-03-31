@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/31 16:06:53 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/31 16:53:54 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,6 @@ static void	free_map(t_map *map)
 		free(map->tex_we);
 	if (map->tex_ea)
 		free(map->tex_ea);
-	if (map->col_ceiling)
-		free(map->col_ceiling);
-	if (map->col_floor)
-		free(map->col_floor);
 	free(map);
 }
 
@@ -45,6 +41,27 @@ static int	exit_hook(t_game *game)
 	return (exit_game(*game, NULL));
 }
 
+static int	render_next_frame(t_game *game)
+{
+	t_rect	ceil_rect;
+	t_rect	floor_rect;
+
+	ceil_rect.x = 0;
+	ceil_rect.y = 0;
+	ceil_rect.w = game->map->res_x;
+	ceil_rect.h = game->map->res_y * 0.5;
+	ceil_rect.c = game->map->col_ceiling;
+	put_rect(game->mlx->img, &ceil_rect);
+	floor_rect.x = 0;
+	floor_rect.y = game->map->res_y * 0.5;
+	floor_rect.w = game->map->res_x;
+	floor_rect.h = floor_rect.y;
+	floor_rect.c = game->map->col_floor;
+	put_rect(game->mlx->img, &floor_rect);
+	return (mlx_put_image_to_window(game->mlx->core, game->mlx->win,
+		game->mlx->img->img_ptr, 0, 0));
+}
+
 int	main(int argc, char **argv)
 {
 	t_game		game;
@@ -59,9 +76,7 @@ int	main(int argc, char **argv)
 	if (!game.mlx)
 		exit_game(game, "Failed to open MLX window");
 	mlx_hook(game.mlx->win, 17, 0, &exit_hook, &game);
-	put_pixel(game.mlx->img, 10, 10, color_to_uint(*(game.map->col_ceiling)));
-	mlx_put_image_to_window(game.mlx->core, game.mlx->win,
-		game.mlx->img->img_ptr, 0, 0);
+	mlx_loop_hook(game.mlx->core, render_next_frame, &game);
 	mlx_loop(game.mlx->core);
 	return (exit_game(game, NULL));
 }
