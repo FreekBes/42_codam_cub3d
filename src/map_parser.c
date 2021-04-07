@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/31 19:56:45 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/07 18:51:30 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,28 @@
 static t_map	*new_map(void)
 {
 	t_map	*map;
+	char	temp[5][5] = {
+			{'1', '1', '1', '1', '1'},
+			{'1', '0', '0', '0', '1'},
+			{'1', '2', '0', 'N', '1'},
+			{'1', '0', '0', '0', '1'},
+			{'1', '1', '1', '1', '1'}
+		};
+	int		i;
 
 	map = (t_map *)malloc(sizeof(t_map));
+	if (map)
+	{
+		map->lvl_w = 5;
+		map->lvl_h = 5;
+		map->lvl = (char **)malloc(sizeof(char *) * 5);
+		i = 0;
+		while (i < 5)
+		{
+			map->lvl[i] = ft_strdup(temp[i]);
+			i++;
+		}
+	}
 	return (map);
 }
 
@@ -86,6 +106,37 @@ static int	parse_line(t_map **map, char *line)
 	return (0);
 }
 
+static int	remalloc_lvl_line(char **line, size_t len)
+{
+	char	*new_line;
+	size_t	old_len;
+
+	old_len = ft_strlen(*line);
+	new_line = ft_realloc(*line, old_len, len);
+	if (!new_line)
+		return (-1);
+	ft_memset(new_line + old_len, ' ', len - old_len);
+	new_line[len - 1] = '\0';
+	if (*line)
+		free(*line);
+	*line = new_line;
+	return (1);
+}
+
+static int	remalloc_level(char **level, size_t lines, size_t len)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < lines)
+	{
+		if (remalloc_lvl_line(&level[i], len) < 0)
+			return (-1);
+		i++;
+	}
+	return (1);
+}
+
 static int	parse_level(t_map **map, char *line)
 {
 	char	*c;
@@ -94,9 +145,25 @@ static int	parse_level(t_map **map, char *line)
 	c = line;
 	len = ft_strlen(line);
 	if (len == 0)
-		return (-1);
+		return (1);
 	if (len > (*map)->lvl_w)
+	{
 		(*map)->lvl_w = len;
+		if (remalloc_level((*map)->lvl, (*map)->lvl_h, (*map)->lvl_w) < 0)
+			return (-1);
+	}
+	(*map)->lvl_h++;
+	if (!(*map)->lvl)
+		(*map)->lvl = ft_calloc(sizeof(char *), (*map)->lvl_h);
+	if (!(*map)->lvl)
+		return (-1);
+	else if (!ft_realloc((*map)->lvl, (*map)->lvl_h - 1, (*map)->lvl_h))
+		return (-1);
+	(*map)->lvl[(*map)->lvl_h - 1] = ft_calloc(sizeof(char), (*map)->lvl_w);
+	if (!(*map)->lvl[(*map)->lvl_h - 1])
+		return (-1);
+	ft_memmove((*map)->lvl[(*map)->lvl_h - 1], line, len);
+	return (1);
 }
 
 t_map	*parse_map(char *map_file)
@@ -130,6 +197,7 @@ t_map	*parse_map(char *map_file)
 				if (result < 0)
 					return (ft_free(map));
 			}
+			/*
 			result = 1;
 			while (result > 0)
 			{
@@ -147,6 +215,7 @@ t_map	*parse_map(char *map_file)
 				if (result < 0)
 					return (ft_free(map));
 			}
+			*/
 		}
 		free(line);
 	}

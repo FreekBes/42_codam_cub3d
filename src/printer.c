@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/31 15:31:47 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/31 16:55:32 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/07 18:51:16 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,32 @@ void	print_color(t_col_rgba color)
 		(int)color.b, (int)color.a);
 }
 
+void	print_level(t_map map)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (i < map.lvl_h)
+	{
+		j = 0;
+		while (j < map.lvl_w)
+		{
+			printf("%c ", map.lvl[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+}
+
 void	print_map(t_map map)
 {
 	printf("res_x: %i\nres_y: %i\n", (int)map.res_x, (int)map.res_y);
 	printf("tex_no: %s\ntex_so: %s\n", map.tex_no, map.tex_so);
 	printf("tex_we: %s\ntex_ea: %s\n", map.tex_we, map.tex_ea);
 	printf("tex_sprite: %s\ncol_floor: 0x%X", map.tex_sprite, map.col_floor);
-	printf("\ncol_ceiling: 0x%X\n", map.col_ceiling);
+	printf("\ncol_ceiling: 0x%X\n\n", map.col_ceiling);
+	printf("lvl_w: %zu, lvl_h: %zu\n", map.lvl_w, map.lvl_h);
+	print_level(map);
 }
