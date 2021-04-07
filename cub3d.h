@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/07 18:44:51 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/07 19:35:14 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,16 @@ typedef struct s_map
 	unsigned int	col_ceiling;
 }					t_map;
 
+typedef struct s_cam
+{
+	double			posX;
+	double			posY;
+	double			dirX;
+	double			dirY;
+	double			planeX;
+	double			planeY;
+}					t_cam;
+
 typedef struct s_img
 {
 	void			*img_ptr;
@@ -75,6 +85,7 @@ typedef struct s_game
 {
 	t_mlx_ctx		*mlx;
 	t_map			*map;
+	t_cam			cam;
 }					t_game;
 
 int					print_error(char *msg);
