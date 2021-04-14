@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/14 19:27:43 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/14 20:51:35 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static void	free_map(t_map *map)
 
 static int	exit_game(t_game game, char *error_msg)
 {
+	mlx_mouse_show();
 	if (error_msg)
 		print_error(error_msg);
 	free_mlx_context(game.mlx);
@@ -207,11 +208,11 @@ static void	rotate_cam(t_game *game, int dir)
 	game->cam.planeY = oldPlaneX * sin(-rotSpeed) + game->cam.planeY * cos(-rotSpeed);
 }
 
-static void	move_cam(t_game *game, int dir)
+static void	move_cam(t_game *game, double dir)
 {
 	double	moveSpeed;
 
-	moveSpeed = (double)(dir) * 0.07 * game->cam.speed_mod;
+	moveSpeed = dir * 0.07 * game->cam.speed_mod;
 	if (game->map->lvl[(int)(game->cam.posX + game->cam.dirX * moveSpeed)][(int)(game->cam.posY)] != '1')
 		game->cam.posX += game->cam.dirX * moveSpeed;
 	if (game->map->lvl[(int)(game->cam.posX)][(int)(game->cam.posY + game->cam.dirY * moveSpeed)] != '1')
@@ -227,9 +228,9 @@ static int	keypress(int keycode, t_game *game)
 		rotate_cam(game, -1);
 	else if (keycode == 124)
 		rotate_cam(game, 1);
-	else if (keycode == 126)
+	else if (keycode == 13)
 		move_cam(game, 1);
-	else if (keycode == 125)
+	else if (keycode == 1)
 		move_cam(game, -1);
 	else if (keycode == 257)
 		game->cam.speed_mod = 2;
@@ -244,9 +245,23 @@ static int	keyrelease(int keycode, t_game *game)
 	return (1);
 }
 
+static int	mousemove(int x, int y, t_game *game)
+{
+	double	speed;
+	double	sensitivity;
+
+	sensitivity = 0.38;
+	speed = x * sensitivity - (game->map->res_x / 2 * sensitivity);
+	rotate_cam(game, speed);
+	mlx_mouse_move(game->mlx->win, game->map->res_x / 2, game->map->res_y / 2);
+	return (1);
+}
+
 int	main(int argc, char **argv)
 {
 	t_game		game;
+	int			x;
+	int			y;
 
 	if (argc < 2)
 		return (print_error("No map specified as first argument"));
@@ -260,9 +275,11 @@ int	main(int argc, char **argv)
 	game.mlx = get_mlx_context(game.map, argv[0]);
 	if (!game.mlx)
 		exit_game(game, "Failed to open MLX window");
-	mlx_hook(game.mlx->win, 17, 0, &exit_hook, &game);
-	mlx_hook(game.mlx->win, 2, 1L<<0, &keypress, &game);
-	mlx_hook(game.mlx->win, 3, 1L<<0, &keyrelease, &game);
+	mlx_mouse_hide();
+	mlx_hook(game.mlx->win, 17, 0L, &exit_hook, &game);
+	mlx_hook(game.mlx->win, 2, 0L, &keypress, &game);
+	mlx_hook(game.mlx->win, 3, 0L, &keyrelease, &game);
+	mlx_hook(game.mlx->win, 6, 1L<<6, &mousemove, &game);
 	mlx_loop_hook(game.mlx->core, render_next_frame, &game);
 	mlx_loop(game.mlx->core);
 	return (exit_game(game, NULL));
