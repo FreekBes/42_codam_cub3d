@@ -4,8 +4,8 @@ SO ./textures/bricks.bmp
 WE ./textures/wood.bmp
 EA ./textures/concrete.bmp
 S ./textures/sprite.bmp
-F   220, 100,0
-C   255,255,255
+F   120, 120, 120
+C   135, 206, 235
 
 11111111111
 10000000001

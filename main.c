@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/14 15:56:17 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/14 16:32:10 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,13 +124,13 @@ static int	render_next_frame(t_game *game)
 	x = 0;
 	while (x < game->map->res_x)
 	{
-		cameraX = 2 * x / (double)game->map->res_x - 1;
+		cameraX = 2 * x / (double)(game->map->res_x) - 1;
 		rayDirX = game->cam.dirX + game->cam.planeX * cameraX;
 		rayDirY = game->cam.dirY + game->cam.planeY * cameraX;
 		mapX = (int)(game->cam.posX);
 		mapY = (int)(game->cam.posY);
 		deltaDistX = ft_abs(1 / rayDirX);
-		deltaDistY = ft_abs(1 / rayDirX);
+		deltaDistY = ft_abs(1 / rayDirY);
 		if (rayDirX < 0)
 		{
 			stepX = -1;
@@ -169,7 +169,7 @@ static int	render_next_frame(t_game *game)
 			if (game->map->lvl[mapX][mapY] == '1')
 				hit = 1;
 		}
-		printf("hit (%d) at: %d, %d (%c)\n", hit, mapX, mapY, game->map->lvl[mapX][mapY]);
+		//printf("hit (%d) at: %d, %d (%c)\n", hit, mapX, mapY, game->map->lvl[mapX][mapY]);
 		if (side == 0)
 			perpWallDist = (mapX - game->cam.posX + (1 - stepX) / 2) / rayDirX;
 		else
@@ -192,6 +192,48 @@ static int	render_next_frame(t_game *game)
 		game->mlx->img->img_ptr, 0, 0));
 }
 
+static void	rotate_cam(t_game *game, int dir)
+{
+	double		rotSpeed;
+	double		oldDirX;
+	double		oldPlaneX;
+
+	rotSpeed = (double)(dir) * 0.05;
+	oldDirX = game->cam.dirX;
+	game->cam.dirX = game->cam.dirX * cos(-rotSpeed) - game->cam.dirY * sin(-rotSpeed);
+	game->cam.dirY = oldDirX * sin(-rotSpeed) + game->cam.dirY * cos(-rotSpeed);
+	oldPlaneX = game->cam.planeX;
+	game->cam.planeX = game->cam.planeX * cos(-rotSpeed) - game->cam.planeY * sin(-rotSpeed);
+	game->cam.planeY = oldPlaneX * sin(-rotSpeed) + game->cam.planeY * cos(-rotSpeed);
+}
+
+static void	move_cam(t_game *game, int dir)
+{
+	double	moveSpeed;
+
+	moveSpeed = (double)(dir) * 0.05;
+	if (game->map->lvl[(int)(game->cam.posX + game->cam.dirX * moveSpeed)][(int)(game->cam.posY)] != '1')
+		game->cam.posX += game->cam.dirX * moveSpeed;
+	if (game->map->lvl[(int)(game->cam.posX)][(int)(game->cam.posY + game->cam.dirY * moveSpeed)] != '1')
+		game->cam.posY += game->cam.dirY * moveSpeed;
+}
+
+static int	keypress(int keycode, t_game *game)
+{
+	//printf("keypress! %d\n", keycode);
+	if (keycode == 53)
+		exit_game(*game, NULL);
+	else if (keycode == 123)
+		rotate_cam(game, -1);
+	else if (keycode == 124)
+		rotate_cam(game, 1);
+	else if (keycode == 126)
+		move_cam(game, 1);
+	else if (keycode == 125)
+		move_cam(game, -1);
+	return (1);
+}
+
 int	main(int argc, char **argv)
 {
 	t_game		game;
@@ -208,6 +250,7 @@ int	main(int argc, char **argv)
 	if (!game.mlx)
 		exit_game(game, "Failed to open MLX window");
 	mlx_hook(game.mlx->win, 17, 0, &exit_hook, &game);
+	mlx_hook(game.mlx->win, 2, 1L<<0, &keypress, &game);
 	mlx_loop_hook(game.mlx->core, render_next_frame, &game);
 	mlx_loop(game.mlx->core);
 	return (exit_game(game, NULL));
