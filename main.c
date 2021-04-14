@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/07 20:00:08 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/14 15:56:17 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,22 +100,25 @@ static void	set_starting_pos(t_game *game)
 
 static int	render_next_frame(t_game *game)
 {
-	int		x;
-	double	cameraX;
-	double	rayDirX;
-	double	rayDirY;
-	int		mapX;
-	int		mapY;
-	double	sideDistX;
-	double	sideDistY;
-	double	deltaDistX;
-	double	deltaDistY;
-	double	perpWallDist;
-	int		stepX;
-	int		stepY;
-	int		hit;
-	int		side;
-	int		lineHeight;
+	int				x;
+	double			cameraX;
+	double			rayDirX;
+	double			rayDirY;
+	int				mapX;
+	int				mapY;
+	double			sideDistX;
+	double			sideDistY;
+	double			deltaDistX;
+	double			deltaDistY;
+	double			perpWallDist;
+	int				stepX;
+	int				stepY;
+	int				hit;
+	int				side;
+	int				lineHeight;
+	int				drawStart;
+	int				drawEnd;
+	unsigned int	color;
 
 	render_floor_ceil(game);
 	x = 0;
@@ -124,8 +127,8 @@ static int	render_next_frame(t_game *game)
 		cameraX = 2 * x / (double)game->map->res_x - 1;
 		rayDirX = game->cam.dirX + game->cam.planeX * cameraX;
 		rayDirY = game->cam.dirY + game->cam.planeY * cameraX;
-		mapX = (int)game->cam.posX;
-		mapY = (int)game->cam.posY;
+		mapX = (int)(game->cam.posX);
+		mapY = (int)(game->cam.posY);
 		deltaDistX = ft_abs(1 / rayDirX);
 		deltaDistY = ft_abs(1 / rayDirX);
 		if (rayDirX < 0)
@@ -148,6 +151,7 @@ static int	render_next_frame(t_game *game)
 			stepY = 1;
 			sideDistY = (mapY + 1.0 - game->cam.posY) * deltaDistY;
 		}
+		hit = 0;
 		while (hit == 0)
 		{
 			if (sideDistX < sideDistY)
@@ -165,11 +169,23 @@ static int	render_next_frame(t_game *game)
 			if (game->map->lvl[mapX][mapY] == '1')
 				hit = 1;
 		}
+		printf("hit (%d) at: %d, %d (%c)\n", hit, mapX, mapY, game->map->lvl[mapX][mapY]);
 		if (side == 0)
 			perpWallDist = (mapX - game->cam.posX + (1 - stepX) / 2) / rayDirX;
 		else
 			perpWallDist = (mapY - game->cam.posY + (1 - stepY) / 2) / rayDirY;
 		lineHeight = (int)(game->map->res_y / perpWallDist);
+
+		drawStart = -lineHeight / 2 + game->map->res_y / 2;
+		if (drawStart < 0)
+			drawStart = 0;
+		drawEnd = lineHeight / 2 + game->map->res_y / 2;
+		if (drawEnd >= game->map->res_y)
+			drawEnd = game->map->res_y - 1;
+		color = 0x00FF0000;
+		if (side == 1)
+			color = color / 2;
+		put_vert_line(game->mlx->img, x, drawStart, drawEnd, color);
 		x++;
 	}
 	return (mlx_put_image_to_window(game->mlx->core, game->mlx->win,
