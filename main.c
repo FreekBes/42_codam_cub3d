@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/14 16:32:10 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/14 17:30:31 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ static int	render_next_frame(t_game *game)
 			drawEnd = game->map->res_y - 1;
 		color = 0x00FF0000;
 		if (side == 1)
-			color = color / 2;
+			color = 0x00CC0000;
 		put_vert_line(game->mlx->img, x, drawStart, drawEnd, color);
 		x++;
 	}
