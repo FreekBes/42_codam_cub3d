@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/14 16:22:29 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/14 19:26:53 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_map
 
 typedef struct s_cam
 {
+	double			speed_mod;
 	double			posX;
 	double			posY;
 	double			dirX;

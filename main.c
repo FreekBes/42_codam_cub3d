@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/14 17:30:31 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/14 19:27:43 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,8 @@ static int	render_next_frame(t_game *game)
 		rayDirY = game->cam.dirY + game->cam.planeY * cameraX;
 		mapX = (int)(game->cam.posX);
 		mapY = (int)(game->cam.posY);
-		deltaDistX = ft_abs(1 / rayDirX);
-		deltaDistY = ft_abs(1 / rayDirY);
+		deltaDistX = fabs(1 / rayDirX);
+		deltaDistY = fabs(1 / rayDirY);
 		if (rayDirX < 0)
 		{
 			stepX = -1;
@@ -198,7 +198,7 @@ static void	rotate_cam(t_game *game, int dir)
 	double		oldDirX;
 	double		oldPlaneX;
 
-	rotSpeed = (double)(dir) * 0.05;
+	rotSpeed = (double)(dir) * 0.1;
 	oldDirX = game->cam.dirX;
 	game->cam.dirX = game->cam.dirX * cos(-rotSpeed) - game->cam.dirY * sin(-rotSpeed);
 	game->cam.dirY = oldDirX * sin(-rotSpeed) + game->cam.dirY * cos(-rotSpeed);
@@ -211,7 +211,7 @@ static void	move_cam(t_game *game, int dir)
 {
 	double	moveSpeed;
 
-	moveSpeed = (double)(dir) * 0.05;
+	moveSpeed = (double)(dir) * 0.07 * game->cam.speed_mod;
 	if (game->map->lvl[(int)(game->cam.posX + game->cam.dirX * moveSpeed)][(int)(game->cam.posY)] != '1')
 		game->cam.posX += game->cam.dirX * moveSpeed;
 	if (game->map->lvl[(int)(game->cam.posX)][(int)(game->cam.posY + game->cam.dirY * moveSpeed)] != '1')
@@ -231,6 +231,16 @@ static int	keypress(int keycode, t_game *game)
 		move_cam(game, 1);
 	else if (keycode == 125)
 		move_cam(game, -1);
+	else if (keycode == 257)
+		game->cam.speed_mod = 2;
+	return (1);
+}
+
+static int	keyrelease(int keycode, t_game *game)
+{
+	//printf("keyrelease! %d\n", keycode);
+	if (keycode == 257)
+		game->cam.speed_mod = 1;
 	return (1);
 }
 
@@ -241,6 +251,7 @@ int	main(int argc, char **argv)
 	if (argc < 2)
 		return (print_error("No map specified as first argument"));
 	game.cam.planeY = 0.66;
+	game.cam.speed_mod = 1;
 	game.map = parse_map(argv[1]);
 	set_starting_pos(&game);
 	if (!game.map)
@@ -251,6 +262,7 @@ int	main(int argc, char **argv)
 		exit_game(game, "Failed to open MLX window");
 	mlx_hook(game.mlx->win, 17, 0, &exit_hook, &game);
 	mlx_hook(game.mlx->win, 2, 1L<<0, &keypress, &game);
+	mlx_hook(game.mlx->win, 3, 1L<<0, &keyrelease, &game);
 	mlx_loop_hook(game.mlx->core, render_next_frame, &game);
 	mlx_loop(game.mlx->core);
 	return (exit_game(game, NULL));
