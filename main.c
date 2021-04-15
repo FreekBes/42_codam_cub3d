@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/15 20:08:20 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/15 20:35:43 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,7 +255,8 @@ static int	mousemove(int x, int y, t_game *game)
 	sensitivity = 0.38;
 	speed = x * sensitivity - (game->map->res_x / 2 * sensitivity);
 	rotate_cam(game, speed);
-	mlx_mouse_move(OS_MLX_REQ_PARAMS, game->map->res_x / 2, game->map->res_y / 2);
+	if (x != game->map->res_x / 2 || y != game->map->res_y / 2)
+		mlx_mouse_move(OS_MLX_REQ_PARAMS, game->map->res_x / 2, game->map->res_y / 2);
 	return (1);
 }
 
