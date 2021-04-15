@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/15 20:35:43 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/15 21:42:07 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ static void	set_starting_pos(t_game *game)
 		{
 			if (ft_strchr("NSEW", game->map->lvl[i][j]))
 			{
-				game->cam.posX = j;
-				game->cam.posY = i;
+				game->cam.posX = j + 0.5;
+				game->cam.posY = i + 0.5;
 				game->cam.dirX = -1;
 				game->cam.dirY = 0;
 				return;
