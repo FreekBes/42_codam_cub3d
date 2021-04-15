@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/14 20:51:35 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/15 19:35:42 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	free_map(t_map *map)
 
 static int	exit_game(t_game game, char *error_msg)
 {
-	mlx_mouse_show();
+	//mlx_mouse_show();
 	if (error_msg)
 		print_error(error_msg);
 	free_mlx_context(game.mlx);
@@ -253,7 +253,7 @@ static int	mousemove(int x, int y, t_game *game)
 	sensitivity = 0.38;
 	speed = x * sensitivity - (game->map->res_x / 2 * sensitivity);
 	rotate_cam(game, speed);
-	mlx_mouse_move(game->mlx->win, game->map->res_x / 2, game->map->res_y / 2);
+	mlx_mouse_move(game->mlx->core, game->mlx->win, game->map->res_x / 2, game->map->res_y / 2);
 	return (1);
 }
 
@@ -275,7 +275,7 @@ int	main(int argc, char **argv)
 	game.mlx = get_mlx_context(game.map, argv[0]);
 	if (!game.mlx)
 		exit_game(game, "Failed to open MLX window");
-	mlx_mouse_hide();
+	//mlx_mouse_hide();
 	mlx_hook(game.mlx->win, 17, 0L, &exit_hook, &game);
 	mlx_hook(game.mlx->win, 2, 0L, &keypress, &game);
 	mlx_hook(game.mlx->win, 3, 0L, &keyrelease, &game);
