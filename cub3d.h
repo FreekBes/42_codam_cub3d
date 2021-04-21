@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/21 16:28:53 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/21 16:30:55 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_keys_status
 	int				d;
 	int				left;
 	int				right;
+	int				shift;
 }					t_keys_status;
 
 typedef struct s_col_rgba

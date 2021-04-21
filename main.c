@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/21 16:24:51 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/21 16:39:00 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,48 @@ static void	set_starting_pos(t_game *game)
 	}
 }
 
+static void	rotate_cam(t_game *game, int dir)
+{
+	double		rotSpeed;
+	double		oldDirX;
+	double		oldPlaneX;
+
+	rotSpeed = (double)(dir) * 0.06;
+	oldDirX = game->cam.dirX;
+	game->cam.dirX = game->cam.dirX * cos(-rotSpeed) - game->cam.dirY * sin(-rotSpeed);
+	game->cam.dirY = oldDirX * sin(-rotSpeed) + game->cam.dirY * cos(-rotSpeed);
+	oldPlaneX = game->cam.planeX;
+	game->cam.planeX = game->cam.planeX * cos(-rotSpeed) - game->cam.planeY * sin(-rotSpeed);
+	game->cam.planeY = oldPlaneX * sin(-rotSpeed) + game->cam.planeY * cos(-rotSpeed);
+}
+
+static void	move_cam(t_game *game, double dir)
+{
+	double	moveSpeed;
+
+	moveSpeed = dir * 0.03 * game->cam.speed_mod;
+	if (game->map->lvl[(int)(game->cam.posX + game->cam.dirX * moveSpeed)][(int)(game->cam.posY)] != '1')
+		game->cam.posX += game->cam.dirX * moveSpeed;
+	if (game->map->lvl[(int)(game->cam.posX)][(int)(game->cam.posY + game->cam.dirY * moveSpeed)] != '1')
+		game->cam.posY += game->cam.dirY * moveSpeed;
+}
+
+static void	handle_key_presses(t_game *game)
+{
+	if (game->key_stat.shift)
+		game->cam.speed_mod = 1.7;
+	else
+		game->cam.speed_mod = 1;
+	if (game->key_stat.w && !game->key_stat.s)
+		move_cam(game, 1);
+	else if (game->key_stat.s && !game->key_stat.w)
+		move_cam(game, -1);
+	if (game->key_stat.right && !game->key_stat.left)
+		rotate_cam(game, 1);
+	else if (game->key_stat.left && !game->key_stat.right)
+		rotate_cam(game, -1);
+}
+
 static int	render_next_frame(t_game *game)
 {
 	int				x;
@@ -123,6 +165,7 @@ static int	render_next_frame(t_game *game)
 	int				drawEnd;
 	unsigned int	color;
 
+	handle_key_presses(game);
 	render_floor_ceil(game);
 	x = 0;
 	while (x < game->map->res_x)
@@ -195,55 +238,37 @@ static int	render_next_frame(t_game *game)
 		game->mlx->img->img_ptr, 0, 0));
 }
 
-static void	rotate_cam(t_game *game, int dir)
-{
-	double		rotSpeed;
-	double		oldDirX;
-	double		oldPlaneX;
-
-	rotSpeed = (double)(dir) * 0.1;
-	oldDirX = game->cam.dirX;
-	game->cam.dirX = game->cam.dirX * cos(-rotSpeed) - game->cam.dirY * sin(-rotSpeed);
-	game->cam.dirY = oldDirX * sin(-rotSpeed) + game->cam.dirY * cos(-rotSpeed);
-	oldPlaneX = game->cam.planeX;
-	game->cam.planeX = game->cam.planeX * cos(-rotSpeed) - game->cam.planeY * sin(-rotSpeed);
-	game->cam.planeY = oldPlaneX * sin(-rotSpeed) + game->cam.planeY * cos(-rotSpeed);
-}
-
-static void	move_cam(t_game *game, double dir)
-{
-	double	moveSpeed;
-
-	moveSpeed = dir * 0.07 * game->cam.speed_mod;
-	if (game->map->lvl[(int)(game->cam.posX + game->cam.dirX * moveSpeed)][(int)(game->cam.posY)] != '1')
-		game->cam.posX += game->cam.dirX * moveSpeed;
-	if (game->map->lvl[(int)(game->cam.posX)][(int)(game->cam.posY + game->cam.dirY * moveSpeed)] != '1')
-		game->cam.posY += game->cam.dirY * moveSpeed;
-}
-
 static int	keypress(int keycode, t_game *game)
 {
 	//printf("keypress! %d\n", keycode);
 	if (keycode == KEY_ESC)
 		exit_game(*game, NULL);
 	else if (keycode == KEY_LEFT)
-		rotate_cam(game, -1);
+		game->key_stat.left = 1;
 	else if (keycode == KEY_RIGHT)
-		rotate_cam(game, 1);
+		game->key_stat.right = 1;
 	else if (keycode == KEY_W)
-		move_cam(game, 1);
+		game->key_stat.w = 1;
 	else if (keycode == KEY_S)
-		move_cam(game, -1);
+		game->key_stat.s = 1;
 	else if (keycode == KEY_LSHIFT || keycode == KEY_RSHIFT)
-		game->cam.speed_mod = 2;
+		game->key_stat.shift = 1;
 	return (1);
 }
 
 static int	keyrelease(int keycode, t_game *game)
 {
 	//printf("keyrelease! %d\n", keycode);
-	if (keycode == KEY_LSHIFT || keycode == KEY_RSHIFT)
-		game->cam.speed_mod = 1;
+	if (keycode == KEY_LEFT)
+		game->key_stat.left = 0;
+	else if (keycode == KEY_RIGHT)
+		game->key_stat.right = 0;
+	else if (keycode == KEY_W)
+		game->key_stat.w = 0;
+	else if (keycode == KEY_S)
+		game->key_stat.s = 0;
+	else if (keycode == KEY_LSHIFT || keycode == KEY_RSHIFT)
+		game->key_stat.shift = 0;
 	return (1);
 }
 
