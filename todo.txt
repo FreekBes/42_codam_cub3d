@@ -2,3 +2,5 @@
 - fix camera starting positions NSEW
 - textures
 - sprites
+- sideways moving
+- check if map is surrounded by walls

@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/21 17:09:43 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/21 18:05:31 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,13 @@
 static t_map	*new_map(void)
 {
 	t_map	*map;
-	char	temp[6][6] = {
-			{'1', '1', '1', '1', '1', '1'},
-			{'1', '0', '0', '0', '0', '1'},
-			{'1', '0', '0', '0', '0', '1'},
-			{'1', '0', '1', '0', '1', '1'},
-			{'1', '0', '1', 'N', '0', '1'},
-			{'1', '1', '1', '1', '1', '1'}
-		};
-	int		i;
 
 	map = (t_map *)malloc(sizeof(t_map));
 	if (map)
 	{
-		map->lvl_w = 6;
-		map->lvl_h = 6;
-		map->lvl = (char **)malloc(sizeof(char *) * 6);
-		i = 0;
-		while (i < 6)
-		{
-			map->lvl[i] = ft_strdup(temp[i]);
-			i++;
-		}
+		map->lvl = NULL;
+		map->lvl_w = 0;
+		map->lvl_h = 0;
 	}
 	return (map);
 }
@@ -113,7 +98,7 @@ static int	remalloc_lvl_line(char **line, size_t len)
 	size_t	old_len;
 
 	old_len = ft_strlen(*line);
-	new_line = ft_realloc(*line, old_len, len);
+	new_line = ft_realloc(*line, old_len, len + 1);
 	if (!new_line)
 		return (-1);
 	ft_memset(new_line + old_len, ' ', len - old_len);
@@ -154,17 +139,14 @@ static int	parse_level(t_map **map, char *line)
 			return (-1);
 	}
 	(*map)->lvl_h++;
-	if (!(*map)->lvl)
-		(*map)->lvl = ft_calloc(sizeof(char *), (*map)->lvl_h);
+	(*map)->lvl = ft_realloc((*map)->lvl, ((*map)->lvl_h - 1) * sizeof(char *), (*map)->lvl_h * sizeof(char *));
 	if (!(*map)->lvl)
 		return (-1);
-	else if (!ft_realloc((*map)->lvl, (*map)->lvl_h - 1, (*map)->lvl_h))
-		return (-1);
-	(*map)->lvl[(*map)->lvl_h - 1] = ft_calloc(sizeof(char), (*map)->lvl_w);
+	(*map)->lvl[(*map)->lvl_h - 1] = ft_calloc(sizeof(char), (*map)->lvl_w + 1);
 	if (!(*map)->lvl[(*map)->lvl_h - 1])
 		return (-1);
 	ft_memmove((*map)->lvl[(*map)->lvl_h - 1], line, len);
-	return (1);
+	return (0);
 }
 
 t_map	*parse_map(char *map_file)
@@ -172,7 +154,8 @@ t_map	*parse_map(char *map_file)
 	t_map	*map;
 	int		fd;
 	char	**line;
-	int		result;
+	int		res_gnl;
+	int		res_parser;
 
 	fd = open(map_file, O_RDONLY);
 	if (fd < 0)
@@ -184,39 +167,40 @@ t_map	*parse_map(char *map_file)
 		map = new_map();
 		if (map)
 		{
-			result = 1;
-			while (result > 0)
+			res_gnl = 1;
+			while (res_gnl > 0)
 			{
-				result = ft_get_next_line(fd, line);
-				if (result >= 0)
+				res_gnl = ft_get_next_line(fd, line);
+				if (res_gnl >= 0)
 				{
 					if (parse_line(&map, *line) > 0)
+					{
+						res_parser = parse_level(&map, *line);
 						break;
+					}
 				}
 				if (*line)
 					free(*line);
-				if (result < 0)
+				if (res_gnl < 0)
 					return (ft_free(map));
 			}
-			/*
-			result = 1;
-			while (result > 0)
+			res_gnl = 1;
+			while (res_gnl > 0)
 			{
-				result = ft_get_next_line(fd, line);
-				if (result >= 0)
+				res_gnl = ft_get_next_line(fd, line);
+				if (res_gnl >= 0)
 				{
-					result = parse_level(&map, *line);
-					if (result > 0)
+					res_parser = parse_level(&map, *line);
+					if (res_parser > 0)
 						break;
-					if (result < 0)
+					if (res_parser < 0)
 						return (ft_free(map));
 				}
 				if (*line)
 					free(*line);
-				if (result < 0)
+				if (res_gnl < 0)
 					return (ft_free(map));
 			}
-			*/
 		}
 		free(line);
 	}

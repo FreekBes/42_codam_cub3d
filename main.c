@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/21 17:07:35 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/21 18:05:43 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	render_floor_ceil(t_game *game)
 	put_rect(game->mlx->img, &floor_rect);
 }
 
-static void	set_starting_pos(t_game *game)
+static int	set_starting_pos(t_game *game)
 {
 	int	i;
 	int	j;
@@ -85,7 +85,7 @@ static void	set_starting_pos(t_game *game)
 	while (i < game->map->lvl_h)
 	{
 		j = 0;
-		while (j < game->map->lvl_w)
+		while (j < game->map->lvl_w && game->map->lvl[i][j] != '\0')
 		{
 			if (ft_strchr("NSEW", game->map->lvl[i][j]))
 			{
@@ -103,12 +103,13 @@ static void	set_starting_pos(t_game *game)
 					game->cam.dir_y = -1;
 				else
 					game->cam.dir_y = 1;
-				return;
+				return (1);
 			}
 			j++;
 		}
 		i++;
 	}
+	return (-1);
 }
 
 static void	rotate_cam(t_game *game, int dir)
@@ -331,7 +332,9 @@ int	main(int argc, char **argv)
 	game.cam.plane_y = 0.66;
 	game.cam.speed_mod = 1;
 	game.map = parse_map(argv[1]);
-	set_starting_pos(&game);
+	if (set_starting_pos(&game) < 0)
+		return (print_error("Start position in map is not set"));
+	printf("start pos: %f, %f\n", game.cam.pos_x, game.cam.pos_y);
 	if (!game.map)
 		return (print_error("Failed to parse map"));
 	print_map(*(game.map));
