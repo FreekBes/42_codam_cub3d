@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/21 16:39:00 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/21 16:51:00 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,10 @@ static void	set_starting_pos(t_game *game)
 		{
 			if (ft_strchr("NSEW", game->map->lvl[i][j]))
 			{
-				game->cam.posX = j + 0.5;
-				game->cam.posY = i + 0.5;
-				game->cam.dirX = -1;
-				game->cam.dirY = 0;
+				game->cam.pos_x = j + 0.5;
+				game->cam.pos_y = i + 0.5;
+				game->cam.dir_x = -1;
+				game->cam.dir_y = 0;
 				return;
 			}
 			j++;
@@ -108,23 +108,23 @@ static void	rotate_cam(t_game *game, int dir)
 	double		oldPlaneX;
 
 	rotSpeed = (double)(dir) * 0.06;
-	oldDirX = game->cam.dirX;
-	game->cam.dirX = game->cam.dirX * cos(-rotSpeed) - game->cam.dirY * sin(-rotSpeed);
-	game->cam.dirY = oldDirX * sin(-rotSpeed) + game->cam.dirY * cos(-rotSpeed);
-	oldPlaneX = game->cam.planeX;
-	game->cam.planeX = game->cam.planeX * cos(-rotSpeed) - game->cam.planeY * sin(-rotSpeed);
-	game->cam.planeY = oldPlaneX * sin(-rotSpeed) + game->cam.planeY * cos(-rotSpeed);
+	oldDirX = game->cam.dir_x;
+	game->cam.dir_x = game->cam.dir_x * cos(-rotSpeed) - game->cam.dir_y * sin(-rotSpeed);
+	game->cam.dir_y = oldDirX * sin(-rotSpeed) + game->cam.dir_y * cos(-rotSpeed);
+	oldPlaneX = game->cam.plane_x;
+	game->cam.plane_x = game->cam.plane_x * cos(-rotSpeed) - game->cam.plane_y * sin(-rotSpeed);
+	game->cam.plane_y = oldPlaneX * sin(-rotSpeed) + game->cam.plane_y * cos(-rotSpeed);
 }
 
-static void	move_cam(t_game *game, double dir)
+static void	move_cam(t_game *game, double dir_fb, double dir_side)
 {
-	double	moveSpeed;
+	double	move_speed_fb;
 
-	moveSpeed = dir * 0.03 * game->cam.speed_mod;
-	if (game->map->lvl[(int)(game->cam.posX + game->cam.dirX * moveSpeed)][(int)(game->cam.posY)] != '1')
-		game->cam.posX += game->cam.dirX * moveSpeed;
-	if (game->map->lvl[(int)(game->cam.posX)][(int)(game->cam.posY + game->cam.dirY * moveSpeed)] != '1')
-		game->cam.posY += game->cam.dirY * moveSpeed;
+	move_speed_fb = dir_fb * 0.03 * game->cam.speed_mod;
+	if (game->map->lvl[(int)(game->cam.pos_x + game->cam.dir_x * move_speed_fb)][(int)(game->cam.pos_y)] != '1')
+		game->cam.pos_x += game->cam.dir_x * move_speed_fb;
+	if (game->map->lvl[(int)(game->cam.pos_x)][(int)(game->cam.pos_y + game->cam.dir_y * move_speed_fb)] != '1')
+		game->cam.pos_y += game->cam.dir_y * move_speed_fb;
 }
 
 static void	handle_key_presses(t_game *game)
@@ -134,9 +134,9 @@ static void	handle_key_presses(t_game *game)
 	else
 		game->cam.speed_mod = 1;
 	if (game->key_stat.w && !game->key_stat.s)
-		move_cam(game, 1);
+		move_cam(game, 1, 0);
 	else if (game->key_stat.s && !game->key_stat.w)
-		move_cam(game, -1);
+		move_cam(game, -1, 0);
 	if (game->key_stat.right && !game->key_stat.left)
 		rotate_cam(game, 1);
 	else if (game->key_stat.left && !game->key_stat.right)
@@ -146,23 +146,23 @@ static void	handle_key_presses(t_game *game)
 static int	render_next_frame(t_game *game)
 {
 	int				x;
-	double			cameraX;
-	double			rayDirX;
-	double			rayDirY;
-	int				mapX;
-	int				mapY;
-	double			sideDistX;
-	double			sideDistY;
-	double			deltaDistX;
-	double			deltaDistY;
-	double			perpWallDist;
-	int				stepX;
-	int				stepY;
+	double			camera_x;
+	double			ray_dir_x;
+	double			ray_dir_y;
+	int				map_x;
+	int				map_y;
+	double			side_dist_x;
+	double			side_dist_y;
+	double			delta_dist_x;
+	double			delta_dist_y;
+	double			perp_wall_dist;
+	int				step_x;
+	int				step_y;
 	int				hit;
 	int				side;
-	int				lineHeight;
-	int				drawStart;
-	int				drawEnd;
+	int				line_height;
+	int				draw_start;
+	int				draw_end;
 	unsigned int	color;
 
 	handle_key_presses(game);
@@ -170,68 +170,68 @@ static int	render_next_frame(t_game *game)
 	x = 0;
 	while (x < game->map->res_x)
 	{
-		cameraX = 2 * x / (double)(game->map->res_x) - 1;
-		rayDirX = game->cam.dirX + game->cam.planeX * cameraX;
-		rayDirY = game->cam.dirY + game->cam.planeY * cameraX;
-		mapX = (int)(game->cam.posX);
-		mapY = (int)(game->cam.posY);
-		deltaDistX = fabs(1 / rayDirX);
-		deltaDistY = fabs(1 / rayDirY);
-		if (rayDirX < 0)
+		camera_x = 2 * x / (double)(game->map->res_x) - 1;
+		ray_dir_x = game->cam.dir_x + game->cam.plane_x * camera_x;
+		ray_dir_y = game->cam.dir_y + game->cam.plane_y * camera_x;
+		map_x = (int)(game->cam.pos_x);
+		map_y = (int)(game->cam.pos_y);
+		delta_dist_x = fabs(1 / ray_dir_x);
+		delta_dist_y = fabs(1 / ray_dir_y);
+		if (ray_dir_x < 0)
 		{
-			stepX = -1;
-			sideDistX = (game->cam.posX - mapX) * deltaDistX;
+			step_x = -1;
+			side_dist_x = (game->cam.pos_x - map_x) * delta_dist_x;
 		}
 		else
 		{
-			stepX = 1;
-			sideDistX = (mapX + 1.0 - game->cam.posX) * deltaDistX;
+			step_x = 1;
+			side_dist_x = (map_x + 1.0 - game->cam.pos_x) * delta_dist_x;
 		}
-		if (rayDirY < 0)
+		if (ray_dir_y < 0)
 		{
-			stepY = -1;
-			sideDistY = (game->cam.posY - mapY) * deltaDistY;
+			step_y = -1;
+			side_dist_y = (game->cam.pos_y - map_y) * delta_dist_y;
 		}
 		else
 		{
-			stepY = 1;
-			sideDistY = (mapY + 1.0 - game->cam.posY) * deltaDistY;
+			step_y = 1;
+			side_dist_y = (map_y + 1.0 - game->cam.pos_y) * delta_dist_y;
 		}
 		hit = 0;
 		while (hit == 0)
 		{
-			if (sideDistX < sideDistY)
+			if (side_dist_x < side_dist_y)
 			{
-				sideDistX += deltaDistX;
-				mapX += stepX;
+				side_dist_x += delta_dist_x;
+				map_x += step_x;
 				side = 0;
 			}
 			else
 			{
-				sideDistY += deltaDistY;
-				mapY += stepY;
+				side_dist_y += delta_dist_y;
+				map_y += step_y;
 				side = 1;
 			}
-			if (game->map->lvl[mapX][mapY] == '1')
+			if (game->map->lvl[map_x][map_y] == '1')
 				hit = 1;
 		}
-		//printf("hit (%d) at: %d, %d (%c)\n", hit, mapX, mapY, game->map->lvl[mapX][mapY]);
+		//printf("hit (%d) at: %d, %d (%c)\n", hit, map_x, map_y, game->map->lvl[map_x][map_y]);
 		if (side == 0)
-			perpWallDist = (mapX - game->cam.posX + (1 - stepX) / 2) / rayDirX;
+			perp_wall_dist = (map_x - game->cam.pos_x + (1 - step_x) / 2) / ray_dir_x;
 		else
-			perpWallDist = (mapY - game->cam.posY + (1 - stepY) / 2) / rayDirY;
-		lineHeight = (int)(game->map->res_y / perpWallDist);
+			perp_wall_dist = (map_y - game->cam.pos_y + (1 - step_y) / 2) / ray_dir_y;
+		line_height = (int)(game->map->res_y / perp_wall_dist);
 
-		drawStart = -lineHeight / 2 + game->map->res_y / 2;
-		if (drawStart < 0)
-			drawStart = 0;
-		drawEnd = lineHeight / 2 + game->map->res_y / 2;
-		if (drawEnd >= game->map->res_y)
-			drawEnd = game->map->res_y - 1;
+		draw_start = -line_height / 2 + game->map->res_y / 2;
+		if (draw_start < 0)
+			draw_start = 0;
+		draw_end = line_height / 2 + game->map->res_y / 2;
+		if (draw_end >= game->map->res_y)
+			draw_end = game->map->res_y - 1;
 		color = 0x00FF0000;
 		if (side == 1)
 			color = 0x00CC0000;
-		put_vert_line(game->mlx->img, x, drawStart, drawEnd, color);
+		put_vert_line(game->mlx->img, x, draw_start, draw_end, color);
 		x++;
 	}
 	return (mlx_put_image_to_window(game->mlx->core, game->mlx->win,
@@ -249,8 +249,12 @@ static int	keypress(int keycode, t_game *game)
 		game->key_stat.right = 1;
 	else if (keycode == KEY_W)
 		game->key_stat.w = 1;
+	else if (keycode == KEY_A)
+		game->key_stat.a = 1;
 	else if (keycode == KEY_S)
 		game->key_stat.s = 1;
+	else if (keycode == KEY_D)
+		game->key_stat.d = 1;
 	else if (keycode == KEY_LSHIFT || keycode == KEY_RSHIFT)
 		game->key_stat.shift = 1;
 	return (1);
@@ -265,8 +269,12 @@ static int	keyrelease(int keycode, t_game *game)
 		game->key_stat.right = 0;
 	else if (keycode == KEY_W)
 		game->key_stat.w = 0;
+	else if (keycode == KEY_A)
+		game->key_stat.a = 0;
 	else if (keycode == KEY_S)
 		game->key_stat.s = 0;
+	else if (keycode == KEY_D)
+		game->key_stat.d = 0;
 	else if (keycode == KEY_LSHIFT || keycode == KEY_RSHIFT)
 		game->key_stat.shift = 0;
 	return (1);
@@ -281,12 +289,23 @@ static int	mousemove(int x, int y, t_game *game)
 	double	sensitivity;
 
 	mlx_mouse_get_pos(OS_MLX_REQ_PARAMS, &x, &y);
-	sensitivity = 0.34;
+	sensitivity = 0.32;
 	speed = x * sensitivity - (game->map->res_x / 2 * sensitivity);
 	rotate_cam(game, speed);
 	if (ft_abs(x - game->map->res_x / 2) > 1)
 		mlx_mouse_move(OS_MLX_REQ_PARAMS, game->map->res_x / 2, game->map->res_y / 2);
 	return (1);
+}
+
+static void	init_game_win(t_game *game)
+{
+	mlx_mouse_hide(OS_MLX_REQ_PARAMS_MOUSE_SHOW_HIDE);
+	mlx_mouse_move(OS_MLX_REQ_PARAMS, game->map->res_x / 2, game->map->res_y / 2);
+	mlx_hook(game->mlx->win, 17, 1L<<17, &exit_hook, game);
+	mlx_hook(game->mlx->win, 2, 1L<<0, &keypress, game);
+	mlx_hook(game->mlx->win, 3, 1L<<1, &keyrelease, game);
+	mlx_hook(game->mlx->win, 6, 1L<<6, &mousemove, game);
+	mlx_loop_hook(game->mlx->core, render_next_frame, game);
 }
 
 int	main(int argc, char **argv)
@@ -297,7 +316,7 @@ int	main(int argc, char **argv)
 
 	if (argc < 2)
 		return (print_error("No map specified as first argument"));
-	game.cam.planeY = 0.66;
+	game.cam.plane_y = 0.66;
 	game.cam.speed_mod = 1;
 	game.map = parse_map(argv[1]);
 	set_starting_pos(&game);
@@ -307,12 +326,7 @@ int	main(int argc, char **argv)
 	game.mlx = get_mlx_context(game.map, argv[0]);
 	if (!game.mlx)
 		exit_game(game, "Failed to open MLX window");
-	mlx_mouse_hide(OS_MLX_REQ_PARAMS_MOUSE_SHOW_HIDE);
-	mlx_hook(game.mlx->win, 17, 1L<<17, &exit_hook, &game);
-	mlx_hook(game.mlx->win, 2, 1L<<0, &keypress, &game);
-	mlx_hook(game.mlx->win, 3, 1L<<1, &keyrelease, &game);
-	mlx_hook(game.mlx->win, 6, 1L<<6, &mousemove, &game);
-	mlx_loop_hook(game.mlx->core, render_next_frame, &game);
+	init_game_win(&game);
 	mlx_loop(game.mlx->core);
 	return (exit_game(game, NULL));
 }

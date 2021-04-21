@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/15 19:50:02 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/15 20:00:30 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/21 16:43:04 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define OS_SPECIFICS_H
 #ifdef __linux__
 # define OS_MLX_REQ_PARAMS game->mlx->core, game->mlx->win
-# define OS_MLX_REQ_PARAMS_MOUSE_SHOW_HIDE game.mlx->core, game.mlx->win
+# define OS_MLX_REQ_PARAMS_MOUSE_SHOW_HIDE game->mlx->core, game->mlx->win
 # define KEY_W 119
 # define KEY_A 97
 # define KEY_S 115
