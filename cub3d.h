@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/21 16:56:55 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/21 19:38:56 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@
 
 # define CAM_MOV_SPEED_FORW_BACKW 0.03
 # define CAM_MOV_SPEED_SIDEWAYS 0.015
-# define CAM_ROT_SPEED 0.06
 # define CAM_SPRINT_SPEED_MOD 1.7
+# define CAM_ROT_SPEED 0.06
+# define CAM_MOUSE_SENSITIVITY 0.15
 
 typedef struct s_keys_status
 {

@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/21 18:05:43 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/21 19:39:51 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,13 +112,13 @@ static int	set_starting_pos(t_game *game)
 	return (-1);
 }
 
-static void	rotate_cam(t_game *game, int dir)
+static void	rotate_cam(t_game *game, double dir)
 {
 	double		rot_speed;
 	double		old_dir_x;
 	double		old_plane_x;
 
-	rot_speed = (double)(dir) * CAM_ROT_SPEED;
+	rot_speed = dir * CAM_ROT_SPEED;
 	old_dir_x = game->cam.dir_x;
 	game->cam.dir_x = game->cam.dir_x * cos(-rot_speed) - game->cam.dir_y * sin(-rot_speed);
 	game->cam.dir_y = old_dir_x * sin(-rot_speed) + game->cam.dir_y * cos(-rot_speed);
@@ -270,6 +270,7 @@ static int	keypress(int keycode, t_game *game)
 		game->key_stat.d = 1;
 	else if (keycode == KEY_LSHIFT || keycode == KEY_RSHIFT)
 		game->key_stat.shift = 1;
+	printf("dirX: %f, dirY: %f, planeX: %f, planeY: %f\n", game->cam.dir_x, game->cam.dir_y, game->cam.plane_x, game->cam.plane_y);
 	return (1);
 }
 
@@ -299,13 +300,11 @@ static int	keyrelease(int keycode, t_game *game)
 static int	mousemove(int x, int y, t_game *game)
 {
 	double	speed;
-	double	sensitivity;
 
 	mlx_mouse_get_pos(OS_MLX_REQ_PARAMS, &x, &y);
-	sensitivity = 0.32;
-	speed = x * sensitivity - (game->map->res_x / 2 * sensitivity);
+	speed = x * CAM_MOUSE_SENSITIVITY - (game->map->res_x / 2 * CAM_MOUSE_SENSITIVITY);
 	rotate_cam(game, speed);
-	if (ft_abs(x - game->map->res_x / 2) > 1)
+	if (x != game->map->res_x / 2)
 		mlx_mouse_move(OS_MLX_REQ_PARAMS, game->map->res_x / 2, game->map->res_y / 2);
 	return (1);
 }
