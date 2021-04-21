@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/15 21:42:07 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/21 16:24:51 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,15 +247,19 @@ static int	keyrelease(int keycode, t_game *game)
 	return (1);
 }
 
+// mlx_mouse_get_pos is used below to get the latest mouse position, as the
+// parameters int x and int y are sometimes slightly behind
+
 static int	mousemove(int x, int y, t_game *game)
 {
 	double	speed;
 	double	sensitivity;
 
-	sensitivity = 0.38;
+	mlx_mouse_get_pos(OS_MLX_REQ_PARAMS, &x, &y);
+	sensitivity = 0.34;
 	speed = x * sensitivity - (game->map->res_x / 2 * sensitivity);
 	rotate_cam(game, speed);
-	if (x != game->map->res_x / 2 || y != game->map->res_y / 2)
+	if (ft_abs(x - game->map->res_x / 2) > 1)
 		mlx_mouse_move(OS_MLX_REQ_PARAMS, game->map->res_x / 2, game->map->res_y / 2);
 	return (1);
 }

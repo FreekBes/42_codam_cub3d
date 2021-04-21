@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/15 19:50:49 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/21 16:28:53 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,16 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <math.h>
+
+typedef struct s_keys_status
+{
+	int				w;
+	int				a;
+	int				s;
+	int				d;
+	int				left;
+	int				right;
+}					t_keys_status;
 
 typedef struct s_col_rgba
 {
@@ -89,6 +99,7 @@ typedef struct s_mlx_ctx
 
 typedef struct s_game
 {
+	t_keys_status	key_stat;
 	t_mlx_ctx		*mlx;
 	t_map			*map;
 	t_cam			cam;
