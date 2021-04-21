@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/21 16:51:00 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/21 17:07:35 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,20 @@ static void	set_starting_pos(t_game *game)
 		{
 			if (ft_strchr("NSEW", game->map->lvl[i][j]))
 			{
-				game->cam.pos_x = j + 0.5;
-				game->cam.pos_y = i + 0.5;
-				game->cam.dir_x = -1;
-				game->cam.dir_y = 0;
+				game->cam.pos_x = i + 0.5;
+				game->cam.pos_y = j + 0.5;
+				if (game->map->lvl[i][j] == 'N' || game->map->lvl[i][j] == 'S')
+					game->cam.dir_y = 0;
+				else
+					game->cam.dir_x = 0;
+				if (game->map->lvl[i][j] == 'N')
+					game->cam.dir_x = -1;
+				else if (game->map->lvl[i][j] == 'S')
+					game->cam.dir_x = 1;
+				else if (game->map->lvl[i][j] == 'E')
+					game->cam.dir_y = -1;
+				else
+					game->cam.dir_y = 1;
 				return;
 			}
 			j++;
@@ -103,24 +113,26 @@ static void	set_starting_pos(t_game *game)
 
 static void	rotate_cam(t_game *game, int dir)
 {
-	double		rotSpeed;
-	double		oldDirX;
-	double		oldPlaneX;
+	double		rot_speed;
+	double		old_dir_x;
+	double		old_plane_x;
 
-	rotSpeed = (double)(dir) * 0.06;
-	oldDirX = game->cam.dir_x;
-	game->cam.dir_x = game->cam.dir_x * cos(-rotSpeed) - game->cam.dir_y * sin(-rotSpeed);
-	game->cam.dir_y = oldDirX * sin(-rotSpeed) + game->cam.dir_y * cos(-rotSpeed);
-	oldPlaneX = game->cam.plane_x;
-	game->cam.plane_x = game->cam.plane_x * cos(-rotSpeed) - game->cam.plane_y * sin(-rotSpeed);
-	game->cam.plane_y = oldPlaneX * sin(-rotSpeed) + game->cam.plane_y * cos(-rotSpeed);
+	rot_speed = (double)(dir) * CAM_ROT_SPEED;
+	old_dir_x = game->cam.dir_x;
+	game->cam.dir_x = game->cam.dir_x * cos(-rot_speed) - game->cam.dir_y * sin(-rot_speed);
+	game->cam.dir_y = old_dir_x * sin(-rot_speed) + game->cam.dir_y * cos(-rot_speed);
+	old_plane_x = game->cam.plane_x;
+	game->cam.plane_x = game->cam.plane_x * cos(-rot_speed) - game->cam.plane_y * sin(-rot_speed);
+	game->cam.plane_y = old_plane_x * sin(-rot_speed) + game->cam.plane_y * cos(-rot_speed);
 }
 
 static void	move_cam(t_game *game, double dir_fb, double dir_side)
 {
 	double	move_speed_fb;
+	double	move_speed_side;
 
-	move_speed_fb = dir_fb * 0.03 * game->cam.speed_mod;
+	move_speed_fb = dir_fb * CAM_MOV_SPEED_FORW_BACKW * game->cam.speed_mod;
+	move_speed_side = dir_side * CAM_MOV_SPEED_SIDEWAYS * game->cam.speed_mod;
 	if (game->map->lvl[(int)(game->cam.pos_x + game->cam.dir_x * move_speed_fb)][(int)(game->cam.pos_y)] != '1')
 		game->cam.pos_x += game->cam.dir_x * move_speed_fb;
 	if (game->map->lvl[(int)(game->cam.pos_x)][(int)(game->cam.pos_y + game->cam.dir_y * move_speed_fb)] != '1')
@@ -130,7 +142,7 @@ static void	move_cam(t_game *game, double dir_fb, double dir_side)
 static void	handle_key_presses(t_game *game)
 {
 	if (game->key_stat.shift)
-		game->cam.speed_mod = 1.7;
+		game->cam.speed_mod = CAM_SPRINT_SPEED_MOD;
 	else
 		game->cam.speed_mod = 1;
 	if (game->key_stat.w && !game->key_stat.s)
