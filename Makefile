@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: fbes <fbes@student.codam.nl>                 +#+                      #
+#                                                    +#+                       #
+#    Created: 2021/04/21 20:02:11 by fbes          #+#    #+#                  #
+#    Updated: 2021/04/21 20:02:13 by fbes          ########   odam.nl          #
+#                                                                              #
+# **************************************************************************** #
+
 NAME =		cub3D
 
 SRCS =		main.c src/printer.c src/map_parser.c src/window.c src/drawer.c src/colors.c
