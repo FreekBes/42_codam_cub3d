@@ -3,3 +3,7 @@
 - sprites
 - sideways moving
 - check if map is surrounded by walls
+- check if map contains only one of the characters in charset "012NSEW"
+- implement --save argument (save first frame in BMP format without opening a window)
+- check if map extension is .cub
+- set display resolution to the current screen resolution, if it is too big (mlx_get_screen_resolution, missing on mac!)
