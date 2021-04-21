@@ -1,5 +1,4 @@
 - check for leaks
-- fix camera starting positions NSEW
 - textures
 - sprites
 - sideways moving

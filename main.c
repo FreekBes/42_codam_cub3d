@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/21 19:39:51 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/21 19:45:35 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,17 +92,35 @@ static int	set_starting_pos(t_game *game)
 				game->cam.pos_x = i + 0.5;
 				game->cam.pos_y = j + 0.5;
 				if (game->map->lvl[i][j] == 'N' || game->map->lvl[i][j] == 'S')
+				{
 					game->cam.dir_y = 0;
+					game->cam.plane_x = 0;
+				}
 				else
+				{
 					game->cam.dir_x = 0;
+					game->cam.plane_y = 0;
+				}
 				if (game->map->lvl[i][j] == 'N')
+				{
 					game->cam.dir_x = -1;
+					game->cam.plane_y = 0.66;
+				}
 				else if (game->map->lvl[i][j] == 'S')
+				{
 					game->cam.dir_x = 1;
-				else if (game->map->lvl[i][j] == 'E')
+					game->cam.plane_y = -0.66;
+				}
+				else if (game->map->lvl[i][j] == 'W')
+				{
 					game->cam.dir_y = -1;
+					game->cam.plane_x = -0.66;
+				}
 				else
+				{
 					game->cam.dir_y = 1;
+					game->cam.plane_x = 0.66;
+				}
 				return (1);
 			}
 			j++;
@@ -328,7 +346,6 @@ int	main(int argc, char **argv)
 
 	if (argc < 2)
 		return (print_error("No map specified as first argument"));
-	game.cam.plane_y = 0.66;
 	game.cam.speed_mod = 1;
 	game.map = parse_map(argv[1]);
 	if (set_starting_pos(&game) < 0)
