@@ -6,7 +6,7 @@
 #    By: fbes <fbes@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/04/21 20:02:11 by fbes          #+#    #+#                  #
-#    Updated: 2021/04/21 20:02:13 by fbes          ########   odam.nl          #
+#    Updated: 2021/04/27 17:31:46 by fbes          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,11 +26,15 @@ $(NAME): $(OBJS) libft mlx
 ifeq ($(UNAME), Linux)
 	$(CC) $(SRCS) lib/libft/libft.a lib/mlx_lin/libmlx.a -lXext -lX11 -lm -lz -fsanitize=address -o $(NAME)
 else
-	$(CC) $(SRCS) lib/libft/libft.a lib/mlx/libmlx.a -framework OpenGL -framework AppKit -fsanitize=address -o $(NAME)
+	$(CC) $(SRCS) lib/libft/libft.a libmlx.dylib -framework OpenGL -framework AppKit -fsanitize=address -o $(NAME)
 endif
 
 .c.o:
+ifeq ($(UNAME), Linux)
 	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+else
+	$(CC) $(CFLAGS) -Imlx -c $< -o $@
+endif
 
 libft: FORCE
 	make -C lib/libft
@@ -40,6 +44,7 @@ ifeq ($(UNAME), Linux)
 	make -C lib/mlx_lin
 else
 	make -C lib/mlx
+	mv lib/mlx/libmlx.dylib libmlx.dylib
 endif
 
 FORCE:

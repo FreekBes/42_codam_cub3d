@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/21 19:45:35 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/27 17:42:31 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,6 +265,7 @@ static int	render_next_frame(t_game *game)
 		put_vert_line(game->mlx->img, x, draw_start, draw_end, color);
 		x++;
 	}
+	mlx_do_sync(game->mlx->core);
 	return (mlx_put_image_to_window(game->mlx->core, game->mlx->win,
 		game->mlx->img->img_ptr, 0, 0));
 }
@@ -288,7 +289,7 @@ static int	keypress(int keycode, t_game *game)
 		game->key_stat.d = 1;
 	else if (keycode == KEY_LSHIFT || keycode == KEY_RSHIFT)
 		game->key_stat.shift = 1;
-	printf("dirX: %f, dirY: %f, planeX: %f, planeY: %f\n", game->cam.dir_x, game->cam.dir_y, game->cam.plane_x, game->cam.plane_y);
+	//printf("dirX: %f, dirY: %f, planeX: %f, planeY: %f\n", game->cam.dir_x, game->cam.dir_y, game->cam.plane_x, game->cam.plane_y);
 	return (1);
 }
 
@@ -341,8 +342,6 @@ static void	init_game_win(t_game *game)
 int	main(int argc, char **argv)
 {
 	t_game		game;
-	int			x;
-	int			y;
 
 	if (argc < 2)
 		return (print_error("No map specified as first argument"));

@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/21 19:38:56 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/27 17:27:13 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,5 +123,6 @@ void				put_pixel(t_img *img, int x, int y, unsigned int color);
 void				put_rect(t_img *img, t_rect *rect);
 void				put_vert_line(t_img *img, int x, int drawStart, int drawEnd, unsigned int color);
 void				put_hori_line(t_img *img, int y, int drawStart, int drawEnd, unsigned int color);
+void				clear_img(t_img *img, t_map *map);
 
 #endif
