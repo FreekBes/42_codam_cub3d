@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/27 18:01:02 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/27 19:00:41 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	free_map(t_map *map)
 static int	exit_game(t_game game, char *error_msg)
 {
 	mlx_mouse_show(OS_MLX_REQ_PARAMS_MOUSE_SHOW_HIDE);
+	mlx_do_key_autorepeaton(game.mlx->core);
 	if (error_msg)
 		print_error(error_msg);
 	free_mlx_context(game.mlx);
@@ -314,6 +315,12 @@ static int	keyrelease(int keycode, t_game *game)
 	return (1);
 }
 
+static int	win_focus(t_game *game)
+{
+	mlx_mouse_move(OS_MLX_REQ_PARAMS, game->map->res_x / 2, game->map->res_y / 2);
+	return (1);
+}
+
 // mlx_mouse_get_pos is used below to get the latest mouse position, as the
 // parameters int x and int y are sometimes slightly behind
 
@@ -332,11 +339,13 @@ static int	mousemove(int x, int y, t_game *game)
 static void	init_game_win(t_game *game)
 {
 	mlx_mouse_hide(OS_MLX_REQ_PARAMS_MOUSE_SHOW_HIDE);
+	mlx_do_key_autorepeatoff(game->mlx->core);
 	mlx_mouse_move(OS_MLX_REQ_PARAMS, game->map->res_x / 2, game->map->res_y / 2);
 	mlx_hook(game->mlx->win, 17, 1L<<17, &exit_hook, game);
 	mlx_hook(game->mlx->win, 2, 1L<<0, &keypress, game);
 	mlx_hook(game->mlx->win, 3, 1L<<1, &keyrelease, game);
 	mlx_hook(game->mlx->win, 6, 1L<<6, &mousemove, game);
+	mlx_hook(game->mlx->win, 9, 1L<<21, &win_focus, game);
 	mlx_loop_hook(game->mlx->core, render_next_frame, game);
 }
 
