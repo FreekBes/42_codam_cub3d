@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/27 17:42:31 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/27 18:01:02 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ static int	render_next_frame(t_game *game)
 	unsigned int	color;
 
 	handle_key_presses(game);
+	mlx_do_sync(game->mlx->core);
 	render_floor_ceil(game);
 	x = 0;
 	while (x < game->map->res_x)
@@ -352,11 +353,11 @@ int	main(int argc, char **argv)
 	printf("start pos: %f, %f\n", game.cam.pos_x, game.cam.pos_y);
 	if (!game.map)
 		return (print_error("Failed to parse map"));
-	print_map(*(game.map));
 	game.mlx = get_mlx_context(game.map, argv[0]);
 	if (!game.mlx)
 		exit_game(game, "Failed to open MLX window");
 	init_game_win(&game);
+	print_map(*(game.map));
 	mlx_loop(game.mlx->core);
 	return (exit_game(game, NULL));
 }

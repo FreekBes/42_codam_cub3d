@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/29 20:24:02 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/31 15:24:46 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/27 17:58:17 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,18 @@ static void	create_img(t_mlx_ctx *ctx, t_map *map)
 	ctx->img->img_ptr = mlx_new_image(ctx->core, map->res_x, map->res_y);
 	ctx->img->address = mlx_get_data_addr(ctx->img->img_ptr,
 			&ctx->img->bits_per_pixel, &ctx->img->line_size, &ctx->img->endian);
+}
+
+static void	catch_max_res_exception(t_map *map, void *mlx_ptr)
+{
+	int		scr_x;
+	int		scr_y;
+
+	mlx_get_screen_size(mlx_ptr, &scr_x, &scr_y);
+	if (map->res_x > scr_x)
+		map->res_x = scr_x;
+	if (map->res_y > scr_y)
+		map->res_y = scr_y;
 }
 
 void	*free_mlx_context(t_mlx_ctx *ctx)
@@ -44,6 +56,7 @@ t_mlx_ctx	*get_mlx_context(t_map *map, char *win_title)
 		mlx_ctx->core = mlx_init();
 		if (!mlx_ctx->core)
 			return (free_mlx_context(mlx_ctx));
+		catch_max_res_exception(map, mlx_ctx->core);
 		mlx_ctx->win = mlx_new_window(mlx_ctx->core,
 				map->res_x, map->res_y, win_title);
 		if (!mlx_ctx->win)
