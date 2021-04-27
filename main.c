@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/27 19:00:41 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/27 19:12:02 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -357,6 +357,8 @@ int	main(int argc, char **argv)
 		return (print_error("No map specified as first argument"));
 	game.cam.speed_mod = 1;
 	game.map = parse_map(argv[1]);
+	if (!game.map)
+		return (print_error("Failed to read map. Does the file exist and is the extension correct?"));
 	if (set_starting_pos(&game) < 0)
 		return (print_error("Start position in map is not set"));
 	printf("start pos: %f, %f\n", game.cam.pos_x, game.cam.pos_y);
