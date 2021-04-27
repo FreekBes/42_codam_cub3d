@@ -6,7 +6,7 @@
 #    By: fbes <fbes@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/04/21 20:02:11 by fbes          #+#    #+#                  #
-#    Updated: 2021/04/27 17:31:46 by fbes          ########   odam.nl          #
+#    Updated: 2021/04/27 18:45:13 by fbes          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,8 +59,11 @@ fclean:
 	rm -f $(OBJS)
 	rm -f $(NAME)
 	make -C lib/libft fclean
-	make -C lib/mlx clean
+ifeq ($(UNAME), Linux)
 	make -C lib/mlx_lin clean
+else
+	make -C lib/mlx clean
+endif
 
 re: fclean all
 
