@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/28 17:06:53 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/28 18:10:46 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,10 @@ typedef struct s_game
 
 int					print_error(char *msg);
 void				print_color(t_col_rgba color);
-void				print_map(t_map map);
+void				print_map(t_map map, char **lvl);
+void				free_lvl(char **lvl, size_t lvl_h);
+char				**lvl_copy(t_map *map);
+void				free_map(t_map *map);
 int					map_filename_valid(char *map_file);
 int					map_characters_valid(t_map *map);
 t_map				*parse_map(char *map_file);

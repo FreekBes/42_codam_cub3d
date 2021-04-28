@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/28 16:31:17 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/28 18:05:50 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,59 @@ static t_map	*new_map(void)
 		map->lvl_h = 0;
 	}
 	return (map);
+}
+
+void	free_lvl(char **lvl, size_t lvl_h)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < lvl_h)
+	{
+		if (lvl[i])
+			free(lvl[i]);
+		i++;
+	}
+	free(lvl);
+}
+
+void	free_map(t_map *map)
+{
+
+
+	if (map->tex_no)
+		free(map->tex_no);
+	if (map->tex_so)
+		free(map->tex_so);
+	if (map->tex_we)
+		free(map->tex_we);
+	if (map->tex_ea)
+		free(map->tex_ea);
+	if (map->tex_sprite)
+		free(map->tex_sprite);
+	if (map->lvl)
+		free_lvl(map->lvl, map->lvl_h);
+	free(map);
+}
+
+char		**lvl_copy(t_map *map)
+{
+	char	**copy;
+	int		i;
+
+	copy = malloc(sizeof(char *) * map->lvl_h);
+	if (copy)
+	{
+		i = 0;
+		while (i < map->lvl_h)
+		{
+			copy[i] = ft_calloc(map->lvl_w, sizeof(char));
+			if (copy[i])
+				ft_memcpy(copy[i], map->lvl[i], map->lvl_w);
+			i++;
+		}
+	}
+	return (copy);
 }
 
 static char	*skip_spaces(char *c)

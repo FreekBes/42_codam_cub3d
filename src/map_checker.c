@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/28 16:20:44 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/28 17:56:10 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/28 18:11:40 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,14 +118,17 @@ static void	delete_queue_item(void *item)
 		free(item);
 }
 
-static int	clear_queue_and_return_zero(t_list *queue)
+static int	clear_queue_and_return_zero(t_list *queue, char **temp_lvl, size_t lvl_h)
 {
+	if (temp_lvl)
+		free_lvl(temp_lvl, lvl_h);
 	ft_lstclear(&queue, &delete_queue_item);
 	return (0);
 }
 
 int	map_surrounded_by_walls(t_game *game)
 {
+	char		**temp_lvl;
 	t_list		*queue;
 	t_list		*current;
 	t_map_node	*helper;
@@ -133,9 +136,12 @@ int	map_surrounded_by_walls(t_game *game)
 	int			y;
 
 	printf("Checking if the map is surrounded by walls... Please wait...\n");
+	temp_lvl = lvl_copy(game->map);
+	if (!temp_lvl)
+		return (0);
 	x = game->cam.pos_x;
 	y = game->cam.pos_y;
-	helper = new_map_node(x, y, game->map->lvl[x][y]);
+	helper = new_map_node(x, y, temp_lvl[x][y]);
 	if (!helper)
 		return (0);
 	queue = ft_lstnew((void *)helper);
@@ -149,23 +155,23 @@ int	map_surrounded_by_walls(t_game *game)
 		//printf("Checking %i, %i (max %zu, %zu)...\n", x, y, game->map->lvl_h, game->map->lvl_w);
 		if (x == 0 || y == 0 || x == game->map->lvl_h - 1 ||
 			((t_map_node *)current->content)->c == '\0' || ((t_map_node *)current->content)->c == ' ')
-			return (clear_queue_and_return_zero(queue));
+			return (clear_queue_and_return_zero(queue, temp_lvl, game->map->lvl_h));
 		if (ft_strchr("02NSEW", ((t_map_node *)current->content)->c))
 		{
-			game->map->lvl[x][y] = '#';
-			//print_map(*(game->map));
-			if (y > 0 && ft_strchr(" 02NSEW", game->map->lvl[x][y - 1]))									// W
-				ft_lstadd_back(&queue, ft_lstnew(new_map_node(x, y - 1, game->map->lvl[x][y - 1])));
-			if (y < game->map->lvl_w && ft_strchr(" 02NSEW", game->map->lvl[x][y + 1]))					// E
-				ft_lstadd_back(&queue, ft_lstnew(new_map_node(x, y + 1, game->map->lvl[x][y + 1])));
-			if (x > 0 && ft_strchr(" 02NSEW", game->map->lvl[x - 1][y]))									// N
-				ft_lstadd_back(&queue, ft_lstnew(new_map_node(x - 1, y, game->map->lvl[x - 1][y])));
-			if (x < game->map->lvl_h - 1 && ft_strchr(" 02NSEW", game->map->lvl[x + 1][y]))				// S
-				ft_lstadd_back(&queue, ft_lstnew(new_map_node(x + 1, y, game->map->lvl[x + 1][y])));
-			game->map->lvl[x][y] = '*';
+			temp_lvl[x][y] = '*';
+			if (y > 0 && ft_strchr(" 02NSEW", temp_lvl[x][y - 1]))									// W
+				ft_lstadd_back(&queue, ft_lstnew(new_map_node(x, y - 1, temp_lvl[x][y - 1])));
+			if (y < game->map->lvl_w && ft_strchr(" 02NSEW", temp_lvl[x][y + 1]))					// E
+				ft_lstadd_back(&queue, ft_lstnew(new_map_node(x, y + 1, temp_lvl[x][y + 1])));
+			if (x > 0 && ft_strchr(" 02NSEW", temp_lvl[x - 1][y]))									// N
+				ft_lstadd_back(&queue, ft_lstnew(new_map_node(x - 1, y, temp_lvl[x - 1][y])));
+			if (x < game->map->lvl_h - 1 && ft_strchr(" 02NSEW", temp_lvl[x + 1][y]))				// S
+				ft_lstadd_back(&queue, ft_lstnew(new_map_node(x + 1, y, temp_lvl[x + 1][y])));
 		}
 		queue = queue->next;
 		ft_lstdelone(current, &delete_queue_item);
 	}
+	print_map(*(game->map), temp_lvl);
+	free_lvl(temp_lvl, game->map->lvl_h);
 	return (1);
 }

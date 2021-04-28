@@ -6,49 +6,25 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/28 16:49:42 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/28 18:13:12 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	free_map(t_map *map)
-{
-	size_t	i;
-
-	if (map->tex_no)
-		free(map->tex_no);
-	if (map->tex_so)
-		free(map->tex_so);
-	if (map->tex_we)
-		free(map->tex_we);
-	if (map->tex_ea)
-		free(map->tex_ea);
-	if (map->tex_sprite)
-		free(map->tex_sprite);
-	if (map->lvl)
-	{
-		i = 0;
-		while (i < map->lvl_h)
-		{
-			if (map->lvl[i])
-				free(map->lvl[i]);
-			i++;
-		}
-		free(map->lvl);
-	}
-	free(map);
-}
-
 static int	exit_game(t_game game, char *error_msg)
 {
+	int i = 0;
 	mlx_mouse_show(OS_MLX_REQ_PARAMS_MOUSE_SHOW_HIDE);
 	mlx_do_key_autorepeaton(game.mlx->core);
 	if (error_msg)
 		print_error(error_msg);
 	free_mlx_context(game.mlx);
 	free_map(game.map);
-	//system("leaks cub3D");
+	while (i == 0)
+	{
+		i = 0;
+	}
 	exit(0);
 	return (0);
 }
@@ -314,7 +290,7 @@ int	main(int argc, char **argv)
 	if (!game.mlx)
 		exit_game(game, "Failed to open MLX window");
 	init_game_win(&game);
-	print_map(*(game.map));
+	print_map(*(game.map), NULL);
 	mlx_loop(game.mlx->core);
 	return (exit_game(game, NULL));
 }
