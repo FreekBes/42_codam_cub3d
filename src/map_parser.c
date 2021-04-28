@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/27 19:19:49 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/28 16:26:01 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,18 +149,6 @@ static int	parse_level(t_map **map, char *line)
 	return (0);
 }
 
-static int	filename_valid(char *map_file)
-{
-	size_t		filename_len;
-
-	filename_len = ft_strlen(map_file);
-	if (filename_len < 5)
-		return (0);
-	if (ft_strncmp(map_file + filename_len - 4, ".cub", 4) != 0)
-		return (0);
-	return (1);
-}
-
 t_map	*parse_map(char *map_file)
 {
 	t_map	*map;
@@ -219,5 +207,7 @@ t_map	*parse_map(char *map_file)
 		free(line);
 	}
 	close(fd);
+	if (!map_characters_valid(map))
+		return (NULL);
 	return (map);
 }

@@ -6,13 +6,14 @@
 #    By: fbes <fbes@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/04/21 20:02:11 by fbes          #+#    #+#                  #
-#    Updated: 2021/04/27 18:45:13 by fbes          ########   odam.nl          #
+#    Updated: 2021/04/28 16:21:32 by fbes          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME =		cub3D
 
-SRCS =		main.c src/printer.c src/map_parser.c src/window.c src/drawer.c src/colors.c
+SRCS =		main.c src/printer.c src/map_parser.c src/window.c src/drawer.c src/colors.c \
+			src/map_checker.c
 
 OBJS =		$(SRCS:.c=.o)
 

@@ -3,5 +3,4 @@
 - sprites
 - sideways moving
 - check if map is surrounded by walls
-- check if map contains only one of the characters in charset "012NSEW"
 - implement --save argument (save first frame in BMP format without opening a window)
