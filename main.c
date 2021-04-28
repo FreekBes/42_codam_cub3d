@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/28 18:13:12 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/28 18:25:16 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,12 @@
 
 static int	exit_game(t_game game, char *error_msg)
 {
-	int i = 0;
 	mlx_mouse_show(OS_MLX_REQ_PARAMS_MOUSE_SHOW_HIDE);
 	mlx_do_key_autorepeaton(game.mlx->core);
 	if (error_msg)
 		print_error(error_msg);
 	free_mlx_context(game.mlx);
 	free_map(game.map);
-	while (i == 0)
-	{
-		i = 0;
-	}
 	exit(0);
 	return (0);
 }

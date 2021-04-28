@@ -6,7 +6,7 @@
 #    By: fbes <fbes@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/04/21 20:02:11 by fbes          #+#    #+#                  #
-#    Updated: 2021/04/28 18:13:42 by fbes          ########   odam.nl          #
+#    Updated: 2021/04/28 18:25:33 by fbes          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ $(NAME): $(OBJS) libft mlx
 ifeq ($(UNAME), Linux)
 	$(CC) $(SRCS) lib/libft/libft.a lib/mlx_lin/libmlx.a -lXext -lX11 -lm -lz -fsanitize=address -o $(NAME)
 else
-	$(CC) $(SRCS) lib/libft/libft.a libmlx.dylib -framework OpenGL -framework AppKit -o $(NAME)
+	$(CC) $(SRCS) lib/libft/libft.a libmlx.dylib -framework OpenGL -framework AppKit -fsanitize=address -o $(NAME)
 endif
 
 .c.o:

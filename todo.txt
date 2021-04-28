@@ -1,4 +1,5 @@
 - check for leaks
+- fix leaks
 - textures
 - sprites
 - sideways moving
@@ -6,3 +7,4 @@
 - implement --save argument (save first frame in BMP format without opening a window)
 - check what happens if cub file is loaded without all arguments
 - check what happens if cub file is loaded without a map
+- fix spaces in the middle of the map (?) https://raw.githubusercontent.com/rchallie/cub3D/master/map.cub
