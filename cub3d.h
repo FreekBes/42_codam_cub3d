@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/28 16:25:32 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/28 17:06:53 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@
 # define CAM_SPRINT_SPEED_MOD 1.7
 # define CAM_ROT_SPEED 0.06
 # define CAM_MOUSE_SENSITIVITY 0.15
+
+typedef struct s_map_node
+{
+	char			c;
+	int				x;
+	int				y;
+}					t_map_node;
 
 typedef struct s_keys_status
 {
@@ -115,9 +122,11 @@ typedef struct s_game
 int					print_error(char *msg);
 void				print_color(t_col_rgba color);
 void				print_map(t_map map);
-int					filename_valid(char *map_file);
+int					map_filename_valid(char *map_file);
 int					map_characters_valid(t_map *map);
 t_map				*parse_map(char *map_file);
+int					set_starting_pos(t_game *game);
+int					map_surrounded_by_walls(t_game *game);
 t_mlx_ctx			*get_mlx_context(t_map *map, char *win_title);
 void				*free_mlx_context(t_mlx_ctx *ctx);
 unsigned int		color_to_uint(t_col_rgba *color);

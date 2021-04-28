@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/27 19:12:02 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/28 16:49:42 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,60 +75,6 @@ static void	render_floor_ceil(t_game *game)
 	floor_rect.h = floor_rect.y;
 	floor_rect.c = game->map->col_floor;
 	put_rect(game->mlx->img, &floor_rect);
-}
-
-static int	set_starting_pos(t_game *game)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < game->map->lvl_h)
-	{
-		j = 0;
-		while (j < game->map->lvl_w && game->map->lvl[i][j] != '\0')
-		{
-			if (ft_strchr("NSEW", game->map->lvl[i][j]))
-			{
-				game->cam.pos_x = i + 0.5;
-				game->cam.pos_y = j + 0.5;
-				if (game->map->lvl[i][j] == 'N' || game->map->lvl[i][j] == 'S')
-				{
-					game->cam.dir_y = 0;
-					game->cam.plane_x = 0;
-				}
-				else
-				{
-					game->cam.dir_x = 0;
-					game->cam.plane_y = 0;
-				}
-				if (game->map->lvl[i][j] == 'N')
-				{
-					game->cam.dir_x = -1;
-					game->cam.plane_y = 0.66;
-				}
-				else if (game->map->lvl[i][j] == 'S')
-				{
-					game->cam.dir_x = 1;
-					game->cam.plane_y = -0.66;
-				}
-				else if (game->map->lvl[i][j] == 'W')
-				{
-					game->cam.dir_y = -1;
-					game->cam.plane_x = -0.66;
-				}
-				else
-				{
-					game->cam.dir_y = 1;
-					game->cam.plane_x = 0.66;
-				}
-				return (1);
-			}
-			j++;
-		}
-		i++;
-	}
-	return (-1);
 }
 
 static void	rotate_cam(t_game *game, double dir)
@@ -362,8 +308,8 @@ int	main(int argc, char **argv)
 	if (set_starting_pos(&game) < 0)
 		return (print_error("Start position in map is not set"));
 	printf("start pos: %f, %f\n", game.cam.pos_x, game.cam.pos_y);
-	if (!game.map)
-		return (print_error("Failed to parse map"));
+	if (!map_surrounded_by_walls(&game))
+		return (print_error("Map is not surrounded by walls"));
 	game.mlx = get_mlx_context(game.map, argv[0]);
 	if (!game.mlx)
 		exit_game(game, "Failed to open MLX window");
