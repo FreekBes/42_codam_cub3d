@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/29 20:47:47 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/29 21:19:44 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/29 21:33:21 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	free_texture(void *mlx, t_tex *tex)
 
 static int	parse_texture(void *mlx, t_tex *tex)
 {
-	tex->img = mlx_xpm_file_to_image(mlx, tex->file_path, tex->w, tex->h);
+	tex->img = mlx_xpm_file_to_image(mlx, tex->file_path, &(tex->w), &(tex->h));
 	if (tex->img == NULL)
 		return (-1);
 	return (1);

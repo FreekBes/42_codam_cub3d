@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/29 21:06:48 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/29 21:31:15 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ typedef struct s_tex
 {
 	char			*file_path;
 	void			*img;
-	int				*w;
-	int				*h;
+	int				w;
+	int				h;
 }					t_tex;
 
 typedef struct s_map
