@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/29 21:31:15 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/29 21:55:31 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ void				print_map(t_map map, char **lvl);
 t_tex				*init_texture(char *file_path);
 void				free_texture(void *mlx, t_tex *tex);
 int					parse_textures(t_game *game);
+unsigned int		get_color(t_tex *tex, int x, int y);
 void				free_lvl(char **lvl, size_t lvl_h);
 char				**lvl_copy(t_map *map);
 void				free_map(void *mlx, t_map *map);

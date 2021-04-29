@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/29 21:19:12 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/29 21:57:19 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ static void	handle_key_presses(t_game *game)
 static void	render_next_frame(t_game *game)
 {
 	int				x;
+	int				y;
 	double			camera_x;
 	double			ray_dir_x;
 	double			ray_dir_y;
@@ -128,6 +129,11 @@ static void	render_next_frame(t_game *game)
 	int				draw_start;
 	int				draw_end;
 	unsigned int	color;
+	double			wall_x;
+	int				tex_x;
+	int				tex_y;
+	double			step;
+	double			tex_pos;
 
 	handle_key_presses(game);
 	mlx_do_sync(game->mlx->core);
@@ -193,10 +199,33 @@ static void	render_next_frame(t_game *game)
 		draw_end = line_height / 2 + game->map->res_y / 2;
 		if (draw_end >= game->map->res_y)
 			draw_end = game->map->res_y - 1;
-		color = 0x00FF0000;
-		if (side == 1)
-			color = 0x00CC0000;
-		put_vert_line(game->mlx->img, x, draw_start, draw_end, color);
+		//color = 0x00FF0000;
+		//if (side == 1)
+		//	color = 0x00CC0000;
+		//put_vert_line(game->mlx->img, x, draw_start, draw_end, color);
+		if (side == 0)
+			wall_x = game->cam.pos_y + perp_wall_dist * ray_dir_y;
+		else
+			wall_x = game->cam.pos_x + perp_wall_dist * ray_dir_x;
+		wall_x -= floor((wall_x));
+		tex_x = (int)(wall_x * (double)(game->map->tex_no->w));
+		if (side == 0 && ray_dir_x > 0)
+			tex_x = game->map->tex_no->w - tex_x - 1;
+		if (side == 1 && ray_dir_y < 0)
+			tex_x = game->map->tex_no->w - tex_x - 1;
+		step = 1.0 * game->map->tex_no->h / line_height;
+		tex_pos = (draw_start - game->map->res_y / 2 + line_height / 2) * step;
+		y = draw_start;
+		while (y < draw_end)
+		{
+			tex_y = (int)tex_pos & (game->map->tex_no->h - 1);
+			tex_pos += step;
+			color = get_color(game->map->tex_no, tex_x, tex_y);
+			if (side == 1)
+				color = (color >> 1) & 8355711;
+			put_pixel(game->mlx->img, x, y, color);
+			y++;
+		}
 		x++;
 	}
 	mlx_do_sync(game->mlx->core);

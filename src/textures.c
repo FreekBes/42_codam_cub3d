@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/29 20:47:47 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/29 21:33:21 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/29 22:01:10 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,19 @@ t_tex	*init_texture(char *file_path)
 		tex->file_path = ft_strdup(file_path);
 	}
 	return (tex);
+}
+
+unsigned int	get_color(t_tex *tex, int x, int y)
+{
+	char	*dst;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_size;
+	int		endian;
+
+	addr = mlx_get_data_addr(tex->img, &bits_per_pixel, &line_size, &endian);
+	dst = addr + y * line_size + x * (bits_per_pixel / 8);
+	return (*(unsigned int *)dst);
 }
 
 void	free_texture(void *mlx, t_tex *tex)
