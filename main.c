@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/29 16:34:37 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/29 17:24:29 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ static void	handle_key_presses(t_game *game)
 		rotate_cam(game, -1);
 }
 
-static int	render_next_frame(t_game *game)
+static void	render_next_frame(t_game *game)
 {
 	int				x;
 	double			camera_x;
@@ -200,6 +200,11 @@ static int	render_next_frame(t_game *game)
 		x++;
 	}
 	mlx_do_sync(game->mlx->core);
+}
+
+static int	draw_next_frame(t_game *game)
+{
+	render_next_frame(game);
 	return (mlx_put_image_to_window(game->mlx->core, game->mlx->win,
 		game->mlx->img->img_ptr, 0, 0));
 }
@@ -278,13 +283,17 @@ static void	init_game_win(t_game *game)
 	mlx_hook(game->mlx->win, 3, 1L<<1, &keyrelease, game);
 	mlx_hook(game->mlx->win, 6, 1L<<6, &mousemove, game);
 	mlx_hook(game->mlx->win, 9, 1L<<21, &win_focus, game);
-	mlx_loop_hook(game->mlx->core, render_next_frame, game);
+	mlx_loop_hook(game->mlx->core, draw_next_frame, game);
 }
 
 int	main(int argc, char **argv)
 {
 	t_game		game;
+	int			save_bmp;
 
+	save_bmp = 0;
+	if (argc > 2 && ft_strncmp(argv[2], "--save", 7) == 0)
+		save_bmp = 1;
 	if (argc < 2)
 		return (print_error("No map specified as first argument"));
 	game.cam.speed_mod = 1;
@@ -296,11 +305,25 @@ int	main(int argc, char **argv)
 	printf("start pos: %f, %f\n", game.cam.pos_x, game.cam.pos_y);
 	if (!map_surrounded_by_walls(&game))
 		return (print_error("Map is not surrounded by walls"));
-	game.mlx = get_mlx_context(game.map, argv[0]);
+	if (save_bmp == 0)
+		game.mlx = get_mlx_context(game.map, argv[0]);
+	else
+		game.mlx = get_mlx_context(game.map, NULL);
 	if (!game.mlx)
-		exit_game(game, "Failed to open MLX window");
-	init_game_win(&game);
+		exit_game(game, "Failed to open MLX instance");
 	print_map(*(game.map), NULL);
-	mlx_loop(game.mlx->core);
+	if (save_bmp == 0)
+	{
+		init_game_win(&game);
+		mlx_loop(game.mlx->core);
+	}
+	else
+	{
+		render_next_frame(&game);
+		if (export_frame_as_bmp(&game, "cub3d.bmp") > 0)
+			printf("Frame exported to cub3d.bmp\n");
+		else
+			exit_game(game, "Failed to export first frame as BMP");
+	}
 	return (exit_game(game, NULL));
 }

@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/31 15:31:47 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/28 18:10:23 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/29 17:34:12 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	print_error(char *msg)
 
 void	print_color(t_col_rgba color)
 {
-	printf("R%i, G%i, B%i, A%i", (int)color.r, (int)color.g,
+	printf("R%i, G%i, B%i, A%i\n", (int)color.r, (int)color.g,
 		(int)color.b, (int)color.a);
 }
 

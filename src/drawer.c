@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/31 15:38:00 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/27 17:26:33 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/29 16:56:57 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@ void	put_pixel(t_img *img, int x, int y, unsigned int color)
 
 	dst = img->address + y * img->line_size + x * (img->bits_per_pixel / 8);
 	*(unsigned int *)dst = color;
+}
+
+unsigned int	get_pixel(t_img *img, int x, int y)
+{
+	char	*dst;
+	dst = img->address + y * img->line_size + x * (img->bits_per_pixel / 8);
+	return (*(unsigned int *)dst);
 }
 
 void	put_rect(t_img *img, t_rect *rect)

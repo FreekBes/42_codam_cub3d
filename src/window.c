@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/29 20:24:02 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/27 17:58:17 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/29 17:26:51 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,15 @@ t_mlx_ctx	*get_mlx_context(t_map *map, char *win_title)
 		if (!mlx_ctx->core)
 			return (free_mlx_context(mlx_ctx));
 		catch_max_res_exception(map, mlx_ctx->core);
-		mlx_ctx->win = mlx_new_window(mlx_ctx->core,
-				map->res_x, map->res_y, win_title);
-		if (!mlx_ctx->win)
-			return (free_mlx_context(mlx_ctx));
+		if (win_title)
+		{
+			mlx_ctx->win = mlx_new_window(mlx_ctx->core,
+					map->res_x, map->res_y, win_title);
+			if (!mlx_ctx->win)
+				return (free_mlx_context(mlx_ctx));
+		}
+		else
+			mlx_ctx->win = NULL;
 		create_img(mlx_ctx, map);
 		if (!mlx_ctx->img || !mlx_ctx->img->img_ptr)
 			return (free_mlx_context(mlx_ctx));

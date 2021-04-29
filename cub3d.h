@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/29 16:32:25 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/29 17:18:23 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,10 +133,13 @@ int					map_surrounded_by_walls(t_game *game);
 t_mlx_ctx			*get_mlx_context(t_map *map, char *win_title);
 void				*free_mlx_context(t_mlx_ctx *ctx);
 unsigned int		color_to_uint(t_col_rgba *color);
+t_col_rgba			uint_to_color(unsigned int color);
 void				put_pixel(t_img *img, int x, int y, unsigned int color);
+unsigned int		get_pixel(t_img *img, int x, int y);
 void				put_rect(t_img *img, t_rect *rect);
 void				put_vert_line(t_img *img, int x, int drawStart, int drawEnd, unsigned int color);
 void				put_hori_line(t_img *img, int y, int drawStart, int drawEnd, unsigned int color);
 void				clear_img(t_img *img, t_map *map);
+int					export_frame_as_bmp(t_game *game, char *file_name);
 
 #endif

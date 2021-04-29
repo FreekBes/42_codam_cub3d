@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/31 15:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/31 16:41:11 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/29 17:58:39 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,16 @@
 
 unsigned int	color_to_uint(t_col_rgba *color)
 {
-	unsigned int	ucol;
-
-	ucol = color->a << 24 | color->r << 16 | color->g << 8 | color->b;
-	return (ucol);
+	return (color->a << 24 | color->r << 16 | color->g << 8 | color->b);
 }
 
 t_col_rgba	uint_to_color(unsigned int color)
 {
 	t_col_rgba	tcol;
 
-	tcol.a = color & (0xFF << 24);
-	tcol.r = color & (0xFF << 16);
-	tcol.g = color & (0xFF << 8);
-	tcol.b = color & 0xFF;
+	tcol.a = 0xFF & (color >> 24);
+	tcol.r = 0xFF & (color >> 16);
+	tcol.g = 0xFF & (color >> 8);
+	tcol.b = 0xFF & (color);
 	return (tcol);
 }
