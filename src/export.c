@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/29 16:40:22 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/29 18:11:23 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/29 20:06:44 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,32 @@
 
 static void	frame_to_bmp_img_data(t_game *game, char *bmp_img_data)
 {
-	size_t		x;
-	size_t		y;
+	int			x;
+	int			y;
+	int			padding;
 	t_col_rgba	pixel;
 
-	x = 0;
-	while (x < game->map->res_x)
+	y = (int)(game->map->res_y) - 1;
+	while (y >= 0)
 	{
-		y = 0;
-		while (y < game->map->res_y)
+		x = 0;
+		while (x < (int)(game->map->res_x))
 		{
 			pixel = uint_to_color(get_pixel(game->mlx->img, x, y));
-			bmp_img_data[0] = pixel.r;
+			bmp_img_data[0] = pixel.b;
 			bmp_img_data[1] = pixel.g;
-			bmp_img_data[2] = pixel.b;
+			bmp_img_data[2] = pixel.r;
 			bmp_img_data += 3;
-			y++;
+			x++;
 		}
-		x++;
+		padding = game->map->res_x * 3 % 4;
+		while (padding > 0 && padding < 4)
+		{
+			printf("writing padding for row %d (%d)...\n", y, padding);
+			bmp_img_data++;
+			padding++;
+		}
+		y--;
 	}
 }
 
@@ -54,9 +62,14 @@ int	export_frame_as_bmp(t_game *game, char *file_name)
 	int		file_size;
 	int		img_data_offset;
 	int		write_return_val;
+	int		padding_req;
 
 	img_data_offset = 26;
-	file_size = img_data_offset + game->map->res_x * game->map->res_y * 3;
+	padding_req = game->map->res_x * 3 % 4;
+	if (padding_req > 0)
+		padding_req = 4 - padding_req;
+	printf("padding bytes needed: %d per row\n", padding_req);
+	file_size = img_data_offset + game->map->res_y * game->map->res_x * 3 + padding_req * game->map->res_y;
 	printf("filesize of bmp: %i (%x)\n", file_size, file_size);
 	bmp = (char *)ft_calloc(sizeof(char), file_size);
 	if (bmp)
@@ -69,7 +82,7 @@ int	export_frame_as_bmp(t_game *game, char *file_name)
 		*(short *)(bmp + 18) = (short)(game->map->res_x);
 		*(short *)(bmp + 20) = (short)(game->map->res_y);
 		*(short *)(bmp + 22) = 1;
-		*(short *)(bmp + 24) = 3;
+		*(short *)(bmp + 24) = 24;
 		frame_to_bmp_img_data(game, bmp + img_data_offset);
 		write_return_val = write_bmp(bmp, file_size, file_name);
 		free(bmp);
