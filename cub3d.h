@@ -6,17 +6,17 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/29 17:18:23 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/29 20:32:48 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
-#ifdef __linux__
-# include "lib/mlx_lin/mlx.h"
-#else
-# include "lib/mlx/mlx.h"
-#endif
+# ifdef __linux__
+#  include "lib/mlx_lin/mlx.h"
+# else
+#  include "lib/mlx/mlx.h"
+# endif
 # include "lib/libft/libft.h"
 # include "os_specifics.h"
 # include <string.h>
