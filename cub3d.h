@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/29 20:32:48 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/29 21:06:48 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,14 @@ typedef struct s_rect
 	unsigned int	c;
 }					t_rect;
 
+typedef struct s_tex
+{
+	char			*file_path;
+	void			*img;
+	int				*w;
+	int				*h;
+}					t_tex;
+
 typedef struct s_map
 {
 	char			**lvl;
@@ -75,11 +83,11 @@ typedef struct s_map
 	size_t			lvl_h;
 	unsigned int	res_x;
 	unsigned int	res_y;
-	char			*tex_no;
-	char			*tex_so;
-	char			*tex_we;
-	char			*tex_ea;
-	char			*tex_sprite;
+	t_tex			*tex_no;
+	t_tex			*tex_so;
+	t_tex			*tex_we;
+	t_tex			*tex_ea;
+	t_tex			*tex_sprite;
 	unsigned int	col_floor;
 	unsigned int	col_ceiling;
 }					t_map;
@@ -122,9 +130,12 @@ typedef struct s_game
 int					print_error(char *msg);
 void				print_color(t_col_rgba color);
 void				print_map(t_map map, char **lvl);
+t_tex				*init_texture(char *file_path);
+void				free_texture(void *mlx, t_tex *tex);
+int					parse_textures(t_game *game);
 void				free_lvl(char **lvl, size_t lvl_h);
 char				**lvl_copy(t_map *map);
-void				free_map(t_map *map);
+void				free_map(void *mlx, t_map *map);
 int					map_filename_valid(char *map_file);
 int					map_characters_valid(t_map *map);
 t_map				*parse_map(char *map_file);

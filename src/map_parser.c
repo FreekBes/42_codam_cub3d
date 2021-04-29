@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/28 18:05:50 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/29 21:12:08 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,18 @@ void	free_lvl(char **lvl, size_t lvl_h)
 	free(lvl);
 }
 
-void	free_map(t_map *map)
+void	free_map(void *mlx, t_map *map)
 {
-
-
 	if (map->tex_no)
-		free(map->tex_no);
+		free_texture(mlx, map->tex_no);
 	if (map->tex_so)
-		free(map->tex_so);
+		free_texture(mlx, map->tex_so);
 	if (map->tex_we)
-		free(map->tex_we);
+		free_texture(mlx, map->tex_we);
 	if (map->tex_ea)
-		free(map->tex_ea);
+		free_texture(mlx, map->tex_ea);
 	if (map->tex_sprite)
-		free(map->tex_sprite);
+		free_texture(mlx, map->tex_sprite);
 	if (map->lvl)
 		free_lvl(map->lvl, map->lvl_h);
 	free(map);
@@ -127,15 +125,15 @@ static int	parse_line(t_map **map, char *line)
 		(*map)->res_y = ft_atoi(c);
 	}
 	else if (id[0] == 'N' && id[1] == 'O')
-		(*map)->tex_no = ft_strdup(c);
+		(*map)->tex_no = init_texture(c);
 	else if (id[0] == 'S' && id[1] == 'O')
-		(*map)->tex_so = ft_strdup(c);
+		(*map)->tex_so = init_texture(c);
 	else if (id[0] == 'W' && id[1] == 'E')
-		(*map)->tex_we = ft_strdup(c);
+		(*map)->tex_we = init_texture(c);
 	else if (id[0] == 'E' && id[1] == 'A')
-		(*map)->tex_ea = ft_strdup(c);
+		(*map)->tex_ea = init_texture(c);
 	else if (id[0] == 'S')
-		(*map)->tex_sprite = ft_strdup(c);
+		(*map)->tex_sprite = init_texture(c);
 	else if (id[0] == 'F')
 		(*map)->col_floor = parse_color_map(&c);
 	else if (id[0] == 'C')
@@ -237,7 +235,11 @@ t_map	*parse_map(char *map_file)
 				if (*line)
 					free(*line);
 				if (res_gnl < 0)
+				{
+					close(fd);
+					ft_free(line);
 					return (ft_free(map));
+				}
 			}
 			res_gnl = 1;
 			while (res_gnl > 0)
@@ -249,18 +251,29 @@ t_map	*parse_map(char *map_file)
 					if (res_parser > 0)
 						break;
 					if (res_parser < 0)
+					{
+						close(fd);
+						ft_free(line);
 						return (ft_free(map));
+					}
 				}
 				if (*line)
 					free(*line);
 				if (res_gnl < 0)
+				{
+					close(fd);
+					ft_free(line);
 					return (ft_free(map));
+				}
+			}
+			free(line);
+			if (!map_characters_valid(map))
+			{
+				close(fd);
+				return (ft_free(map));
 			}
 		}
-		free(line);
 	}
 	close(fd);
-	if (!map_characters_valid(map))
-		return (NULL);
 	return (map);
 }

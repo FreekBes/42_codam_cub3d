@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/29 17:24:29 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/29 21:19:12 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static int	exit_game(t_game game, char *error_msg)
 	mlx_do_key_autorepeaton(game.mlx->core);
 	if (error_msg)
 		print_error(error_msg);
+	free_map(game.mlx->core, game.map);
 	free_mlx_context(game.mlx);
-	free_map(game.map);
 	exit(0);
 	return (0);
 }
@@ -312,6 +312,8 @@ int	main(int argc, char **argv)
 	if (!game.mlx)
 		exit_game(game, "Failed to open MLX instance");
 	print_map(*(game.map), NULL);
+	if (parse_textures(&game) < 0)
+		exit_game(game, "Failed to parse textures, are all texture files present?");
 	if (save_bmp == 0)
 	{
 		init_game_win(&game);
