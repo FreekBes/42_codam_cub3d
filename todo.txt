@@ -2,8 +2,6 @@
 - fix leaks
 - textures
 - sprites
-- sideways moving
-- check if map is surrounded by walls
 - implement --save argument (save first frame in BMP format without opening a window)
 - check what happens if cub file is loaded without all arguments
 - check what happens if cub file is loaded without a map

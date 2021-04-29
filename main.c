@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/28 18:25:16 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/29 16:34:37 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,33 @@ static void	move_cam(t_game *game, double dir_fb, double dir_side)
 		game->cam.pos_x += game->cam.dir_x * move_speed_fb;
 	if (game->map->lvl[(int)(game->cam.pos_x)][(int)(game->cam.pos_y + game->cam.dir_y * move_speed_fb)] != '1')
 		game->cam.pos_y += game->cam.dir_y * move_speed_fb;
+	if (game->map->lvl[(int)(game->cam.pos_x + game->cam.plane_x * move_speed_side)][(int)(game->cam.pos_y)] != '1')
+		game->cam.pos_x += game->cam.plane_x * move_speed_side;
+	if (game->map->lvl[(int)(game->cam.pos_x)][(int)(game->cam.pos_y + game->cam.plane_y * move_speed_side)] != '1')
+		game->cam.pos_y += game->cam.plane_y * move_speed_side;
 }
 
 static void	handle_key_presses(t_game *game)
 {
+	double	move_dir_fb;
+	double	move_dir_side;
+
+	move_dir_fb = 0;
+	move_dir_side = 0;
 	if (game->key_stat.shift)
 		game->cam.speed_mod = CAM_SPRINT_SPEED_MOD;
 	else
 		game->cam.speed_mod = 1;
-	if (game->key_stat.w && !game->key_stat.s)
-		move_cam(game, 1, 0);
-	else if (game->key_stat.s && !game->key_stat.w)
-		move_cam(game, -1, 0);
+	if (game->key_stat.w)
+		move_dir_fb += 1;
+	if (game->key_stat.s)
+		move_dir_fb -= 1;
+	if (game->key_stat.d)
+		move_dir_side += 1;
+	if (game->key_stat.a)
+		move_dir_side -= 1;
+	if (move_dir_fb != 0 || move_dir_side != 0)
+		move_cam(game, move_dir_fb, move_dir_side);
 	if (game->key_stat.right && !game->key_stat.left)
 		rotate_cam(game, 1);
 	else if (game->key_stat.left && !game->key_stat.right)
