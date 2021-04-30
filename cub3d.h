@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/30 16:14:39 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/30 16:54:04 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define CAM_MOV_SPEED_SIDEWAYS 0.025
 # define CAM_SPRINT_SPEED_MOD 1.7
 # define CAM_ROT_SPEED 0.06
-# define CAM_MOUSE_SENSITIVITY 0.15
+# define CAM_DEFAULT_MOUSE_SENSITIVITY 0.15
 
 typedef struct s_map_node
 {
@@ -104,6 +104,7 @@ typedef struct s_map
 typedef struct s_cam
 {
 	double			speed_mod;
+	double			mouse_sens;
 	double			pos_x;
 	double			pos_y;
 	double			dir_x;

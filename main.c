@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/30 16:30:32 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/30 16:54:12 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,10 +303,24 @@ static int	mousemove(int x, int y, t_game *game)
 	double	speed;
 
 	mlx_mouse_get_pos(OS_MLX_REQ_PARAMS, &x, &y);
-	speed = x * CAM_MOUSE_SENSITIVITY - (game->map->res_x / 2 * CAM_MOUSE_SENSITIVITY);
+	speed = x * game->cam.mouse_sens - (game->map->res_x / 2 * game->cam.mouse_sens);
 	rotate_cam(game, speed);
 	if (x != game->map->res_x / 2)
 		mlx_mouse_move(OS_MLX_REQ_PARAMS, game->map->res_x / 2, game->map->res_y / 2);
+	return (1);
+}
+
+static int	mousebtnpress(int btncode, int x, int y, t_game *game)
+{
+	//printf("btnpress! %d\n", btncode);
+	if (btncode == BTN_SCROLL_UP)
+		game->cam.mouse_sens += 0.01;
+	else if (btncode == BTN_SCROLL_DOWN)
+		game->cam.mouse_sens -= 0.01;
+	if (game->cam.mouse_sens <= 0.00)
+		game->cam.mouse_sens = 0.01;
+	else if (game->cam.mouse_sens >= 0.31)
+		game->cam.mouse_sens = 0.30;
 	return (1);
 }
 
@@ -318,6 +332,7 @@ static void	init_game_win(t_game *game)
 	mlx_hook(game->mlx->win, 17, 1L<<17, &exit_hook, game);
 	mlx_hook(game->mlx->win, 2, 1L<<0, &keypress, game);
 	mlx_hook(game->mlx->win, 3, 1L<<1, &keyrelease, game);
+	mlx_hook(game->mlx->win, 4, 1L<<2, &mousebtnpress, game);
 	mlx_hook(game->mlx->win, 6, 1L<<6, &mousemove, game);
 	mlx_hook(game->mlx->win, 9, 1L<<21, &win_focus, game);
 	mlx_loop_hook(game->mlx->core, draw_next_frame, game);
@@ -334,6 +349,7 @@ int	main(int argc, char **argv)
 	if (argc < 2)
 		return (print_error("No map specified as first argument"));
 	game.cam.speed_mod = 1;
+	game.cam.mouse_sens = CAM_DEFAULT_MOUSE_SENSITIVITY;
 	game.map = parse_map(argv[1]);
 	if (!game.map)
 		return (print_error("Failed to read map. Does the file exist and is the extension correct?"));

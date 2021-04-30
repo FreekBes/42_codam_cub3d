@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/31 15:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/30 16:37:08 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/30 16:39:33 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ t_col_rgba	uint_to_color(unsigned int color)
 	tcol.b = 0xFF & (color);
 	return (tcol);
 }
-
-// below function is quite slow when using it for every pixel in a frame
 
 unsigned int	brighten(unsigned int color)
 {

@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/15 19:50:02 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/29 20:34:39 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/30 16:46:20 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 #  define KEY_ESC 65307
 #  define KEY_LSHIFT 65505
 #  define KEY_RSHIFT 65506
+#  define BTN_SCROLL_UP 4
+#  define BTN_SCROLL_DOWN 5
 # else
 #  define OS_MLX_REQ_PARAMS game->mlx->win
 #  define OS_MLX_REQ_PARAMS_MOUSE_SHOW_HIDE
@@ -40,5 +42,7 @@
 #  define KEY_ESC 53
 #  define KEY_LSHIFT 257
 #  define KEY_RSHIFT 258
+#  define BTN_SCROLL_UP 4
+#  define BTN_SCROLL_DOWN 5
 # endif
 #endif
