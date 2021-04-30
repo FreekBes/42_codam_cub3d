@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/29 21:55:31 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/30 15:45:00 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,19 @@ typedef struct s_rect
 	unsigned int	c;
 }					t_rect;
 
+typedef struct s_img
+{
+	void			*img_ptr;
+	char			*address;
+	int				bits_per_pixel;
+	int				line_size;
+	int				endian;
+}					t_img;
+
 typedef struct s_tex
 {
 	char			*file_path;
-	void			*img;
+	t_img			img;
 	int				w;
 	int				h;
 }					t_tex;
@@ -102,15 +111,6 @@ typedef struct s_cam
 	double			plane_x;
 	double			plane_y;
 }					t_cam;
-
-typedef struct s_img
-{
-	void			*img_ptr;
-	char			*address;
-	int				bits_per_pixel;
-	int				line_size;
-	int				endian;
-}					t_img;
 
 typedef struct s_mlx_ctx
 {

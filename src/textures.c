@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/29 20:47:47 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/29 22:01:10 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/30 15:47:49 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_tex	*init_texture(char *file_path)
 	tex = (t_tex *)malloc(sizeof(t_tex));
 	if (tex)
 	{
-		tex->img = NULL;
 		tex->h = 0;
 		tex->w = 0;
 		tex->file_path = ft_strdup(file_path);
@@ -30,29 +29,25 @@ t_tex	*init_texture(char *file_path)
 unsigned int	get_color(t_tex *tex, int x, int y)
 {
 	char	*dst;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_size;
-	int		endian;
 
-	addr = mlx_get_data_addr(tex->img, &bits_per_pixel, &line_size, &endian);
-	dst = addr + y * line_size + x * (bits_per_pixel / 8);
+	dst = tex->img.address + y * tex->img.line_size + x * (tex->img.bits_per_pixel / 8);
 	return (*(unsigned int *)dst);
 }
 
 void	free_texture(void *mlx, t_tex *tex)
 {
-	if (tex->img)
-		mlx_destroy_image(mlx, tex->img);
+	if (tex->img.img_ptr)
+		mlx_destroy_image(mlx, tex->img.img_ptr);
 	free(tex->file_path);
 	free(tex);
 }
 
 static int	parse_texture(void *mlx, t_tex *tex)
 {
-	tex->img = mlx_xpm_file_to_image(mlx, tex->file_path, &(tex->w), &(tex->h));
-	if (tex->img == NULL)
+	tex->img.img_ptr = mlx_xpm_file_to_image(mlx, tex->file_path, &(tex->w), &(tex->h));
+	if (tex->img.img_ptr == NULL)
 		return (-1);
+	tex->img.address = mlx_get_data_addr(tex->img.img_ptr, &(tex->img.bits_per_pixel), &(tex->img.line_size), &(tex->img.endian));
 	return (1);
 }
 
