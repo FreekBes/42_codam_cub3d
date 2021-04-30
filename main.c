@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/29 21:57:19 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/30 16:30:32 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ static void	render_next_frame(t_game *game)
 	int				draw_end;
 	unsigned int	color;
 	double			wall_x;
+	t_tex			*tex;
 	int				tex_x;
 	int				tex_y;
 	double			step;
@@ -208,21 +209,28 @@ static void	render_next_frame(t_game *game)
 		else
 			wall_x = game->cam.pos_x + perp_wall_dist * ray_dir_x;
 		wall_x -= floor((wall_x));
-		tex_x = (int)(wall_x * (double)(game->map->tex_no->w));
-		if (side == 0 && ray_dir_x > 0)
-			tex_x = game->map->tex_no->w - tex_x - 1;
-		if (side == 1 && ray_dir_y < 0)
-			tex_x = game->map->tex_no->w - tex_x - 1;
-		step = 1.0 * game->map->tex_no->h / line_height;
+		if (side == 0 && ray_dir_x > 0)		// S
+			tex = game->map->tex_so;
+		else if (side == 0 && ray_dir_x <= 0) // N
+			tex = game->map->tex_no;
+		else if (side == 1 && ray_dir_y > 0) // E
+			tex = game->map->tex_ea;
+		else if (side == 1 && ray_dir_y <= 0) // W
+			tex = game->map->tex_we;
+		tex_x = (int)(wall_x * (double)(tex->w));
+		tex_x = tex->w - tex_x - 1;
+		step = 1.0 * tex->h / line_height;
 		tex_pos = (draw_start - game->map->res_y / 2 + line_height / 2) * step;
 		y = draw_start;
 		while (y < draw_end)
 		{
-			tex_y = (int)tex_pos & (game->map->tex_no->h - 1);
+			tex_y = (int)tex_pos & (tex->h - 1);
 			tex_pos += step;
-			color = get_color(game->map->tex_no, tex_x, tex_y);
-			if (side == 1)
-				color = (color >> 1) & 8355711;
+			color = get_color(tex, tex_x, tex_y);
+			if (side == 1 && ray_dir_y > 0)
+				color = brighten(color);
+			else if (side == 1 && ray_dir_y <= 0)
+				color = darken(color);
 			put_pixel(game->mlx->img, x, y, color);
 			y++;
 		}

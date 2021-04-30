@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/30 15:45:00 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/30 16:14:39 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,8 @@ typedef struct s_game
 
 int					print_error(char *msg);
 void				print_color(t_col_rgba color);
+unsigned int		brighten(unsigned int color);
+unsigned int		darken(unsigned int color);
 void				print_map(t_map map, char **lvl);
 t_tex				*init_texture(char *file_path);
 void				free_texture(void *mlx, t_tex *tex);
