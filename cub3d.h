@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/30 16:54:04 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/30 17:56:54 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # include <fcntl.h>
 # include <math.h>
 
-# define CAM_MOV_SPEED_FORW_BACKW 0.03
-# define CAM_MOV_SPEED_SIDEWAYS 0.025
+# define CAM_MOV_SPEED_FORW_BACKW 0.05
+# define CAM_MOV_SPEED_SIDEWAYS 0.037
 # define CAM_SPRINT_SPEED_MOD 1.7
 # define CAM_ROT_SPEED 0.06
 # define CAM_DEFAULT_MOUSE_SENSITIVITY 0.15
