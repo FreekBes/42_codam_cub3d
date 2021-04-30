@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/28 16:20:44 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/30 17:52:27 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/30 18:07:01 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ int	map_surrounded_by_walls(t_game *game)
 	int			y;
 
 	printf("Checking if the map is surrounded by walls... Please wait...\n");
+	return (1);
 	temp_lvl = lvl_copy(game->map);
 	if (!temp_lvl)
 		return (0);
@@ -152,8 +153,8 @@ int	map_surrounded_by_walls(t_game *game)
 		current = queue;
 		x = ((t_map_node *)current->content)->x;
 		y = ((t_map_node *)current->content)->y;
-		system("clear");
-		printf("Checking %i, %i (max %zu, %zu)...\n", x, y, game->map->lvl_h, game->map->lvl_w);
+		//system("clear");
+		//printf("Checking %i, %i (max %zu, %zu)...\n", x, y, game->map->lvl_h, game->map->lvl_w);
 		if (x == 0 || y == 0 || x == game->map->lvl_h - 1 ||
 			((t_map_node *)current->content)->c == '\0' || ((t_map_node *)current->content)->c == ' ')
 			return (clear_queue_and_return_zero(queue, temp_lvl, game->map->lvl_h));
@@ -168,7 +169,7 @@ int	map_surrounded_by_walls(t_game *game)
 				ft_lstadd_back(&queue, ft_lstnew(new_map_node(x - 1, y, temp_lvl[x - 1][y])));
 			if (x < game->map->lvl_h - 1 && ft_strchr(" 02NSEW", temp_lvl[x + 1][y]))				// S
 				ft_lstadd_back(&queue, ft_lstnew(new_map_node(x + 1, y, temp_lvl[x + 1][y])));
-			print_map(*(game->map), temp_lvl);
+			//print_map(*(game->map), temp_lvl);
 			temp_lvl[x][y] = '*';
 		}
 		queue = queue->next;

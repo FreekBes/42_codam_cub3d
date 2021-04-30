@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/30 17:35:19 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/30 18:06:06 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,8 +154,6 @@ static int	remalloc_lvl_line(char **line, size_t len)
 		return (-1);
 	ft_memset(new_line + old_len, ' ', len - old_len);
 	new_line[len - 1] = '\0';
-	//if (*line)
-		//ft_free(*line);
 	*line = new_line;
 	return (1);
 }
@@ -233,7 +231,7 @@ t_map	*parse_map(char *map_file)
 					}
 				}
 				if (*line)
-					free(*line);
+					ft_free(*line);
 				if (res_gnl < 0)
 				{
 					close(fd);
@@ -258,7 +256,7 @@ t_map	*parse_map(char *map_file)
 					}
 				}
 				if (*line)
-					free(*line);
+					ft_free(*line);
 				if (res_gnl < 0)
 				{
 					close(fd);
@@ -266,7 +264,7 @@ t_map	*parse_map(char *map_file)
 					return (ft_free(map));
 				}
 			}
-			free(line);
+			ft_free(line);
 			if (!map_characters_valid(map))
 			{
 				close(fd);

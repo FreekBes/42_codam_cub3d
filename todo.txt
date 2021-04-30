@@ -8,3 +8,4 @@
 - norminette
 - speed up map wall checking
 - fix bug in map_parser with freeing large lines or something
+- Wall Werror Wextra
