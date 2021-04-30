@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/31 15:31:47 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/29 21:18:04 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/30 17:37:37 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	print_level(t_map map, char **lvl)
 		j = 0;
 		while (j < map.lvl_w)
 		{
-			printf("%c ", lvl[i][j]);
+			printf("%c", lvl[i][j]);
 			j++;
 		}
 		printf("\n");

@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/28 16:20:44 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/28 18:11:40 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/30 17:52:27 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,13 +152,14 @@ int	map_surrounded_by_walls(t_game *game)
 		current = queue;
 		x = ((t_map_node *)current->content)->x;
 		y = ((t_map_node *)current->content)->y;
-		//printf("Checking %i, %i (max %zu, %zu)...\n", x, y, game->map->lvl_h, game->map->lvl_w);
+		system("clear");
+		printf("Checking %i, %i (max %zu, %zu)...\n", x, y, game->map->lvl_h, game->map->lvl_w);
 		if (x == 0 || y == 0 || x == game->map->lvl_h - 1 ||
 			((t_map_node *)current->content)->c == '\0' || ((t_map_node *)current->content)->c == ' ')
 			return (clear_queue_and_return_zero(queue, temp_lvl, game->map->lvl_h));
 		if (ft_strchr("02NSEW", ((t_map_node *)current->content)->c))
 		{
-			temp_lvl[x][y] = '*';
+			temp_lvl[x][y] = '#';
 			if (y > 0 && ft_strchr(" 02NSEW", temp_lvl[x][y - 1]))									// W
 				ft_lstadd_back(&queue, ft_lstnew(new_map_node(x, y - 1, temp_lvl[x][y - 1])));
 			if (y < game->map->lvl_w && ft_strchr(" 02NSEW", temp_lvl[x][y + 1]))					// E
@@ -167,6 +168,8 @@ int	map_surrounded_by_walls(t_game *game)
 				ft_lstadd_back(&queue, ft_lstnew(new_map_node(x - 1, y, temp_lvl[x - 1][y])));
 			if (x < game->map->lvl_h - 1 && ft_strchr(" 02NSEW", temp_lvl[x + 1][y]))				// S
 				ft_lstadd_back(&queue, ft_lstnew(new_map_node(x + 1, y, temp_lvl[x + 1][y])));
+			print_map(*(game->map), temp_lvl);
+			temp_lvl[x][y] = '*';
 		}
 		queue = queue->next;
 		ft_lstdelone(current, &delete_queue_item);

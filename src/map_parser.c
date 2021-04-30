@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/29 21:12:08 by fbes          ########   odam.nl         */
+/*   Updated: 2021/04/30 17:35:19 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,8 +154,8 @@ static int	remalloc_lvl_line(char **line, size_t len)
 		return (-1);
 	ft_memset(new_line + old_len, ' ', len - old_len);
 	new_line[len - 1] = '\0';
-	if (*line)
-		free(*line);
+	//if (*line)
+		//ft_free(*line);
 	*line = new_line;
 	return (1);
 }

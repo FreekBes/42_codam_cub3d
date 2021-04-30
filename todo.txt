@@ -6,3 +6,5 @@
 - check what happens if cub file is loaded without a map
 - fix spaces in the middle of the map (?) https://raw.githubusercontent.com/rchallie/cub3D/master/map.cub
 - norminette
+- speed up map wall checking
+- fix bug in map_parser with freeing large lines or something
