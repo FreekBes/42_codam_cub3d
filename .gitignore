@@ -1,5 +1,6 @@
 cub3D
 cub3D.bmp
+*.DS_Store
 
 # Prerequisites
 *.d
