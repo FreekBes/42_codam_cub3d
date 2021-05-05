@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/05 20:41:28 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/05 21:02:23 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,6 +246,8 @@ t_map	*parse_map(char *map_file)
 					return (ft_free(map));
 				}
 			}
+			if (*line)
+				ft_free(*line);
 			res_gnl = 1;
 			while (res_gnl > 0)
 			{
@@ -271,6 +273,8 @@ t_map	*parse_map(char *map_file)
 					return (ft_free(map));
 				}
 			}
+			if (*line)
+				ft_free(*line);
 			ft_free(line);
 			if (!map_characters_valid(map))
 			{

@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/29 16:40:22 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/29 20:26:49 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/05 21:06:56 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	frame_to_bmp_img_data(t_game *game, char *bmp_img_data)
 		x = 0;
 		while (x < (int)(game->map->res_x))
 		{
-			*(unsigned int *)bmp_img_data = get_pixel(game->mlx->img, x, y);
+			*(unsigned int *)bmp_img_data = get_pixel(&game->mlx->img, x, y);
 			bmp_img_data += 3;
 			x++;
 		}

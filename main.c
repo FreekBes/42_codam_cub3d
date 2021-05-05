@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/05 20:38:54 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/05 21:10:38 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ static void	render_floor_ceil(t_game *game)
 	ceil_rect.w = game->map->res_x;
 	ceil_rect.h = game->map->res_y * 0.5;
 	ceil_rect.c = game->map->col_ceiling;
-	put_rect(game->mlx->img, &ceil_rect);
+	put_rect(&game->mlx->img, &ceil_rect);
 	floor_rect.x = 0;
 	floor_rect.y = game->map->res_y * 0.5;
 	floor_rect.w = game->map->res_x;
 	floor_rect.h = floor_rect.y;
 	floor_rect.c = game->map->col_floor;
-	put_rect(game->mlx->img, &floor_rect);
+	put_rect(&game->mlx->img, &floor_rect);
 }
 
 static void	rotate_cam(t_game *game, double dir)
@@ -77,6 +77,17 @@ static void	move_cam(t_game *game, double dir_fb, double dir_side)
 		game->cam.pos_x += game->cam.plane_x * move_speed_side;
 	if (game->map->lvl[(int)(game->cam.pos_x)][(int)(game->cam.pos_y + game->cam.plane_y * move_speed_side)] != '1')
 		game->cam.pos_y += game->cam.plane_y * move_speed_side;
+}
+
+static void	reset_key_presses(t_keys_status *key_status)
+{
+	key_status->w = 0;
+	key_status->a = 0;
+	key_status->s = 0;
+	key_status->d = 0;
+	key_status->left = 0;
+	key_status->right = 0;
+	key_status->shift = 0;
 }
 
 static void	handle_key_presses(t_game *game)
@@ -226,7 +237,7 @@ static void	render_next_frame(t_game *game)
 				color = brighten(color);
 			else if (side == 1 && ray_dir_y <= 0)
 				color = darken(color);
-			put_pixel(game->mlx->img, x, y, color);
+			put_pixel(&game->mlx->img, x, y, color);
 			y++;
 		}
 		x++;
@@ -238,7 +249,7 @@ static int	draw_next_frame(t_game *game)
 {
 	render_next_frame(game);
 	return (mlx_put_image_to_window(game->mlx->core, game->mlx->win,
-		game->mlx->img->img_ptr, 0, 0));
+		game->mlx->img.img_ptr, 0, 0));
 }
 
 static int	keypress(int keycode, t_game *game)
@@ -323,6 +334,7 @@ static int	mousebtnpress(int btncode, int x, int y, t_game *game)
 
 static void	init_game_win(t_game *game)
 {
+	reset_key_presses(&game->key_stat);
 	mlx_mouse_hide(OS_MLX_REQ_PARAMS_MOUSE_SHOW_HIDE);
 	mlx_mouse_move(OS_MLX_REQ_PARAMS, game->map->res_x / 2, game->map->res_y / 2);
 	mlx_hook(game->mlx->win, 17, 1L<<17, &exit_hook, game);

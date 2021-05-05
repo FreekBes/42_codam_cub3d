@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/05 20:37:41 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/05 21:03:48 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ typedef struct s_mlx_ctx
 {
 	void			*core;
 	void			*win;
-	t_img			*img;
+	t_img			img;
 }					t_mlx_ctx;
 
 typedef struct s_game
