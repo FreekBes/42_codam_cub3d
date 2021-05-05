@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/05 16:35:38 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/05 19:38:04 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/05 20:02:27 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	delete_queue_item(void *item)
 		free(item);
 }
 
-static int	clear_queue_and_return_zero(t_list *queue, char **temp_lvl, size_t lvl_h)
+static int	clear_queue(t_list *queue, char **temp_lvl, size_t lvl_h)
 {
 	if (temp_lvl)
 		free_lvl(temp_lvl, lvl_h);
@@ -47,10 +47,10 @@ static int	inside(char **temp_lvl, int x, int y)
 
 static int	outside(t_game *game, char **temp_lvl, int x, int y)
 {
-	if (x == -1 || y == -1 || x == game->map->lvl_h || y == game->map->lvl_w - 1 ||
-		temp_lvl[x][y + 1] == '\0' || temp_lvl[x][y + 1] == ' ' ||
-		(y == 0 && inside(temp_lvl, x, y)) ||
-		temp_lvl[x][y - 1] == '\0' || temp_lvl[x][y - 1] == ' ')
+	if (x == -1 || y == -1 || x == game->map->lvl_h || y == game->map->lvl_w - 1
+		|| temp_lvl[x][y + 1] == '\0' || temp_lvl[x][y + 1] == ' '
+		|| (y == 0 && inside(temp_lvl, x, y))
+		|| temp_lvl[x][y - 1] == '\0' || temp_lvl[x][y - 1] == ' ')
 		return (1);
 	return (0);
 }
@@ -68,7 +68,8 @@ static void	scan(t_list **queue, char **temp_lvl, int lx, int rx, int y)
 			added = 0;
 		else if (added == 0)
 		{
-			ft_lstadd_back(queue, ft_lstnew(new_map_node(x, y, temp_lvl[x][y])));
+			ft_lstadd_back(queue,
+				ft_lstnew(new_map_node(x, y, temp_lvl[x][y])));
 			added = 1;
 		}
 		x++;
@@ -99,25 +100,25 @@ int	map_surrounded_by_walls(t_game *game)
 	{
 		current = queue;
 		if (!(current->content))
-			return (clear_queue_and_return_zero(queue, temp_lvl, game->map->lvl_h));
+			return (clear_queue(queue, temp_lvl, game->map->lvl_h));
 		x = ((t_map_node *)current->content)->x;
 		y = ((t_map_node *)current->content)->y;
 		if (outside(game, temp_lvl, x, y))
-			return (clear_queue_and_return_zero(queue, temp_lvl, game->map->lvl_h));
+			return (clear_queue(queue, temp_lvl, game->map->lvl_h));
 		lx = x;
 		while (inside(temp_lvl, lx - 1, y))
 		{
 			temp_lvl[lx - 1][y] = '*';
 			lx--;
 			if (outside(game, temp_lvl, lx - 1, y))
-				return (clear_queue_and_return_zero(queue, temp_lvl, game->map->lvl_h));
+				return (clear_queue(queue, temp_lvl, game->map->lvl_h));
 		}
 		while (inside(temp_lvl, x, y))
 		{
 			temp_lvl[x][y] = '*';
 			x++;
 			if (outside(game, temp_lvl, x, y))
-				return (clear_queue_and_return_zero(queue, temp_lvl, game->map->lvl_h));
+				return (clear_queue(queue, temp_lvl, game->map->lvl_h));
 		}
 		queue = queue->next;
 		ft_lstdelone(current, &delete_queue_item);

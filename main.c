@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/30 17:31:55 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/05 19:44:28 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,10 +199,6 @@ static void	render_next_frame(t_game *game)
 		draw_end = line_height / 2 + game->map->res_y / 2;
 		if (draw_end >= game->map->res_y)
 			draw_end = game->map->res_y - 1;
-		//color = 0x00FF0000;
-		//if (side == 1)
-		//	color = 0x00CC0000;
-		//put_vert_line(game->mlx->img, x, draw_start, draw_end, color);
 		if (side == 0)
 			wall_x = game->cam.pos_y + perp_wall_dist * ray_dir_y;
 		else
