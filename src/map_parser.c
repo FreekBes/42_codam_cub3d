@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/30 18:06:06 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/05 19:36:13 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static t_map	*new_map(void)
 	return (map);
 }
 
-void	free_lvl(char **lvl, size_t lvl_h)
+int	free_lvl(char **lvl, size_t lvl_h)
 {
 	size_t	i;
 
@@ -38,6 +38,7 @@ void	free_lvl(char **lvl, size_t lvl_h)
 		i++;
 	}
 	free(lvl);
+	return (0);
 }
 
 void	free_map(void *mlx, t_map *map)
