@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/05 19:44:28 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/05 20:12:49 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ static void	handle_key_presses(t_game *game)
 
 static void	render_next_frame(t_game *game)
 {
-	int				x;
-	int				y;
+	int	x;
+	int	y;
 	double			camera_x;
 	double			ray_dir_x;
 	double			ray_dir_y;
@@ -125,8 +125,8 @@ static void	render_next_frame(t_game *game)
 	int				hit;
 	int				side;
 	int				line_height;
-	int				draw_start;
-	int				draw_end;
+	int	draw_start;
+	int	draw_end;
 	unsigned int	color;
 	double			wall_x;
 	t_tex			*tex;
@@ -139,7 +139,7 @@ static void	render_next_frame(t_game *game)
 	mlx_do_sync(game->mlx->core);
 	render_floor_ceil(game);
 	x = 0;
-	while (x < game->map->res_x)
+	while (x < (int)(game->map->res_x))
 	{
 		camera_x = 2 * x / (double)(game->map->res_x) - 1;
 		ray_dir_x = game->cam.dir_x + game->cam.plane_x * camera_x;
@@ -197,7 +197,7 @@ static void	render_next_frame(t_game *game)
 		if (draw_start < 0)
 			draw_start = 0;
 		draw_end = line_height / 2 + game->map->res_y / 2;
-		if (draw_end >= game->map->res_y)
+		if (draw_end >= (int)(game->map->res_y))
 			draw_end = game->map->res_y - 1;
 		if (side == 0)
 			wall_x = game->cam.pos_y + perp_wall_dist * ray_dir_y;
@@ -308,6 +308,8 @@ static int	mousemove(int x, int y, t_game *game)
 static int	mousebtnpress(int btncode, int x, int y, t_game *game)
 {
 	//printf("btnpress! %d\n", btncode);
+	x = 0;
+	y = 0;
 	if (btncode == BTN_SCROLL_UP)
 		game->cam.mouse_sens += 0.01;
 	else if (btncode == BTN_SCROLL_DOWN)

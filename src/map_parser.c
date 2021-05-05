@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/05 19:55:39 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/05 20:09:54 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ static char	*skip_non_spaces(char *c)
 static unsigned int	parse_color_map(char **c)
 {
 	t_col_rgba		t_col;
-	unsigned int	col;
 
 	t_col.r = ft_atoi(*c);
 	*c = ft_strchr(*c, ',');
@@ -159,9 +158,9 @@ static int	remalloc_lvl_line(char **line, size_t len)
 	return (1);
 }
 
-static int	remalloc_level(char **level, size_t lines, size_t len)
+static int	remalloc_level(char **level, int lines, int len)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (i < lines)
@@ -176,10 +175,10 @@ static int	remalloc_level(char **level, size_t lines, size_t len)
 static int	parse_level(t_map **map, char *line)
 {
 	char	*c;
-	size_t	len;
+	int		len;
 
 	c = line;
-	len = ft_strlen(line);
+	len = (int)ft_strlen(line);
 	if (len == 0)
 		return (1);
 	if (len > (*map)->lvl_w)

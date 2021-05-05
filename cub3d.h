@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/05 19:55:03 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/05 20:08:36 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ typedef struct s_tex
 typedef struct s_map
 {
 	char			**lvl;
-	size_t			lvl_w;
-	size_t			lvl_h;
+	int				lvl_w;
+	int				lvl_h;
 	unsigned int	res_x;
 	unsigned int	res_y;
 	t_tex			*tex_no;

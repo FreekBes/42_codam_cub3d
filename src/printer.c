@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/31 15:31:47 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/05 19:57:27 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/05 20:09:12 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	print_color(t_col_rgba color)
 
 void	print_level(t_map map, char **lvl)
 {
-	size_t	i;
-	size_t	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	if (!lvl)
@@ -56,6 +56,6 @@ void	print_map(t_map map, char **lvl)
 	printf("tex_sprite: %s\n", map.tex_sprite->file_path);
 	printf("col_floor: 0x%X\n", map.col_floor);
 	printf("col_ceiling: 0x%X\n", map.col_ceiling);
-	printf("lvl_w: %zu, lvl_h: %zu\n", map.lvl_w, map.lvl_h);
+	printf("lvl_w: %d, lvl_h: %d\n", map.lvl_w, map.lvl_h);
 	print_level(map, lvl);
 }
