@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/05 20:08:36 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/05 20:37:41 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <fcntl.h>
 # include <math.h>
 
+# define COLOR_VALUE_UNDEFINED 0xAAFFFFFF
 # define CAM_MOV_SPEED_FORW_BACKW 0.05
 # define CAM_MOV_SPEED_SIDEWAYS 0.037
 # define CAM_SPRINT_SPEED_MOD 1.7

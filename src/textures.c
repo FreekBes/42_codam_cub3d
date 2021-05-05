@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/29 20:47:47 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/05 20:00:22 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/05 20:31:02 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_tex	*init_texture(char *file_path)
 		tex->h = 0;
 		tex->w = 0;
 		tex->file_path = ft_strdup(file_path);
+		tex->img.img_ptr = NULL;
 	}
 	return (tex);
 }

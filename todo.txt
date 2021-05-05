@@ -1,6 +1,5 @@
 - check for leaks
 - fix leaks
-- textures
 - sprites
 - check what happens if cub file is loaded without all arguments
 - check what happens if cub file is loaded without a map
@@ -8,3 +7,4 @@
 - norminette
 - fix bug in map_parser with freeing large lines or something
 - Wall Werror Wextra
+- check for weird maps, such as just a starting position

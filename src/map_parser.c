@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/05 20:09:54 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/05 20:41:28 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@ static t_map	*new_map(void)
 		map->lvl = NULL;
 		map->lvl_w = 0;
 		map->lvl_h = 0;
+		map->tex_no = NULL;
+		map->tex_ea = NULL;
+		map->tex_so = NULL;
+		map->tex_we = NULL;
+		map->tex_sprite = NULL;
+		map->col_ceiling = COLOR_VALUE_UNDEFINED;
+		map->col_floor = COLOR_VALUE_UNDEFINED;
 	}
 	return (map);
 }

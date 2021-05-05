@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/05 20:12:49 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/05 20:38:54 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -359,10 +359,13 @@ int	main(int argc, char **argv)
 	else
 		game.mlx = get_mlx_context(game.map, NULL);
 	if (!game.mlx)
-		exit_game(game, "Failed to open MLX instance");
-	print_map(*(game.map), NULL);
+		exit_game(game, "Failed to create MLX instance");
 	if (parse_textures(&game) < 0)
-		exit_game(game, "Failed to parse textures, are all texture files present?");
+		exit_game(game, "Failed to parse textures, do all texture files exist?");
+	if (game.map->col_floor == COLOR_VALUE_UNDEFINED
+		|| game.map->col_ceiling == COLOR_VALUE_UNDEFINED)
+		exit_game(game, "Floor and/or ceiling color missing from .cub file");
+	print_map(*(game.map), NULL);
 	if (save_bmp == 0)
 	{
 		init_game_win(&game);
