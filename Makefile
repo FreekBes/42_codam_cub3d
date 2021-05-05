@@ -6,7 +6,7 @@
 #    By: fbes <fbes@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/04/21 20:02:11 by fbes          #+#    #+#                  #
-#    Updated: 2021/05/05 20:03:45 by fbes          ########   odam.nl          #
+#    Updated: 2021/05/05 20:14:39 by fbes          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,6 +65,7 @@ ifeq ($(UNAME), Linux)
 	make -C lib/mlx_lin clean
 else
 	make -C lib/mlx clean
+	rm -f libmlx.dylib
 endif
 
 re: fclean all
