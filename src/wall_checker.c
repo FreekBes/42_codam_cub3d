@@ -6,11 +6,14 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/05 16:35:38 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/05 20:02:27 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/05 20:22:48 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+// most functions here were based on a Wikpedia article: flood fill algorithm
+// https://en.wikipedia.org/wiki/Flood_fill
 
 static t_map_node	*new_map_node(int x, int y, char c)
 {
@@ -45,12 +48,22 @@ static int	inside(char **temp_lvl, int x, int y)
 	return (ft_strchr("02NSEW", temp_lvl[x][y]) != NULL);
 }
 
+// outside check: if
+// - x or y is outside of map boundaries,
+// - the next character on the y axis is a EOL or SPACE character,
+// - the current character is "inside" on y axis 0,
+// - the previous character on the y axis was a EOL or SPACE character,
+// return (1): the current position would be outside of the map.
+
 static int	outside(t_game *game, char **temp_lvl, int x, int y)
 {
-	if (x == -1 || y == -1 || x == game->map->lvl_h || y == game->map->lvl_w - 1
-		|| temp_lvl[x][y + 1] == '\0' || temp_lvl[x][y + 1] == ' '
-		|| (y == 0 && inside(temp_lvl, x, y))
-		|| temp_lvl[x][y - 1] == '\0' || temp_lvl[x][y - 1] == ' ')
+	if (x == -1 || y == -1 || x == game->map->lvl_h || y == game->map->lvl_w - 1)
+		return (1);
+	if (temp_lvl[x][y + 1] == '\0' || temp_lvl[x][y + 1] == ' ')
+		return (1);
+	if (y == 0 && inside(temp_lvl, x, y))
+		return (1);
+	if (temp_lvl[x][y - 1] == '\0' || temp_lvl[x][y - 1] == ' ')
 		return (1);
 	return (0);
 }
@@ -76,8 +89,12 @@ static void	scan(t_list **queue, char **temp_lvl, int lx, int rx, int y)
 	}
 }
 
-// x axis: top to bottom
-// y axis: left to right
+// x axis map: top to bottom
+// y axis map: left to right
+// check if map is surrounded by walls by using a flood fill algorithm
+// on the starting position. if it is possible to reach outside of the
+// map, the map is not surrounded by walls.
+// check wikipedia article on span (flood) filling for explanation.
 
 int	map_surrounded_by_walls(t_game *game)
 {
