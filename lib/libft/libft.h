@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/26 14:35:23 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/07 18:23:40 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/07 16:48:42 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,6 @@ int				ft_get_next_line(int fd, char **line);
 size_t			ft_strnlen(const char *s, size_t maxlen);
 void			*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 void			*ft_free(void *freeable);
+void			ft_lstsort(t_list **lst, int (*f)(void *, void *));
 
 #endif
