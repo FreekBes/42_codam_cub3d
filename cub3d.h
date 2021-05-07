@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/05 21:03:48 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/07 16:36:48 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,18 @@ typedef struct s_tex
 	int				h;
 }					t_tex;
 
+typedef struct s_sprite
+{
+	t_tex			*tex;
+	double			x;
+	double			y;
+	double			dist;
+}					t_sprite;
+
 typedef struct s_map
 {
 	char			**lvl;
+	t_list			*sprites;
 	int				lvl_w;
 	int				lvl_h;
 	unsigned int	res_x;
@@ -104,6 +113,7 @@ typedef struct s_map
 
 typedef struct s_cam
 {
+	double			*z_buffer;
 	double			speed_mod;
 	double			mouse_sens;
 	double			pos_x;
@@ -112,6 +122,7 @@ typedef struct s_cam
 	double			dir_y;
 	double			plane_x;
 	double			plane_y;
+
 }					t_cam;
 
 typedef struct s_mlx_ctx
@@ -129,6 +140,7 @@ typedef struct s_game
 	t_cam			cam;
 }					t_game;
 
+void				item_free_simple(void *content);
 int					print_error(char *msg);
 void				print_color(t_col_rgba color);
 unsigned int		brighten(unsigned int color);
@@ -137,6 +149,8 @@ void				print_map(t_map map, char **lvl);
 t_tex				*init_texture(char *file_path);
 void				free_texture(void *mlx, t_tex *tex);
 int					parse_textures(t_game *game);
+void				parse_sprites(t_game *game);
+void				render_sprites(t_game *game);
 unsigned int		get_color(t_tex *tex, int x, int y);
 int					free_lvl(char **lvl, size_t lvl_h);
 char				**lvl_copy(t_map *map);

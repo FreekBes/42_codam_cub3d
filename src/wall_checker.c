@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/05 16:35:38 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/05 20:22:48 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/07 16:56:23 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,11 @@ static t_map_node	*new_map_node(int x, int y, char c)
 	return (helper);
 }
 
-static void	delete_queue_item(void *item)
-{
-	if (item)
-		free(item);
-}
-
 static int	clear_queue(t_list *queue, char **temp_lvl, size_t lvl_h)
 {
 	if (temp_lvl)
 		free_lvl(temp_lvl, lvl_h);
-	ft_lstclear(&queue, &delete_queue_item);
+	ft_lstclear(&queue, &item_free_simple);
 	return (0);
 }
 
@@ -138,7 +132,7 @@ int	map_surrounded_by_walls(t_game *game)
 				return (clear_queue(queue, temp_lvl, game->map->lvl_h));
 		}
 		queue = queue->next;
-		ft_lstdelone(current, &delete_queue_item);
+		ft_lstdelone(current, &item_free_simple);
 		scan(&queue, temp_lvl, lx, x - 1, y + 1);
 		scan(&queue, temp_lvl, lx, x - 1, y - 1);
 	}

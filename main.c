@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/05 21:10:38 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/07 16:58:59 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static int	exit_game(t_game game, char *error_msg)
 		print_error(error_msg);
 	free_map(game.mlx->core, game.map);
 	free_mlx_context(game.mlx);
+	if (game.cam.z_buffer)
+		free(game.cam.z_buffer);
 	exit(0);
 	return (0);
 }
@@ -136,8 +138,8 @@ static void	render_next_frame(t_game *game)
 	int				hit;
 	int				side;
 	int				line_height;
-	int	draw_start;
-	int	draw_end;
+	int				draw_start;
+	int				draw_end;
 	unsigned int	color;
 	double			wall_x;
 	t_tex			*tex;
@@ -240,9 +242,11 @@ static void	render_next_frame(t_game *game)
 			put_pixel(&game->mlx->img, x, y, color);
 			y++;
 		}
+		game->cam.z_buffer[x] = perp_wall_dist;
 		x++;
 	}
 	mlx_do_sync(game->mlx->core);
+	render_sprites(game);
 }
 
 static int	draw_next_frame(t_game *game)
@@ -358,9 +362,10 @@ int	main(int argc, char **argv)
 		return (print_error("No map specified as first argument"));
 	game.cam.speed_mod = 1;
 	game.cam.mouse_sens = CAM_DEFAULT_MOUSE_SENSITIVITY;
+	game.cam.z_buffer = NULL;
 	game.map = parse_map(argv[1]);
 	if (!game.map)
-		return (print_error("Failed to read map. Does the file exist and is the extension correct?"));
+		return (print_error("Failed to read map"));
 	if (set_starting_pos(&game) < 0)
 		return (print_error("Start position in map is not set"));
 	printf("start pos: %f, %f\n", game.cam.pos_x, game.cam.pos_y);
@@ -377,6 +382,10 @@ int	main(int argc, char **argv)
 	if (game.map->col_floor == COLOR_VALUE_UNDEFINED
 		|| game.map->col_ceiling == COLOR_VALUE_UNDEFINED)
 		exit_game(game, "Floor and/or ceiling color missing from .cub file");
+	parse_sprites(&game);
+	game.cam.z_buffer = (double *)malloc(sizeof(double) * game.map->res_x);
+	if (!game.cam.z_buffer)
+		exit_game(game, "Could not allocate memory for z_buffer");
 	print_map(*(game.map), NULL);
 	if (save_bmp == 0)
 	{
