@@ -6,12 +6,11 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/07 16:41:18 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/07 17:24:25 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/07 17:26:22 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
 static void	swap_lst_content(t_list *a, t_list *b)
 {
