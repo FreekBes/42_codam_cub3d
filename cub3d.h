@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/07 16:36:48 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/07 18:10:11 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ typedef struct s_game
 void				item_free_simple(void *content);
 int					print_error(char *msg);
 void				print_color(t_col_rgba color);
+void				print_sprite(void *sprite);
 unsigned int		brighten(unsigned int color);
 unsigned int		darken(unsigned int color);
 void				print_map(t_map map, char **lvl);

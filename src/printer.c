@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/31 15:31:47 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/05 20:09:12 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/07 18:10:02 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@ void	print_color(t_col_rgba color)
 {
 	printf("R%i, G%i, B%i, A%i\n", (int)color.r, (int)color.g,
 		(int)color.b, (int)color.a);
+}
+
+void	print_sprite(void *sprite)
+{
+	t_sprite	*why;
+
+	why = (t_sprite *)sprite;
+	printf("sprite distance: %f\n", why->dist);
 }
 
 void	print_level(t_map map, char **lvl)
