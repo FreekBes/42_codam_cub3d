@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/12 22:28:52 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/12 22:47:44 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -364,7 +364,7 @@ int	main(int argc, char **argv)
 	game.cam.z_buffer = NULL;
 	game.map = parse_map(argv[1]);
 	if (!game.map)
-		return (print_error("Failed to read map due to invalid or missing config"));
+		return (print_error("Failed to read or parse map"));
 	if (set_starting_pos(&game) < 0)
 		return (print_error("Start position in map is not set"));
 	printf("start pos: %f, %f\n", game.cam.pos_x, game.cam.pos_y);
