@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/31 15:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/30 16:39:33 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/12 21:12:56 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,23 @@ unsigned int	brighten(unsigned int color)
 unsigned int	darken(unsigned int color)
 {
 	return ((color >> 1) & 8355711);
+}
+
+unsigned int	parse_color_map(char **c)
+{
+	t_col_rgba		t_col;
+
+	t_col.r = ft_atoi(*c);
+	*c = ft_strchr(*c, ',');
+	if (!*c)
+		return (0);
+	*c = skip_spaces(*c + 1);
+	t_col.g = ft_atoi(*c);
+	*c = ft_strchr(*c, ',');
+	if (!*c)
+		return (0);
+	*c = skip_spaces(*c + 1);
+	t_col.b = ft_atoi(*c);
+	t_col.a = 0;
+	return (color_to_uint(&t_col));
 }

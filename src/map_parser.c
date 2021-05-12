@@ -6,120 +6,11 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/12 21:09:19 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/12 21:15:12 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-static t_map	*new_map(void)
-{
-	t_map	*map;
-
-	map = (t_map *)malloc(sizeof(t_map));
-	if (map)
-	{
-		map->lvl = NULL;
-		map->lvl_w = 0;
-		map->lvl_h = 0;
-		map->tex_no = NULL;
-		map->tex_ea = NULL;
-		map->tex_so = NULL;
-		map->tex_we = NULL;
-		map->tex_sprite = NULL;
-		map->col_ceiling = COLOR_VALUE_UNDEFINED;
-		map->col_floor = COLOR_VALUE_UNDEFINED;
-		map->sprites = NULL;
-	}
-	return (map);
-}
-
-int	free_lvl(char **lvl, size_t lvl_h)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < lvl_h)
-	{
-		if (lvl[i])
-			free(lvl[i]);
-		i++;
-	}
-	free(lvl);
-	return (0);
-}
-
-void	free_map(void *mlx, t_map *map)
-{
-	if (map->tex_no)
-		free_texture(mlx, map->tex_no);
-	if (map->tex_so)
-		free_texture(mlx, map->tex_so);
-	if (map->tex_we)
-		free_texture(mlx, map->tex_we);
-	if (map->tex_ea)
-		free_texture(mlx, map->tex_ea);
-	if (map->tex_sprite)
-		free_texture(mlx, map->tex_sprite);
-	if (map->lvl)
-		free_lvl(map->lvl, map->lvl_h);
-	if (map->sprites)
-		ft_lstclear(&map->sprites, &item_free_simple);
-	free(map);
-}
-
-char	**lvl_copy(t_map *map)
-{
-	char	**copy;
-	int		i;
-
-	copy = malloc(sizeof(char *) * map->lvl_h);
-	if (copy)
-	{
-		i = 0;
-		while (i < map->lvl_h)
-		{
-			copy[i] = ft_calloc(map->lvl_w, sizeof(char));
-			if (copy[i])
-				ft_memcpy(copy[i], map->lvl[i], map->lvl_w);
-			i++;
-		}
-	}
-	return (copy);
-}
-
-static char	*skip_spaces(char *c)
-{
-	while (*c && *c == ' ')
-		c++;
-	return (c);
-}
-
-static char	*skip_non_spaces(char *c)
-{
-	while (*c && *c != ' ')
-		c++;
-	return (c);
-}
-
-static unsigned int	parse_color_map(char **c)
-{
-	t_col_rgba		t_col;
-
-	t_col.r = ft_atoi(*c);
-	*c = ft_strchr(*c, ',');
-	if (!*c)
-		return (0);
-	*c = skip_spaces(*c + 1);
-	t_col.g = ft_atoi(*c);
-	*c = ft_strchr(*c, ',');
-	if (!*c)
-		return (0);
-	*c = skip_spaces(*c + 1);
-	t_col.b = ft_atoi(*c);
-	t_col.a = 0;
-	return (color_to_uint(&t_col));
-}
 
 static int	parse_line(t_map **map, char *line)
 {
@@ -208,46 +99,10 @@ static int	parse_level(t_map **map, char *line)
 	return (0);
 }
 
-char	*read_file(char *contents, char *buff, size_t buff_size)
-{
-	char	*temp;
-	size_t	contents_len;
-
-	if (!contents)
-	{
-		contents = ft_calloc(buff_size + 1, sizeof(char));
-		contents_len = 0;
-	}
-	else
-	{
-		contents_len = ft_strlen(contents);
-		temp = ft_calloc(contents_len + buff_size + 1, sizeof(char));
-		ft_memmove(temp, contents, contents_len);
-		ft_free(contents);
-		contents = temp;
-	}
-	ft_memmove(contents + contents_len, buff, buff_size);
-	return (contents);
-}
-
-static void		free_lines(char **lines)
-{
-	size_t	i;
-
-	i = 0;
-	while (lines[i])
-	{
-		if (lines[i])
-			ft_free(lines[i]);
-		i++;
-	}
-	ft_free(lines);
-}
-
 // no if-elseif in the while loop below, since stage 2 needs to be run if
 // the result of parse_line > 0 as well.
 
-static t_map	*string_to_map(char *str)
+t_map	*string_to_map(char *str)
 {
 	t_map	*map;
 	char	**lines;
@@ -278,39 +133,5 @@ static t_map	*string_to_map(char *str)
 		if (res < 0 || !map_characters_valid(map))
 			return (ft_free(map));
 	}
-	return (map);
-}
-
-t_map	*parse_map(char *map_file)
-{
-	t_map	*map;
-	int		fd;
-	char	*contents;
-	void	*buffer;
-	int		read_res;
-
-	map = NULL;
-	contents = NULL;
-	if (!map_filename_valid(map_file))
-		return (NULL);
-	fd = open(map_file, O_RDONLY);
-	if (fd < 0)
-		return (NULL);
-	buffer = ft_calloc(sizeof(char), 256);
-	if (!buffer)
-		return (NULL);
-	read_res = read(fd, buffer, 255);
-	while(read_res > 0)
-	{
-		contents = read_file(contents, buffer, 255);
-		ft_bzero(buffer, 255);
-		read_res = read(fd, buffer, 255);
-	}
-	if (read_res < 0)
-		ft_free(contents);
-	else
-		map = string_to_map(contents);
-	ft_free(buffer);
-	close(fd);
 	return (map);
 }

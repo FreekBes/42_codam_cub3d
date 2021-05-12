@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/07 18:10:11 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/12 21:15:30 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,10 @@ typedef struct s_game
 	t_cam			cam;
 }					t_game;
 
+void				free_lines(char **lines);
 void				item_free_simple(void *content);
+char				*skip_spaces(char *c);
+char				*skip_non_spaces(char *c);
 int					print_error(char *msg);
 void				print_color(t_col_rgba color);
 void				print_sprite(void *sprite);
@@ -153,11 +156,14 @@ int					parse_textures(t_game *game);
 void				parse_sprites(t_game *game);
 void				render_sprites(t_game *game);
 unsigned int		get_color(t_tex *tex, int x, int y);
+unsigned int		parse_color_map(char **c);
 int					free_lvl(char **lvl, size_t lvl_h);
 char				**lvl_copy(t_map *map);
+t_map				*new_map(void);
 void				free_map(void *mlx, t_map *map);
 int					map_filename_valid(char *map_file);
 int					map_characters_valid(t_map *map);
+t_map				*string_to_map(char *str);
 t_map				*parse_map(char *map_file);
 int					set_starting_pos(t_game *game);
 int					map_surrounded_by_walls(t_game *game);
