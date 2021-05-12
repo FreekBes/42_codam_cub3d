@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/12 20:47:34 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/12 21:05:37 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,6 @@ static void	render_next_frame(t_game *game)
 		game->cam.z_buffer[x] = perp_wall_dist;
 		x++;
 	}
-	mlx_do_sync(game->mlx->core);
 	render_sprites(game);
 }
 

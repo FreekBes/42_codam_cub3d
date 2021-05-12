@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/07 15:58:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/07 18:22:55 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/12 21:07:05 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	render_sprites(t_game *game)
 		item = game->map->sprites;
 		while (item)
 		{
+			mlx_do_sync(game->mlx->core);
 			sprite = (t_sprite *)item->content;
 			sprite_x = sprite->x - game->cam.pos_x;
 			sprite_y = sprite->y - game->cam.pos_y;
@@ -152,6 +153,5 @@ void	render_sprites(t_game *game)
 			}
 			item = item->next;
 		}
-		mlx_do_sync(game->mlx->core);
 	}
 }
