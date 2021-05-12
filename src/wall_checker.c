@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/05 16:35:38 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/07 16:56:23 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/12 21:01:27 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,12 @@ static int	clear_queue(t_list *queue, char **temp_lvl, size_t lvl_h)
 	return (0);
 }
 
+// while a space is technically not inside, for the algorithm in this file
+// it needs to be checked for (or maps like maps/invalid.cub are marked valid)
+
 static int	inside(char **temp_lvl, int x, int y)
 {
-	return (ft_strchr("02NSEW", temp_lvl[x][y]) != NULL);
+	return (ft_strchr(" 02NSEW", temp_lvl[x][y]) != NULL);
 }
 
 // outside check: if
