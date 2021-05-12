@@ -6,7 +6,7 @@
 #    By: fbes <fbes@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/04/21 20:02:11 by fbes          #+#    #+#                  #
-#    Updated: 2021/05/12 21:26:08 by fbes          ########   odam.nl          #
+#    Updated: 2021/05/12 22:17:32 by fbes          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,9 @@ NAME =		cub3D
 
 SRCS =		main.c src/helpers.c src/printer.c src/map.c src/map_reader.c \
 			src/level_parser.c src/map_parser.c src/map_checker.c \
-			src/wall_checker.c src/window.c src/drawer.c src/export.c \
-			src/textures.c src/start_pos.c src/colors.c src/sprites.c
+			src/wall_checker_utils.c src/wall_checker.c src/window.c \
+			src/drawer.c src/export.c src/textures.c src/start_pos.c \
+			src/colors.c src/sprites.c
 
 OBJS =		$(SRCS:.c=.o)
 

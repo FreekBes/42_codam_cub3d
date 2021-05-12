@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/12 21:25:18 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/12 22:17:01 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@
 # define CAM_SPRINT_SPEED_MOD 1.7
 # define CAM_ROT_SPEED 0.06
 # define CAM_DEFAULT_MOUSE_SENSITIVITY 0.15
+
+typedef struct s_coords
+{
+	int				x;
+	int				y;
+}					t_coords;
 
 typedef struct s_map_node
 {
@@ -144,6 +150,7 @@ void				free_lines(char **lines);
 void				item_free_simple(void *content);
 char				*skip_spaces(char *c);
 char				*skip_non_spaces(char *c);
+t_coords			*new_coords(int x, int y);
 int					print_error(char *msg);
 void				print_color(t_col_rgba color);
 void				print_sprite(void *sprite);
@@ -177,5 +184,9 @@ unsigned int		get_pixel(t_img *img, int x, int y);
 void				put_rect(t_img *img, t_rect *rect);
 void				clear_img(t_img *img, t_map *map);
 int					export_frame_as_bmp(t_game *game, char *file_name);
+t_map_node			*new_map_node(int x, int y, char c);
+int					clear_queue(t_list *queue, char **temp_lvl, size_t lvl_h);
+int					inside(char **temp_lvl, int x, int y);
+int					outside(t_game *game, char **temp_lvl, int x, int y);
 
 #endif

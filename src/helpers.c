@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/07 16:35:40 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/12 21:13:55 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/12 21:36:12 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,17 @@ void	free_lines(char **lines)
 		i++;
 	}
 	ft_free(lines);
+}
+
+t_coords	*new_coords(int x, int y)
+{
+	t_coords	*coords;
+
+	coords = (t_coords *)malloc(sizeof(t_coords));
+	if (coords)
+	{
+		coords->x = x;
+		coords->y = y;
+	}
+	return (coords);
 }
