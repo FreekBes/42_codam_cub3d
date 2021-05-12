@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 21:11:22 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/12 21:16:17 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/12 22:22:52 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ t_map	*new_map(void)
 	map = (t_map *)malloc(sizeof(t_map));
 	if (map)
 	{
+		map->res_x = 0;
+		map->res_y = 0;
 		map->lvl = NULL;
 		map->lvl_w = 0;
 		map->lvl_h = 0;
