@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/12 21:15:30 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/12 21:25:18 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ t_map				*new_map(void);
 void				free_map(void *mlx, t_map *map);
 int					map_filename_valid(char *map_file);
 int					map_characters_valid(t_map *map);
+int					parse_level(t_map **map, char *line);
 t_map				*string_to_map(char *str);
 t_map				*parse_map(char *map_file);
 int					set_starting_pos(t_game *game);

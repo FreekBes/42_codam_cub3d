@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 21:10:11 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/12 21:16:22 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/12 21:30:21 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,20 @@ static char	*read_file(char *contents, char *buff, size_t buff_size)
 	return (contents);
 }
 
+static int	init_map_parser(char *map_file, char **cont, int *fd, void **buff)
+{
+	*cont = NULL;
+	if (!map_filename_valid(map_file))
+		return (-1);
+	*fd = open(map_file, O_RDONLY);
+	if (*fd < 0)
+		return (-1);
+	*buff = ft_calloc(sizeof(char), 256);
+	if (!*buff)
+		return (-1);
+	return (1);
+}
+
 t_map	*parse_map(char *map_file)
 {
 	t_map	*map;
@@ -43,17 +57,10 @@ t_map	*parse_map(char *map_file)
 	int		read_res;
 
 	map = NULL;
-	contents = NULL;
-	if (!map_filename_valid(map_file))
-		return (NULL);
-	fd = open(map_file, O_RDONLY);
-	if (fd < 0)
-		return (NULL);
-	buffer = ft_calloc(sizeof(char), 256);
-	if (!buffer)
+	if (init_map_parser(map_file, &contents, &fd, &buffer) < 0)
 		return (NULL);
 	read_res = read(fd, buffer, 255);
-	while(read_res > 0)
+	while (read_res > 0)
 	{
 		contents = read_file(contents, buffer, 255);
 		ft_bzero(buffer, 255);
