@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/07 16:59:15 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/12 20:55:57 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ static int	parse_line(t_map **map, char *line)
 		(*map)->col_floor = parse_color_map(&c);
 	else if (id[0] == 'C')
 		(*map)->col_ceiling = parse_color_map(&c);
-	else if (id[0] == '1')
+	else if (ft_strchr("102NSEW", id[0]) != NULL)
 		return (1);
 	return (0);
 }
@@ -208,84 +208,110 @@ static int	parse_level(t_map **map, char *line)
 	return (0);
 }
 
+char	*read_file(char *contents, char *buff, size_t buff_size)
+{
+	char	*temp;
+	size_t	contents_len;
+
+	if (!contents)
+	{
+		contents = ft_calloc(buff_size + 1, sizeof(char));
+		contents_len = 0;
+	}
+	else
+	{
+		contents_len = ft_strlen(contents);
+		temp = ft_calloc(contents_len + buff_size + 1, sizeof(char));
+		ft_memmove(temp, contents, contents_len);
+		ft_free(contents);
+		contents = temp;
+	}
+	ft_memmove(contents + contents_len, buff, buff_size);
+	return (contents);
+}
+
+static void		free_lines(char **lines)
+{
+	size_t	i;
+
+	i = 0;
+	while (lines[i])
+	{
+		if (lines[i])
+			ft_free(lines[i]);
+		i++;
+	}
+	ft_free(lines);
+}
+
+// no if-elseif in the while loop below, since stage 2 needs to be run if
+// the result of parse_line > 0 as well.
+
+static t_map	*string_to_map(char *str)
+{
+	t_map	*map;
+	char	**lines;
+	size_t	i;
+	int		stage;
+	int		res;
+
+	map = new_map();
+	if (map)
+	{
+		lines = ft_split(str, '\n');
+		i = 0;
+		stage = 1;
+		res = 0;
+		while (lines[i])
+		{
+			if (stage == 1 && parse_line(&map, lines[i]) > 0)
+				stage = 2;
+			if (stage == 2)
+			{
+				res = parse_level(&map, lines[i]);
+				if (res != 0)
+					break;
+			}
+			i++;
+		}
+		free_lines(lines);
+		print_map(*map, NULL);
+		if (res < 0 || !map_characters_valid(map))
+			return (ft_free(map));
+	}
+	return (map);
+}
+
 t_map	*parse_map(char *map_file)
 {
 	t_map	*map;
 	int		fd;
-	char	**line;
-	int		res_gnl;
-	int		res_parser;
+	char	*contents;
+	void	*buffer;
+	int		read_res;
 
+	map = NULL;
+	contents = NULL;
 	if (!map_filename_valid(map_file))
 		return (NULL);
 	fd = open(map_file, O_RDONLY);
 	if (fd < 0)
 		return (NULL);
-	line = (char **)malloc(sizeof(char *));
-	map = NULL;
-	if (line)
+	buffer = ft_calloc(sizeof(char), 256);
+	if (!buffer)
+		return (NULL);
+	read_res = read(fd, buffer, 255);
+	while(read_res > 0)
 	{
-		map = new_map();
-		if (map)
-		{
-			res_gnl = 1;
-			while (res_gnl > 0)
-			{
-				res_gnl = ft_get_next_line(fd, line);
-				if (res_gnl >= 0)
-				{
-					if (parse_line(&map, *line) > 0)
-					{
-						res_parser = parse_level(&map, *line);
-						break;
-					}
-				}
-				if (*line)
-					ft_free(*line);
-				if (res_gnl < 0)
-				{
-					close(fd);
-					ft_free(line);
-					return (ft_free(map));
-				}
-			}
-			if (*line)
-				ft_free(*line);
-			res_gnl = 1;
-			while (res_gnl > 0)
-			{
-				res_gnl = ft_get_next_line(fd, line);
-				if (res_gnl >= 0)
-				{
-					res_parser = parse_level(&map, *line);
-					if (res_parser > 0)
-						break;
-					if (res_parser < 0)
-					{
-						close(fd);
-						ft_free(line);
-						return (ft_free(map));
-					}
-				}
-				if (*line)
-					ft_free(*line);
-				if (res_gnl < 0)
-				{
-					close(fd);
-					ft_free(line);
-					return (ft_free(map));
-				}
-			}
-			if (*line)
-				ft_free(*line);
-			ft_free(line);
-			if (!map_characters_valid(map))
-			{
-				close(fd);
-				return (ft_free(map));
-			}
-		}
+		contents = read_file(contents, buffer, 255);
+		ft_bzero(buffer, 255);
+		read_res = read(fd, buffer, 255);
 	}
+	if (read_res < 0)
+		ft_free(contents);
+	else
+		map = string_to_map(contents);
+	ft_free(buffer);
 	close(fd);
 	return (map);
 }

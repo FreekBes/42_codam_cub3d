@@ -1,9 +1,13 @@
 R 852 480
 NO ./textures/brick.xpm
 SO ./textures/metal.xpm
+
+
 WE ./textures/brick.xpm
+
 EA ./textures/stone.xpm
 S ./textures/sprite.xpm
+
 F   120, 120, 120
 C   135, 206, 235
 

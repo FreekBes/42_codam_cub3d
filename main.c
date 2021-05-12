@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/07 16:58:59 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/12 20:47:34 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -366,6 +366,8 @@ int	main(int argc, char **argv)
 	game.map = parse_map(argv[1]);
 	if (!game.map)
 		return (print_error("Failed to read map"));
+	if (game.map->lvl_w == 0 || game.map->lvl_h == 0)
+		return (print_error("Invalid map"));
 	if (set_starting_pos(&game) < 0)
 		return (print_error("Start position in map is not set"));
 	printf("start pos: %f, %f\n", game.cam.pos_x, game.cam.pos_y);

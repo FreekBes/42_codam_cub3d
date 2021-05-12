@@ -1,0 +1,8 @@
+R 852 480
+NO ./textures/brick.xpm
+SO ./textures/metal.xpm
+WE ./textures/brick.xpm
+EA ./textures/stone.xpm
+S ./textures/grass.xpm
+F   120, 120, 120
+C   300, 300,  300
