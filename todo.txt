@@ -1,7 +1,4 @@
 - check for leaks
 - fix leaks
 - fix sprite flickering
-- check what happens if cub file is loaded without all arguments
-- check what happens if cub file is loaded without a map
 - norminette
-- check for weird maps, such as just a starting position
