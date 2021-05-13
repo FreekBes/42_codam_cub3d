@@ -6,7 +6,7 @@
 #    By: fbes <fbes@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/04/21 20:02:11 by fbes          #+#    #+#                  #
-#    Updated: 2021/05/13 21:53:12 by fbes          ########   odam.nl          #
+#    Updated: 2021/05/13 22:00:50 by fbes          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,9 +57,9 @@ endif
 
 oscopy: FORCE
 ifeq ($(UNAME), Linux)
-	cp -r -f src/lin/ src
+	ln -f src/lin/* src
 else
-	cp -r -f src/mac/ src
+	ln -f src/mac/* src
 endif
 
 FORCE:
