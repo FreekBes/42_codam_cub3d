@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/13 21:10:25 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/13 21:21:53 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,7 +256,9 @@ void				reset_key_presses(t_keys_status *key_status);
 int					exit_game(t_game game, char *error_msg);
 void				init_ray(t_game *game, t_render_holder_walls *hold);
 void				init_drawer(t_game *game, t_render_holder_walls *hold);
-void				init_texture_draw(t_game *game, t_render_holder_walls *hold);
-void				init_sprite_render(t_game *game, t_render_holder_sprites *hold);
+void				init_texture_draw(t_game *game,
+						t_render_holder_walls *hold);
+void				init_sprite_render(t_game *game,
+						t_render_holder_sprites *hold);
 
 #endif

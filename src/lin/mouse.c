@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/13 20:04:23 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/13 20:29:53 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/13 21:32:32 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	win_focus(t_game *game)
 {
-	mlx_mouse_move(OS_MLX_REQ_PARAMS, game->map->res_x / 2,
+	mlx_mouse_move(game->mlx->core, game->mlx->win, game->map->res_x / 2,
 		game->map->res_y / 2);
 	return (1);
 }
@@ -26,13 +26,13 @@ int	mousemove(int x, int y, t_game *game)
 {
 	double	speed;
 
-	mlx_mouse_get_pos(OS_MLX_REQ_PARAMS, &x, &y);
+	mlx_mouse_get_pos(game->mlx->core, game->mlx->win, &x, &y);
 	speed = x * game->cam.mouse_sens
 		- (game->map->res_x / 2 * game->cam.mouse_sens);
 	rotate_cam(game, speed);
 	if (x != game->map->res_x / 2)
 	{
-		mlx_mouse_move(OS_MLX_REQ_PARAMS,
+		mlx_mouse_move(game->mlx->core, game->mlx->win,
 			game->map->res_x / 2, game->map->res_y / 2);
 	}
 	return (1);

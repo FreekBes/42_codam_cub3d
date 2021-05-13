@@ -6,15 +6,13 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/15 19:50:02 by fbes          #+#    #+#                 */
-/*   Updated: 2021/04/30 16:46:20 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/13 21:32:56 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OS_SPECIFICS_H
 # define OS_SPECIFICS_H
 # ifdef __linux__
-#  define OS_MLX_REQ_PARAMS game->mlx->core, game->mlx->win
-#  define OS_MLX_REQ_PARAMS_MOUSE_SHOW_HIDE game->mlx->core, game->mlx->win
 #  define KEY_W 119
 #  define KEY_A 97
 #  define KEY_S 115
@@ -29,8 +27,6 @@
 #  define BTN_SCROLL_UP 4
 #  define BTN_SCROLL_DOWN 5
 # else
-#  define OS_MLX_REQ_PARAMS game->mlx->win
-#  define OS_MLX_REQ_PARAMS_MOUSE_SHOW_HIDE
 #  define KEY_W 13
 #  define KEY_A 0
 #  define KEY_S 1

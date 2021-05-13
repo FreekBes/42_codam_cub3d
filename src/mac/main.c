@@ -6,15 +6,15 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/13 21:18:51 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/13 21:51:30 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 int	exit_game(t_game game, char *error_msg)
 {
-	mlx_mouse_show(OS_MLX_REQ_PARAMS_MOUSE_SHOW_HIDE);
+	mlx_mouse_show();
 	if (error_msg)
 		print_error(error_msg);
 	free_map(game.mlx->core, game.map);
@@ -33,9 +33,8 @@ static int	exit_hook(t_game *game)
 static void	init_game_win(t_game *game)
 {
 	reset_key_presses(&game->key_stat);
-	mlx_mouse_hide(OS_MLX_REQ_PARAMS_MOUSE_SHOW_HIDE);
-	mlx_mouse_move(OS_MLX_REQ_PARAMS,
-		game->map->res_x / 2, game->map->res_y / 2);
+	mlx_mouse_hide();
+	mlx_mouse_move(game->mlx->win, game->map->res_x / 2, game->map->res_y / 2);
 	mlx_hook(game->mlx->win, 17, 1L << 17, &exit_hook, game);
 	mlx_hook(game->mlx->win, 2, 1L << 0, &keypress, game);
 	mlx_hook(game->mlx->win, 3, 1L << 1, &keyrelease, game);
