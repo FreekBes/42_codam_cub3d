@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/12 22:23:59 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/13 20:10:58 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,18 @@ typedef struct s_coords
 	int				x;
 	int				y;
 }					t_coords;
+
+typedef struct s_dcoords
+{
+	double			x;
+	double			y;
+}					t_dcoords;
+
+typedef struct s_dimensions
+{
+	int				w;
+	int				h;
+}					t_dimensions;
 
 typedef struct s_map_node
 {
@@ -146,6 +158,23 @@ typedef struct s_game
 	t_cam			cam;
 }					t_game;
 
+typedef struct s_render_holder_sprites
+{
+	t_sprite		*sprite;
+	t_dcoords		sprite_pos;
+	double			inv_det;
+	t_dcoords		transform;
+	int				sprite_screen_x;
+	t_dimensions	sprite_dims;
+	t_coords		draw_start;
+	t_coords		draw_end;
+	int				stripe;
+	t_coords		tex;
+	int				d;
+	int				y;
+	unsigned int	color;
+}				t_render_holder_sprites;
+
 void				free_lines(char **lines);
 void				item_free_simple(void *content);
 char				*skip_spaces(char *c);
@@ -189,5 +218,17 @@ t_map_node			*new_map_node(int x, int y, char c);
 int					clear_queue(t_list *queue, char **temp_lvl, size_t lvl_h);
 int					inside(char **temp_lvl, int x, int y);
 int					outside(t_game *game, char **temp_lvl, int x, int y);
+void				move_cam(t_game *game, double dir_fb, double dir_side);
+void				rotate_cam(t_game *game, double dir);
+void				render_next_frame(t_game *game);
+int					draw_next_frame(t_game *game);
+int					win_focus(t_game *game);
+int					mousemove(int x, int y, t_game *game);
+int					mousebtnpress(int btncode, int x, int y, t_game *game);
+int					keyrelease(int keycode, t_game *game);
+int					keypress(int keycode, t_game *game);
+void				handle_key_presses(t_game *game);
+void				reset_key_presses(t_keys_status *key_status);
+int					exit_game(t_game game, char *error_msg);
 
 #endif
