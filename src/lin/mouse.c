@@ -6,16 +6,28 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/13 20:04:23 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/13 21:32:32 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/13 22:12:48 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../../cub3d.h"
+
+int	mouse_show_hide(t_game *game, int hidden)
+{
+	if (hidden)
+		return (mlx_mouse_hide(game->mlx->core, game->mlx->win));
+	else
+		return (mlx_mouse_show(game->mlx->core, game->mlx->win));
+}
+
+int	move_mouse(t_game *game, int x, int y)
+{
+	return (mlx_mouse_move(game->mlx->core, game->mlx->win, x, y));
+}
 
 int	win_focus(t_game *game)
 {
-	mlx_mouse_move(game->mlx->core, game->mlx->win, game->map->res_x / 2,
-		game->map->res_y / 2);
+	move_mouse(game, game->map->res_x / 2, game->map->res_y / 2);
 	return (1);
 }
 

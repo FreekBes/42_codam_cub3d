@@ -1,8 +1,6 @@
 cub3D
 cub3D.bmp
 *.DS_Store
-src/mouse.c
-src/main.c
 
 # Prerequisites
 *.d
