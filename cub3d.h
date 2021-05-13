@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/13 20:10:58 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/13 21:10:25 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,11 +169,34 @@ typedef struct s_render_holder_sprites
 	t_coords		draw_start;
 	t_coords		draw_end;
 	int				stripe;
-	t_coords		tex;
+	t_coords		tex_c;
 	int				d;
 	int				y;
 	unsigned int	color;
-}				t_render_holder_sprites;
+}					t_render_holder_sprites;
+
+typedef struct s_render_holder_walls
+{
+	t_tex			*tex;
+	t_coords		pixel;
+	double			cam_x;
+	t_dcoords		ray_dir;
+	t_coords		map;
+	t_dcoords		side_dist;
+	t_dcoords		delta_dist;
+	double			perp_wall_dist;
+	t_coords		step;
+	int				hit;
+	int				side;
+	int				line_height;
+	int				draw_start;
+	int				draw_end;
+	unsigned int	color;
+	double			wall_x;
+	t_coords		tex_c;
+	double			tex_pos;
+	double			tex_step;
+}					t_render_holder_walls;
 
 void				free_lines(char **lines);
 void				item_free_simple(void *content);
@@ -220,6 +243,7 @@ int					inside(char **temp_lvl, int x, int y);
 int					outside(t_game *game, char **temp_lvl, int x, int y);
 void				move_cam(t_game *game, double dir_fb, double dir_side);
 void				rotate_cam(t_game *game, double dir);
+void				render_walls(t_game *game);
 void				render_next_frame(t_game *game);
 int					draw_next_frame(t_game *game);
 int					win_focus(t_game *game);
@@ -230,5 +254,9 @@ int					keypress(int keycode, t_game *game);
 void				handle_key_presses(t_game *game);
 void				reset_key_presses(t_keys_status *key_status);
 int					exit_game(t_game game, char *error_msg);
+void				init_ray(t_game *game, t_render_holder_walls *hold);
+void				init_drawer(t_game *game, t_render_holder_walls *hold);
+void				init_texture_draw(t_game *game, t_render_holder_walls *hold);
+void				init_sprite_render(t_game *game, t_render_holder_sprites *hold);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: fbes <fbes@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/04/21 20:02:11 by fbes          #+#    #+#                  #
-#    Updated: 2021/05/13 20:07:49 by fbes          ########   odam.nl          #
+#    Updated: 2021/05/13 21:09:21 by fbes          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,8 @@ SRCS =		main.c src/helpers.c src/printer.c src/map.c src/map_reader.c \
 			src/wall_checker_utils.c src/wall_checker.c src/window.c \
 			src/drawer.c src/export.c src/textures.c src/start_pos.c \
 			src/colors.c src/sprites.c src/renderer_sprites.c \
-			src/renderer_walls.c src/renderer.c src/camera.c src/controls.c \
-			src/mouse.c
+			src/renderer_inits.c src/renderer_walls.c src/renderer.c \
+			src/camera.c src/controls.c src/mouse.c
 
 OBJS =		$(SRCS:.c=.o)
 
