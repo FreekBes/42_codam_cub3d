@@ -6,7 +6,7 @@
 #    By: fbes <fbes@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/04/21 20:02:11 by fbes          #+#    #+#                  #
-#    Updated: 2021/05/13 22:17:27 by fbes          ########   odam.nl          #
+#    Updated: 2021/05/16 20:25:59 by fbes          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ ifeq ($(UNAME), Linux)
 	make -C lib/mlx_lin
 else
 	make -C lib/mlx
-	mv lib/mlx/libmlx.dylib libmlx.dylib
+	ln -f lib/mlx/libmlx.dylib libmlx.dylib
 endif
 
 FORCE:
