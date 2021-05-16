@@ -1,6 +1,7 @@
 cub3D
 cub3D.bmp
 *.DS_Store
+lib/mlx_lin/test/mlx-test
 
 # Prerequisites
 *.d
