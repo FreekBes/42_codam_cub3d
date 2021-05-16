@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 21:24:49 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/12 21:25:08 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/16 20:19:05 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,8 @@ static int	remalloc_level(char **level, int lines, int len)
 
 int	parse_level(t_map **map, char *line)
 {
-	char	*c;
 	int		len;
 
-	c = line;
 	len = (int)ft_strlen(line);
 	if (len == 0)
 		return (1);

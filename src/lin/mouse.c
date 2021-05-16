@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/13 20:04:23 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/13 22:12:48 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/16 20:24:08 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	mousemove(int x, int y, t_game *game)
 	speed = x * game->cam.mouse_sens
 		- (game->map->res_x / 2 * game->cam.mouse_sens);
 	rotate_cam(game, speed);
-	if (x != game->map->res_x / 2)
+	if ((unsigned int)x != game->map->res_x / 2)
 	{
 		mlx_mouse_move(game->mlx->core, game->mlx->win,
 			game->map->res_x / 2, game->map->res_y / 2);
@@ -52,8 +52,8 @@ int	mousemove(int x, int y, t_game *game)
 
 int	mousebtnpress(int btncode, int x, int y, t_game *game)
 {
-	x = 0;
-	y = 0;
+	x = x - y;
+	y = x - y;
 	if (btncode == BTN_SCROLL_UP)
 		game->cam.mouse_sens += 0.01;
 	else if (btncode == BTN_SCROLL_DOWN)
