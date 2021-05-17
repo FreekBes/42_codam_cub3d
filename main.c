@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/13 22:14:56 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/17 16:50:10 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static int	setup_map(t_game *game, int save_bmp, char **argv)
 		return (print_error("Failed to read or parse map"));
 	if (set_starting_pos(game) < 0)
 		return (print_error("Start position in map is not set"));
-	printf("start pos: %f, %f\n", game->cam.pos_x, game->cam.pos_y);
 	if (!map_surrounded_by_walls(game))
 		return (print_error("Map is not surrounded by walls"));
 	if (save_bmp == 0)
@@ -69,7 +68,6 @@ static int	setup_map(t_game *game, int save_bmp, char **argv)
 	game->cam.z_buffer = (double *)malloc(sizeof(double) * game->map->res_x);
 	if (!game->cam.z_buffer)
 		exit_game(*game, "Could not allocate memory for z_buffer");
-	print_map(*(game->map), NULL);
 	return (1);
 }
 
