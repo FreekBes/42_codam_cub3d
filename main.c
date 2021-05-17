@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/17 18:08:15 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/17 19:02:23 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,23 +51,23 @@ static int	setup_map(t_game *game, int save_bmp, char **argv)
 	game->cam.z_buffer = NULL;
 	game->map = parse_map(argv[1]);
 	if (!game->map)
-		return (print_error("Failed to read or parse map"));
+		return (print_error(ERR_MAP_READ_PARSE));
 	if (set_starting_pos(game) < 0)
-		return (print_error("Start position in map is not set or invalid"));
+		return (print_error(ERR_START_POS));
 	if (!map_surrounded_by_walls(game))
-		return (print_error("Map is not surrounded by walls"));
+		return (print_error(ERR_MAP_WALLS_MISSING));
 	if (save_bmp == 0)
 		game->mlx = get_mlx_context(game->map, argv[0]);
 	else
 		game->mlx = get_mlx_context(game->map, NULL);
 	if (!game->mlx)
-		exit_game(*game, "Failed to create MLX instance");
+		exit_game(*game, ERR_CREATE_MLX_CONTEXT);
 	if (parse_textures(game) < 0)
-		exit_game(*game, "Failed to parse textures, do the files exist?");
+		exit_game(*game, ERR_TEXTURE_PARSE);
 	parse_sprites(game);
 	game->cam.z_buffer = (double *)malloc(sizeof(double) * game->map->res_x);
 	if (!game->cam.z_buffer)
-		exit_game(*game, "Could not allocate memory for z_buffer");
+		exit_game(*game, ERR_Z_BUFFER_ALLOC);
 	return (1);
 }
 
@@ -80,7 +80,7 @@ int	main(int argc, char **argv)
 	if (argc > 2 && ft_strncmp(argv[2], "--save", 7) == 0)
 		save_bmp = 1;
 	if (argc < 2)
-		return (print_error("No map specified as first argument"));
+		return (print_error(ERR_MAP_MISSING));
 	if (setup_map(&game, save_bmp, argv) != 1)
 		return (0);
 	if (save_bmp == 0)
@@ -92,7 +92,7 @@ int	main(int argc, char **argv)
 	{
 		render_next_frame(&game);
 		if (export_frame_as_bmp(&game, "cub3d.bmp") != 1)
-			exit_game(game, "Failed to export first frame as BMP");
+			exit_game(game, ERR_BMP_EXPORT);
 	}
 	return (exit_game(game, NULL));
 }

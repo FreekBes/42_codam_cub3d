@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/17 18:35:34 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/17 18:59:13 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # endif
 # include "lib/libft/libft.h"
 # include "os_specifics.h"
+# include "game_errors.h"
 # include <string.h>
 # include <errno.h>
 # include <stdio.h>
