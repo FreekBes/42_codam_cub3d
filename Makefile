@@ -6,7 +6,7 @@
 #    By: fbes <fbes@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/04/21 20:02:11 by fbes          #+#    #+#                  #
-#    Updated: 2021/05/17 16:41:32 by fbes          ########   odam.nl          #
+#    Updated: 2021/05/17 16:42:40 by fbes          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,8 @@ else
 	ln -f lib/mlx/libmlx.dylib libmlx.dylib
 endif
 
+bonus: all
+
 FORCE:
 
 clean:
@@ -83,4 +85,4 @@ endif
 
 re: fclean all
 
-.PHONY: all clean fclean re mlx libft FORCE
+.PHONY: all clean fclean re mlx libft bonus FORCE
