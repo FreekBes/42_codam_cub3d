@@ -2,4 +2,4 @@
 - fix leaks
 - fix sprite flickering
 - norminette
-- fix Makefile mlx lib ln instead of cp
+- wall check corners
