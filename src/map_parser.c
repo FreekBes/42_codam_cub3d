@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/12 22:23:30 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/17 17:14:21 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ static int	parse_config_attr(t_map **map, char *c, char *id)
 	else if (id[0] == 'S')
 		(*map)->tex_sprite = init_texture(c);
 	else if (id[0] == 'F')
-		(*map)->col_floor = parse_color_map(&c);
+		parse_color_map(&(*map)->col_floor, &c);
 	else if (id[0] == 'C')
-		(*map)->col_ceiling = parse_color_map(&c);
+		parse_color_map(&(*map)->col_ceiling, &c);
 	else if (ft_strchr("102NSEW", id[0]) != NULL)
 		return (1);
 	return (0);

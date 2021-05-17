@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/17 16:50:10 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/17 17:14:51 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	main(int argc, char **argv)
 		save_bmp = 1;
 	if (argc < 2)
 		return (print_error("No map specified as first argument"));
-	if (setup_map(&game, save_bmp, argv) == 0)
+	if (setup_map(&game, save_bmp, argv) != 1)
 		return (0);
 	if (save_bmp == 0)
 	{
