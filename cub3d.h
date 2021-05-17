@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/17 17:02:15 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/17 18:35:34 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ typedef struct s_keys_status
 
 typedef struct s_col_rgba
 {
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char	b;
-	unsigned char	a;
+	int				r;
+	int				g;
+	int				b;
+	int				a;
 }					t_col_rgba;
 
 typedef struct s_rect
@@ -118,8 +118,8 @@ typedef struct s_map
 	t_list			*sprites;
 	int				lvl_w;
 	int				lvl_h;
-	unsigned int	res_x;
-	unsigned int	res_y;
+	int				res_x;
+	int				res_y;
 	t_tex			*tex_no;
 	t_tex			*tex_so;
 	t_tex			*tex_we;
@@ -223,6 +223,9 @@ void				free_map(void *mlx, t_map *map);
 int					map_filename_valid(char *map_file);
 int					map_characters_valid(t_map *map);
 int					config_valid(t_map *map);
+int					valid_config_number(char *s, int space_stop);
+int					valid_color_string(char *s);
+int					valid_color_struct(t_col_rgba *col);
 int					parse_level(t_map **map, char *line);
 t_map				*string_to_map(char *str);
 t_map				*parse_map(char *map_file);

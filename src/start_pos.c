@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/05 19:47:52 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/05 19:54:40 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/17 18:09:20 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 static int	set_start_pos_n(t_game *game, int x, int y)
 {
+	if (x == 0 || y == 0
+		|| x == game->map->lvl_h - 1 || y == game->map->lvl_w - 1)
+		return (-1);
 	game->cam.pos_x = x + 0.5;
 	game->cam.pos_y = y + 0.5;
 	game->cam.dir_x = -1;
@@ -25,6 +28,9 @@ static int	set_start_pos_n(t_game *game, int x, int y)
 
 static int	set_start_pos_e(t_game *game, int x, int y)
 {
+	if (x == 0 || y == 0
+		|| x == game->map->lvl_h - 1 || y == game->map->lvl_w - 1)
+		return (-1);
 	game->cam.pos_x = x + 0.5;
 	game->cam.pos_y = y + 0.5;
 	game->cam.dir_x = 0;
@@ -36,6 +42,9 @@ static int	set_start_pos_e(t_game *game, int x, int y)
 
 static int	set_start_pos_s(t_game *game, int x, int y)
 {
+	if (x == 0 || y == 0
+		|| x == game->map->lvl_h - 1 || y == game->map->lvl_w - 1)
+		return (-1);
 	game->cam.pos_x = x + 0.5;
 	game->cam.pos_y = y + 0.5;
 	game->cam.dir_x = 1;
@@ -47,6 +56,9 @@ static int	set_start_pos_s(t_game *game, int x, int y)
 
 static int	set_start_pos_w(t_game *game, int x, int y)
 {
+	if (x == 0 || y == 0
+		|| x == game->map->lvl_h - 1 || y == game->map->lvl_w - 1)
+		return (-1);
 	game->cam.pos_x = x + 0.5;
 	game->cam.pos_y = y + 0.5;
 	game->cam.dir_x = 0;

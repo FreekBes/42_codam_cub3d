@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/17 17:14:51 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/17 18:08:15 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	setup_map(t_game *game, int save_bmp, char **argv)
 	if (!game->map)
 		return (print_error("Failed to read or parse map"));
 	if (set_starting_pos(game) < 0)
-		return (print_error("Start position in map is not set"));
+		return (print_error("Start position in map is not set or invalid"));
 	if (!map_surrounded_by_walls(game))
 		return (print_error("Map is not surrounded by walls"));
 	if (save_bmp == 0)
@@ -91,9 +91,7 @@ int	main(int argc, char **argv)
 	else
 	{
 		render_next_frame(&game);
-		if (export_frame_as_bmp(&game, "cub3d.bmp") > 0)
-			printf("Frame exported to cub3d.bmp\n");
-		else
+		if (export_frame_as_bmp(&game, "cub3d.bmp") != 1)
 			exit_game(game, "Failed to export first frame as BMP");
 	}
 	return (exit_game(game, NULL));

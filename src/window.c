@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/29 20:24:02 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/05 21:05:46 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/17 18:31:34 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ static void	catch_max_res_exception(t_map *map, void *mlx_ptr)
 	int		scr_y;
 
 	mlx_get_screen_size(mlx_ptr, &scr_x, &scr_y);
-	if (map->res_x > (unsigned int)scr_x)
-		map->res_x = (unsigned int)scr_x;
-	if (map->res_y > (unsigned int)scr_y)
-		map->res_y = (unsigned int)scr_y;
+	if (map->res_x > scr_x)
+		map->res_x = scr_x;
+	if (map->res_y > scr_y)
+		map->res_y = scr_y;
 }
 
 void	*free_mlx_context(t_mlx_ctx *ctx)

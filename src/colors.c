@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/31 15:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/17 17:15:04 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/17 17:28:01 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	parse_color_map(unsigned int *p, char **c)
 {
 	t_col_rgba		t_col;
 
-	if (!ft_isdigit(**c))
+	if (!valid_color_string(*c) || !ft_isdigit(**c))
 		return (-1);
 	t_col.r = ft_atoi(*c);
 	*c = ft_strchr(*c, ',');
@@ -69,6 +69,7 @@ int	parse_color_map(unsigned int *p, char **c)
 		return (-1);
 	t_col.b = ft_atoi(*c);
 	t_col.a = 0;
-	*p = color_to_uint(&t_col);
+	if (valid_color_struct(&t_col))
+		*p = color_to_uint(&t_col);
 	return (0);
 }

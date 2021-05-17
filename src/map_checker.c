@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/28 16:20:44 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/12 22:28:38 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/17 18:29:33 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ int	map_characters_valid(t_map *map)
 {
 	int		i;
 	int		j;
+	int		start_found;
 
+	start_found = 0;
 	i = 0;
 	while (i < map->lvl_h)
 	{
@@ -37,6 +39,12 @@ int	map_characters_valid(t_map *map)
 		{
 			if (!ft_strchr(" 012NSEW", map->lvl[i][j]))
 				return (0);
+			if (map->lvl[i][j] && ft_strchr("NSEW", map->lvl[i][j]))
+			{
+				if (start_found)
+					return (0);
+				start_found = 1;
+			}
 			j++;
 		}
 		i++;
@@ -48,7 +56,7 @@ int	config_valid(t_map *map)
 {
 	if (map->lvl_w == 0 || map->lvl_h == 0)
 		return (0);
-	if (map->res_x == 0 || map->res_y == 0)
+	if (map->res_x <= 0 || map->res_y <= 0)
 		return (0);
 	if (map->col_floor == COLOR_VALUE_UNDEFINED
 		|| map->col_ceiling == COLOR_VALUE_UNDEFINED)

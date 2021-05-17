@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/13 20:04:23 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/16 20:20:27 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/17 18:31:11 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	mousemove(int x, int y, t_game *game)
 	speed = x * game->cam.mouse_sens
 		- (game->map->res_x / 2 * game->cam.mouse_sens);
 	rotate_cam(game, speed);
-	if ((unsigned int)x != game->map->res_x / 2)
+	if (x != game->map->res_x / 2)
 	{
 		mlx_mouse_move(game->mlx->win,
 			game->map->res_x / 2, game->map->res_y / 2);

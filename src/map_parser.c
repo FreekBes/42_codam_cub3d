@@ -6,36 +6,49 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/17 17:14:21 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/17 18:41:04 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-static int	parse_config_attr(t_map **map, char *c, char *id)
+static int	parse_config_attr_more(t_map **map, char *c, char *id)
 {
-	if (id[0] == 'R')
-	{
-		(*map)->res_x = ft_atoi(c);
-		c = skip_spaces(skip_non_spaces(c));
-		(*map)->res_y = ft_atoi(c);
-	}
-	else if (id[0] == 'N' && id[1] == 'O')
-		(*map)->tex_no = init_texture(c);
-	else if (id[0] == 'S' && id[1] == 'O')
-		(*map)->tex_so = init_texture(c);
-	else if (id[0] == 'W' && id[1] == 'E')
-		(*map)->tex_we = init_texture(c);
-	else if (id[0] == 'E' && id[1] == 'A')
-		(*map)->tex_ea = init_texture(c);
-	else if (id[0] == 'S')
+	if (id[0] == 'S' && id[1] == ' ')
 		(*map)->tex_sprite = init_texture(c);
-	else if (id[0] == 'F')
+	else if (id[0] == 'F' && id[1] == ' ')
 		parse_color_map(&(*map)->col_floor, &c);
-	else if (id[0] == 'C')
+	else if (id[0] == 'C' && id[1] == ' ')
 		parse_color_map(&(*map)->col_ceiling, &c);
 	else if (ft_strchr("102NSEW", id[0]) != NULL)
 		return (1);
+	return (0);
+}
+
+static int	parse_config_attr(t_map **map, char *c, char *id)
+{
+	if (ft_strlen(id) < 3)
+		return (0);
+	if (id[0] == 'R' && id[1] == ' ')
+	{
+		if (valid_config_number(c, 1))
+		{
+			(*map)->res_x = ft_atoi(c);
+			c = skip_spaces(skip_non_spaces(c));
+			if (valid_config_number(c, 0))
+				(*map)->res_y = ft_atoi(c);
+		}
+	}
+	else if (id[0] == 'N' && id[1] == 'O' && id[2] == ' ')
+		(*map)->tex_no = init_texture(c);
+	else if (id[0] == 'S' && id[1] == 'O' && id[2] == ' ')
+		(*map)->tex_so = init_texture(c);
+	else if (id[0] == 'W' && id[1] == 'E' && id[2] == ' ')
+		(*map)->tex_we = init_texture(c);
+	else if (id[0] == 'E' && id[1] == 'A' && id[2] == ' ')
+		(*map)->tex_ea = init_texture(c);
+	else
+		return (parse_config_attr_more(map, c, id));
 	return (0);
 }
 
