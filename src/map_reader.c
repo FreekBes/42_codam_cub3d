@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 21:10:11 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/16 20:22:59 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/17 19:10:28 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	*read_file(char *contents, char *buff, size_t buff_size)
 static int	init_map_parser(char *map_file, char **cont, int *fd, void **buff)
 {
 	*cont = NULL;
-	if (!map_filename_valid(map_file))
+	if (!extension_valid(map_file, ".cub"))
 		return (-1);
 	*fd = open(map_file, O_RDONLY);
 	if (*fd < 0)

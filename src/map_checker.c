@@ -6,20 +6,22 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/28 16:20:44 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/17 18:29:33 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/17 19:08:52 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	map_filename_valid(char *map_file)
+int	extension_valid(char *file_name, char *ext)
 {
 	size_t		filename_len;
+	size_t		ext_len;
 
-	filename_len = ft_strlen(map_file);
-	if (filename_len < 5)
+	filename_len = ft_strlen(file_name);
+	ext_len = ft_strlen(ext);
+	if (filename_len < ext_len)
 		return (0);
-	if (ft_strncmp(map_file + filename_len - 4, ".cub", 4) != 0)
+	if (ft_strncmp(file_name + filename_len - ext_len, ext, ext_len) != 0)
 		return (0);
 	return (1);
 }

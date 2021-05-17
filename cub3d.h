@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/17 18:59:13 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/17 19:09:17 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,7 @@ int					free_lvl(char **lvl, size_t lvl_h);
 char				**lvl_copy(t_map *map);
 t_map				*new_map(void);
 void				free_map(void *mlx, t_map *map);
-int					map_filename_valid(char *map_file);
+int					extension_valid(char *file_name, char *ext);
 int					map_characters_valid(t_map *map);
 int					config_valid(t_map *map);
 int					valid_config_number(char *s, int space_stop);
