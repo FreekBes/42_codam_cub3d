@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/31 15:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 13:49:06 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 15:56:03 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,15 @@ t_col_rgba	uint_to_color(unsigned int color)
 	return (tcol);
 }
 
-// brighten and saturate a color by using bitwise operations
-// could have used calculations here, but that turned out to be
-// really slow really quickly, even for small resolutions
-
-unsigned int	brighten(unsigned int color)
+static int	parse_color_check(char **c)
 {
-	unsigned int	saturate;
-
-	saturate = ((color & 0x80808080) >> 7) * 255;
-	return (((color & 0x7F7F7F7F) << 1) | saturate | 0x01010101);
+	if (!*c)
+		return (0);
+	*c = skip_spaces(*c + 1);
+	if (!ft_isdigit(**c))
+		return (0);
+	return (1);
 }
-
-unsigned int	darken(unsigned int color)
-{
-	return ((color >> 1) & 8355711);
-}
-
-// parse a color from a string (*c) to an unsigned int *p
 
 int	parse_color_map(unsigned int *p, char **c)
 {
@@ -63,17 +54,11 @@ int	parse_color_map(unsigned int *p, char **c)
 		return (-11);
 	t_col.r = ft_atoi(*c);
 	*c = ft_strchr(*c, ',');
-	if (!*c)
-		return (-11);
-	*c = skip_spaces(*c + 1);
-	if (!ft_isdigit(**c))
+	if (!parse_color_check(c))
 		return (-11);
 	t_col.g = ft_atoi(*c);
 	*c = ft_strchr(*c, ',');
-	if (!*c)
-		return (-11);
-	*c = skip_spaces(*c + 1);
-	if (!ft_isdigit(**c))
+	if (!parse_color_check(c))
 		return (-11);
 	t_col.b = ft_atoi(*c);
 	t_col.a = 0;
