@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 14:45:15 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 16:24:01 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	main(int argc, char **argv)
 {
 	t_game		game;
 
+	errno = 0;
 	game.bmp_export = 0;
 	if (argc > 2 && ft_strncmp(argv[2], "--save", 7) == 0)
 		game.bmp_export = 1;

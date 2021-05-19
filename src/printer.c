@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/31 15:31:47 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 15:13:08 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 16:23:01 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 int	print_error(char *msg)
 {
-	printf("Error\n%s\n", msg);
-	strerror(errno);
+	if (errno)
+		printf("Error\n%s: %s\n", msg, strerror(errno));
+	else
+		printf("Error\n%s\n", msg);
 	return (-1);
 }
 
