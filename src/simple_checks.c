@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/17 18:18:24 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/17 18:35:16 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 10:57:49 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	valid_color_string(char *s)
 				num_count++;
 			else if (num_count > 3)
 				return (0);
-			else if (*s != ' ')
+			else if (!ft_iswhitespace(*s))
 				return (0);
 			s++;
 		}

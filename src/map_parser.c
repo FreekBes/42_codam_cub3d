@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/17 18:41:04 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 10:58:21 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ t_map	*string_to_map(char *str)
 	if (map)
 	{
 		lines = ft_split(str, '\n');
+		if (!lines)
+			return (NULL);
 		i = 0;
 		stage = 1;
 		res = 0;
