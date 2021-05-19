@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 21:10:11 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/17 19:10:28 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 12:08:35 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_map	*parse_map(char *map_file)
 		read_res = read(fd, buffer, 255);
 	}
 	if (read_res == 0)
-		map = string_to_map(contents);
+		map = config_to_map(ft_split(contents, '\n'));
 	ft_free(contents);
 	ft_free(buffer);
 	close(fd);

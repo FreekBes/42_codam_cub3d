@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 11:52:01 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 12:08:29 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,30 +98,28 @@ static int	parse_line(int *stage, t_map **map, char *line, int *res)
 	return (0);
 }
 
-t_map	*string_to_map(char *str)
+t_map	*config_to_map(char **config)
 {
 	t_map	*map;
-	char	**lines;
 	size_t	i;
 	int		stage;
 	int		res;
 
+	if (!config)
+		return (NULL);
 	map = new_map();
 	if (map)
 	{
-		lines = ft_split(str, '\n');
-		if (!lines)
-			return (NULL);
 		i = 0;
 		stage = 1;
 		res = 0;
-		while (lines[i] && res >= 0)
+		while (config[i] && res >= 0)
 		{
-			if (parse_line(&stage, &map, lines[i], &res) > 0)
+			if (parse_line(&stage, &map, config[i], &res) > 0)
 				break ;
 			i++;
 		}
-		free_lines(lines);
+		free_lines(config);
 		if (res < 0 || !config_valid(map) || !map_characters_valid(map))
 			return (ft_free(map));
 	}

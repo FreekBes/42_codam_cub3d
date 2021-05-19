@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 22:15:56 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 10:38:33 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 12:05:49 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,3 @@ int	outside(t_game *game, char **temp_lvl, int x, int y)
 		return (1);
 	return (0);
 }
-

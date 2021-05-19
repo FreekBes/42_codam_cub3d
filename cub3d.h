@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 11:37:06 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 12:08:15 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,7 +228,7 @@ int					valid_config_number(char *s, int space_stop);
 int					valid_color_string(char *s);
 int					valid_color_struct(t_col_rgba *col);
 int					parse_level(t_map **map, char *line);
-t_map				*string_to_map(char *str);
+t_map				*config_to_map(char **config);
 t_map				*parse_map(char *map_file);
 int					set_starting_pos(t_game *game);
 int					map_surrounded_by_walls(t_game *game);
