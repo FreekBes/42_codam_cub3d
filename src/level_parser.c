@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 21:24:49 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/16 20:19:05 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 12:17:21 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ static int	remalloc_level(char **level, int lines, int len)
 	}
 	return (1);
 }
+
+// parse a level, line by line. if a line is bigger than any of the lines
+// previously parsed, all previous lines are re-allocated with this new
+// size, to make sure the level is always "rectangular in memory".
 
 int	parse_level(t_map **map, char *line)
 {

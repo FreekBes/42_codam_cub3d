@@ -6,13 +6,13 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 21:10:11 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 12:08:35 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 12:25:47 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-static char	*read_file(char *contents, char *buff, size_t buff_size)
+static char	*append_buffer(char *contents, char *buff, size_t buff_size)
 {
 	char	*temp;
 	size_t	contents_len;
@@ -62,7 +62,7 @@ t_map	*parse_map(char *map_file)
 	read_res = read(fd, buffer, 255);
 	while (read_res > 0)
 	{
-		contents = read_file(contents, buffer, 255);
+		contents = append_buffer(contents, buffer, 255);
 		ft_bzero(buffer, 255);
 		read_res = read(fd, buffer, 255);
 	}

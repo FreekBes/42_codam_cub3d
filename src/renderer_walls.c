@@ -6,11 +6,14 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/13 19:57:36 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/13 21:08:24 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 12:39:49 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+// see https://lodev.org/cgtutor/raycasting.html and renderer_inits.c
+// for an explanation of all methods below.
 
 static void	raycast(t_game *game, t_render_holder_walls *hold)
 {

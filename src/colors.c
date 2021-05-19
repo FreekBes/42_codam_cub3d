@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/31 15:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 11:06:52 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 12:14:25 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ t_col_rgba	uint_to_color(unsigned int color)
 	return (tcol);
 }
 
+// brighten and saturate a color by using bitwise operations
+// could have used calculations here, but that turned out to be
+// really slow really quickly, even for small resolutions
+
 unsigned int	brighten(unsigned int color)
 {
 	unsigned int	saturate;
@@ -46,6 +50,8 @@ unsigned int	darken(unsigned int color)
 {
 	return ((color >> 1) & 8355711);
 }
+
+// parse a color from a string (*c) to an unsigned int *p
 
 int	parse_color_map(unsigned int *p, char **c)
 {

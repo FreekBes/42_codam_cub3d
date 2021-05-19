@@ -6,11 +6,14 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/13 21:08:01 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/13 21:10:18 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 12:33:26 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+// for all methods below, see https://lodev.org/cgtutor/raycasting.html
+// for a thorough explanation on how all of this works.
 
 static void	setup_step_side_dist(t_game *game, t_render_holder_walls *hold)
 {
@@ -94,6 +97,9 @@ void	init_texture_draw(t_game *game, t_render_holder_walls *hold)
 	hold->tex_pos = (hold->draw_start - game->map->res_y
 			/ 2 + hold->line_height / 2) * hold->tex_step;
 }
+
+// see https://lodev.org/cgtutor/raycasting3.html
+// for an explanation of the method below.
 
 void	init_sprite_render(t_game *game, t_render_holder_sprites *hold)
 {

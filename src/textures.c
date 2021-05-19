@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/29 20:47:47 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 11:38:05 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 12:44:28 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	init_texture(t_tex **tex, char *file_path)
 	}
 	return (-1);
 }
+
+// get color at position x, y from a texture
 
 unsigned int	get_color(t_tex *tex, int x, int y)
 {

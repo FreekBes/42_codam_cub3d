@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/29 16:40:22 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/05 21:06:56 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 12:16:08 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // made use of the way integers are stored in memory below.
 // integers are stored backwards in memory, and the BMP format
-// does not use RGB, but BGR, so that comes in handy.
+// does not use RGB, but "BGR", so that comes in handy.
 // there's no need to modify the color value that get_pixel returns,
 // as the alpha channel will just get overwritten by the next pixel
 // (or, in the case of padding, will be ignored).

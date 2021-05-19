@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 21:11:22 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/12 22:22:52 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 12:18:42 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,10 @@ void	free_map(void *mlx, t_map *map)
 		ft_lstclear(&map->sprites, &item_free_simple);
 	free(map);
 }
+
+// copy a level to a new string, useful for operations
+// that would interfere with a playthrough, like changing
+// all 0 characters to * characters.
 
 char	**lvl_copy(t_map *map)
 {

@@ -6,11 +6,19 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/17 18:18:24 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 10:57:49 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 12:43:48 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+// check if a color structure contains no values over 255.
+// originally, I had an unsigned char in place to make sure that this would
+// never happen, but then it overflowed, which caused invalid RGB values
+// to actually output colors. I found that a nice solution, but others may
+// think otherwise, so now each value in the struct is an integer, which does
+// take up more memory, but is able to hold invalid information given in the
+// .cub config file as well, to let the user know there's an error in it.
 
 int	valid_color_struct(t_col_rgba *col)
 {
@@ -18,6 +26,9 @@ int	valid_color_struct(t_col_rgba *col)
 		return (0);
 	return (1);
 }
+
+// check if a string of colors only contains commas, whitespace and three
+// digits between each comma and/or whitespace.
 
 int	valid_color_string(char *s)
 {
@@ -47,6 +58,9 @@ int	valid_color_string(char *s)
 		return (0);
 	return (1);
 }
+
+// check if a numeric string contains just one number without a space
+// in the middle, or up to the EOL character (if space_stop == 1).
 
 int	valid_config_number(char *s, int space_stop)
 {

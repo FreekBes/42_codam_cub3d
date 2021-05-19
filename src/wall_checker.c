@@ -6,11 +6,18 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/19 10:20:18 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 10:39:54 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 12:46:20 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+// modified from
+// https://www.geeksforgeeks.org/boundary-fill-algorithm/
+// below method fills all spaces that aren't walls with * characters.
+// if the map at position x, y is considered "outside" of the level,
+// 1 is returned, stating that the map is invalid, since we can reach
+// places outside of the walls.
 
 int	b_fill(t_game *game, char **lvl, int x, int y)
 {

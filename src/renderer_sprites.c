@@ -6,11 +6,13 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/13 19:54:55 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/13 21:10:13 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 12:39:06 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+// calculate the distance between each sprite and the player
 
 static void	calc_distances(t_game *game)
 {
@@ -31,10 +33,8 @@ static void	calc_distances(t_game *game)
 	}
 }
 
-static int	compare_sprite_distances(void *s1, void *s2)
-{
-	return (((t_sprite *)s1)->dist < ((t_sprite *)s2)->dist);
-}
+// render a single sprite
+// always call init_sprite_render with the holder before calling this one!
 
 static void	render_sprite(t_game *game, t_render_holder_sprites *h)
 {
@@ -63,6 +63,19 @@ static void	render_sprite(t_game *game, t_render_holder_sprites *h)
 		h->stripe++;
 	}
 }
+
+// below method is used as the compare method in ft_lstsort
+
+static int	compare_sprite_distances(void *s1, void *s2)
+{
+	return (((t_sprite *)s1)->dist < ((t_sprite *)s2)->dist);
+}
+
+// render sprites to the image.
+// first, calculate the distance between the player and each sprite.
+// then, sort the list of sprites, so that the one that's the furthest away
+// is the first in the list, which will then get drawn first, so that
+// sprites nearer to the player overwrite the ones further away.
 
 void	render_sprites(t_game *game)
 {

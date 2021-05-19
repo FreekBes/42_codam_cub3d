@@ -6,11 +6,15 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 12:08:29 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 12:24:00 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+// parse resolution, floor and ceiling colors in the config.
+// the function returns 1 as soon as a start of a map was found,
+// instead of a config identifier.
 
 static int	parse_config_attr_more(t_map **map, char *c, char *id)
 {
@@ -40,6 +44,11 @@ static int	parse_config_attr_more(t_map **map, char *c, char *id)
 		return (1);
 	return (0);
 }
+
+// parse paths to textures in the config file.
+// if the config identifier is not for a texture,
+// parse_config_attr_more is ran and returned,
+// where more config attributes are parsed.
 
 static int	parse_config_attr(t_map **map, char *c, char *id)
 {
@@ -74,8 +83,10 @@ static int	parse_config(t_map **map, char *line)
 	return (parse_config_attr(map, c, id));
 }
 
-// no if-elseif in the function below, since stage 2 needs to be run if
-// the result of parse_line > 0 as well.
+// no if-elseif in the root of the function below,
+// since stage 2 needs to be run if the result
+// of parse_line > 0 as well (we've then found the map,
+// and the current line then needs to be parsed as such).
 
 static int	parse_line(int *stage, t_map **map, char *line, int *res)
 {
@@ -97,6 +108,11 @@ static int	parse_line(int *stage, t_map **map, char *line, int *res)
 	}
 	return (0);
 }
+
+// read a configuration, line by line.
+// *config holds an array of strings, each string being one line
+// in a .cub file. This method assumes **config has been created
+// by ft_split, and checks for NULL + frees it as such.
 
 t_map	*config_to_map(char **config)
 {

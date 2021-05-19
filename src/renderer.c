@@ -6,11 +6,14 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/13 20:01:14 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/13 21:11:04 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 12:29:59 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+// render the floor and the ceiling, basically just two rectangles
+// each the size of half the window.
 
 static void	render_floor_ceil(t_game *game)
 {
@@ -31,6 +34,14 @@ static void	render_floor_ceil(t_game *game)
 	put_rect(&game->mlx->img, &floor_rect);
 }
 
+// render the next frame. An overview of the steps:
+// - first check for keys being pressed on the keyboard
+//   and move the camera as such (all in one function)
+// - then sync the mlx core, which is neccessary to avoid flickering
+// - render the floor and the ceiling
+// - overwrite the floor and the ceiling with walls were neccessary
+// - overwrite the floor, ceiling and walls with sprites were neccessary
+
 void	render_next_frame(t_game *game)
 {
 	handle_key_presses(game);
@@ -39,6 +50,10 @@ void	render_next_frame(t_game *game)
 	render_walls(game);
 	render_sprites(game);
 }
+
+// below function renders the next frame and outputs it to the window.
+// these functions are separated in order to support the BMP export
+// functionality without opening an MLX window.
 
 int	draw_next_frame(t_game *game)
 {
