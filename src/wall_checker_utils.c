@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 22:15:56 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/12 22:16:24 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 10:38:33 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,20 @@ int	inside(char **temp_lvl, int x, int y)
 
 // outside check: if
 // - x or y is outside of map boundaries,
-// - the next character on the y axis is a EOL or SPACE character,
+// - the current character is a space or EOL
 // - the current character is "inside" on y axis 0,
-// - the previous character on the y axis was a EOL or SPACE character,
 // return (1): the current position would be outside of the map.
 
 int	outside(t_game *game, char **temp_lvl, int x, int y)
 {
 	if (x == -1 || y == -1)
 		return (1);
-	if (x == game->map->lvl_h || y == game->map->lvl_w - 1)
+	if (x == game->map->lvl_h || y == game->map->lvl_w)
 		return (1);
-	if (temp_lvl[x][y + 1] == '\0' || temp_lvl[x][y + 1] == ' ')
+	if (temp_lvl[x][y] == ' ' || temp_lvl[x][y] == '\0')
 		return (1);
 	if (y == 0 && inside(temp_lvl, x, y))
 		return (1);
-	if (temp_lvl[x][y - 1] == '\0' || temp_lvl[x][y - 1] == ' ')
-		return (1);
 	return (0);
 }
+
