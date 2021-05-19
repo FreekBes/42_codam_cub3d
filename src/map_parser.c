@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 10:58:21 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 11:13:03 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,15 @@ static int	parse_config_attr_more(t_map **map, char *c, char *id)
 	if (id[0] == 'S' && id[1] == ' ')
 		(*map)->tex_sprite = init_texture(c);
 	else if (id[0] == 'F' && id[1] == ' ')
-		parse_color_map(&(*map)->col_floor, &c);
+	{
+		if (parse_color_map(&(*map)->col_floor, &c) < 0)
+			return (-1);
+	}
 	else if (id[0] == 'C' && id[1] == ' ')
-		parse_color_map(&(*map)->col_ceiling, &c);
+	{
+		if (parse_color_map(&(*map)->col_ceiling, &c) < 0)
+			return (-1);
+	}
 	else if (ft_strchr("102NSEW", id[0]) != NULL)
 		return (1);
 	return (0);
@@ -67,8 +73,16 @@ static int	parse_config(t_map **map, char *line)
 
 static int	parse_line(int *stage, t_map **map, char *line, int *res)
 {
-	if (*stage == 1 && parse_config(map, line) > 0)
-		*stage = 2;
+	if (*stage == 1)
+	{
+		*res = parse_config(map, line);
+		if (*res > 0)
+			*stage = 2;
+		else if (*res < 0)
+			return (-1);
+	}
+	else if (*stage == 1 && *res < 0)
+		return (-1);
 	if (*stage == 2)
 	{
 		*res = parse_level(map, line);
@@ -95,7 +109,7 @@ t_map	*string_to_map(char *str)
 		i = 0;
 		stage = 1;
 		res = 0;
-		while (lines[i])
+		while (lines[i] && res >= 0)
 		{
 			if (parse_line(&stage, &map, lines[i], &res) > 0)
 				break ;

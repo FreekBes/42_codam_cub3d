@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/31 15:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/17 17:28:01 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 11:06:52 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	parse_color_map(unsigned int *p, char **c)
 {
 	t_col_rgba		t_col;
 
+	if (*p != COLOR_VALUE_UNDEFINED)
+		return (-1);
 	if (!valid_color_string(*c) || !ft_isdigit(**c))
 		return (-1);
 	t_col.r = ft_atoi(*c);
