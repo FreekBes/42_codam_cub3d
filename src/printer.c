@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/31 15:31:47 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/07 18:10:02 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 15:13:08 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,19 @@ void	print_level(t_map map, char **lvl)
 void	print_map(t_map map, char **lvl)
 {
 	printf("res_x: %i\nres_y: %i\n", (int)map.res_x, (int)map.res_y);
-	printf("tex_no: %s\n", map.tex_no->file_path);
-	printf("tex_so: %s\n", map.tex_so->file_path);
-	printf("tex_we: %s\n", map.tex_we->file_path);
-	printf("tex_ea: %s\n", map.tex_ea->file_path);
-	printf("tex_sprite: %s\n", map.tex_sprite->file_path);
+	if (map.tex_no)
+		printf("tex_no: %s\n", map.tex_no->file_path);
+	if (map.tex_so)
+		printf("tex_so: %s\n", map.tex_so->file_path);
+	if (map.tex_we)
+		printf("tex_we: %s\n", map.tex_we->file_path);
+	if (map.tex_ea)
+		printf("tex_ea: %s\n", map.tex_ea->file_path);
+	if (map.tex_sprite)
+		printf("tex_sprite: %s\n", map.tex_sprite->file_path);
 	printf("col_floor: 0x%X\n", map.col_floor);
 	printf("col_ceiling: 0x%X\n", map.col_ceiling);
 	printf("lvl_w: %d, lvl_h: %d\n", map.lvl_w, map.lvl_h);
+	printf("\n==== LEVEL ====\n");
 	print_level(map, lvl);
 }

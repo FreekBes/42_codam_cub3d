@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 21:11:22 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 12:18:42 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 14:59:03 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ t_map	*new_map(void)
 	map = (t_map *)malloc(sizeof(t_map));
 	if (map)
 	{
-		map->res_x = 0;
-		map->res_y = 0;
+		map->res_x = -1;
+		map->res_y = -1;
 		map->lvl = NULL;
 		map->lvl_w = 0;
 		map->lvl_h = 0;
@@ -51,7 +51,7 @@ int	free_lvl(char **lvl, size_t lvl_h)
 	return (0);
 }
 
-void	free_map(void *mlx, t_map *map)
+void	*free_map(void *mlx, t_map *map)
 {
 	if (map->tex_no)
 		free_texture(mlx, map->tex_no);
@@ -67,7 +67,8 @@ void	free_map(void *mlx, t_map *map)
 		free_lvl(map->lvl, map->lvl_h);
 	if (map->sprites)
 		ft_lstclear(&map->sprites, &item_free_simple);
-	free(map);
+	ft_free(map);
+	return (NULL);
 }
 
 // copy a level to a new string, useful for operations

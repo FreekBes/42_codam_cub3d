@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 12:52:24 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 14:38:11 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,8 @@ typedef struct s_render_holder_walls
 	double			tex_step;
 }					t_render_holder_walls;
 
+int					set_err(int *err, int n);
+char				*get_config_error(int *err);
 void				free_lines(char **lines);
 void				item_free_simple(void *content);
 char				*skip_spaces(char *c);
@@ -221,16 +223,16 @@ int					parse_color_map(unsigned int *p, char **c);
 int					free_lvl(char **lvl, size_t lvl_h);
 char				**lvl_copy(t_map *map);
 t_map				*new_map(void);
-void				free_map(void *mlx, t_map *map);
+void				*free_map(void *mlx, t_map *map);
 int					extension_valid(char *file_name, char *ext);
-int					map_characters_valid(t_map *map);
-int					config_valid(t_map *map);
+int					map_characters_valid(t_map *map, int *err);
+int					config_valid(t_map *map, int *err);
 int					valid_config_number(char *s, int space_stop);
 int					valid_color_string(char *s);
 int					valid_color_struct(t_col_rgba *col);
 int					parse_level(t_map **map, char *line);
-t_map				*config_to_map(char **config);
-t_map				*parse_map(char *map_file);
+t_map				*config_to_map(char **config, int *err);
+t_map				*parse_map(char *map_file, int *err);
 int					set_starting_pos(t_game *game);
 int					map_surrounded_by_walls(t_game *game);
 t_mlx_ctx			*get_mlx_context(t_map *map, char *win_title);
@@ -258,7 +260,7 @@ int					keyrelease(int keycode, t_game *game);
 int					keypress(int keycode, t_game *game);
 void				handle_key_presses(t_game *game);
 void				reset_key_presses(t_keys_status *key_status);
-int					exit_game(t_game *game, char *error_msg);
+int					exit_game(t_game *game, char *error_msg, char *m_error_msg);
 int					mouse_show_hide(t_game *game, int hidden);
 int					move_mouse(t_game *game, int x, int y);
 void				init_ray(t_game *game, t_render_holder_walls *hold);

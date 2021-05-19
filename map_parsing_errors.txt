@@ -1,0 +1,27 @@
+-2:  empty configuration in config file
+-3:  window resolution set multiple times
+-4:  could not parse floor color
+-5:  could not parse ceiling color
+-6:  out of memory
+-7:  invalid resolution set
+-8:  texture configuration set multiple times
+-10: floor or ceiling color is defined multiple times
+-11: invalid color set for floor or ceiling
+-30: invalid extension for config file
+-31: could not open config file
+-33: an error occurred while reading config file
+-40: invalid character in map
+-41: start position set multiple times
+-42: map not defined in config file
+-43: resolution not defined in config file
+-44: floor or ceiling color not defined in config file
+-50: failed to create BMP file
+-51: failed to write BMP file
+-60: failed to parse xpm texture file
+-61: failed to parse NO texture
+-62: failed to parse SO texture
+-63: failed to parse WE texture
+-64: failed to parse EA texture
+-65: failed to parse sprite texture
+-66: one or more texture(s) is not defined in config file
+-67: invalid extension for texture file

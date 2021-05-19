@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/29 16:40:22 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 12:16:08 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 13:44:59 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@ static int	write_bmp(char *bmp, size_t bmp_size, char *file_name)
 	{
 		if (write(fd, bmp, bmp_size) == (ssize_t)bmp_size)
 			return (1);
+		else
+			return (-51);
 	}
-	return (-1);
+	return (-50);
 }
 
 static void	set_bmp_header(t_game *game, char *bmp, int *f_size, int *d_offset)
@@ -92,9 +94,9 @@ int	export_frame_as_bmp(t_game *game, char *file_name)
 		frame_to_bmp_img_data(game, bmp + img_data_offset);
 		write_return_val = write_bmp(bmp, file_size, file_name);
 		free(bmp);
-		if (write_return_val > 0)
-			return (1);
-		return (-1);
+		if (write_return_val < 0)
+			return (write_return_val);
+		return (1);
 	}
 	return (-1);
 }

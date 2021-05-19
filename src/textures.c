@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/29 20:47:47 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 12:44:28 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 15:28:30 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 int	init_texture(t_tex **tex, char *file_path)
 {
+	if (!extension_valid(file_path, ".xpm")
+		&& !extension_valid(file_path, ".XPM"))
+		return (-67);
 	if (*tex)
-		return (-1);
+		return (-8);
 	*tex = (t_tex *)malloc(sizeof(t_tex));
 	if (tex)
 	{
@@ -25,12 +28,12 @@ int	init_texture(t_tex **tex, char *file_path)
 		if (!(*tex)->file_path)
 		{
 			ft_free(*tex);
-			return (-1);
+			return (-6);
 		}
 		(*tex)->img.img_ptr = NULL;
 		return (0);
 	}
-	return (-1);
+	return (-6);
 }
 
 // get color at position x, y from a texture
@@ -46,7 +49,7 @@ unsigned int	get_color(t_tex *tex, int x, int y)
 
 void	free_texture(void *mlx, t_tex *tex)
 {
-	if (tex->img.img_ptr)
+	if (mlx && tex->img.img_ptr)
 		mlx_destroy_image(mlx, tex->img.img_ptr);
 	free(tex->file_path);
 	free(tex);
@@ -68,18 +71,18 @@ int	parse_textures(t_game *game)
 {
 	if (!(game->map->tex_no)
 		|| parse_texture(game->mlx->core, game->map->tex_no) < 0)
-		return (-1);
+		return (-61);
 	if (!(game->map->tex_so)
 		|| parse_texture(game->mlx->core, game->map->tex_so) < 0)
-		return (-1);
+		return (-62);
 	if (!(game->map->tex_we)
 		|| parse_texture(game->mlx->core, game->map->tex_we) < 0)
-		return (-1);
+		return (-63);
 	if (!(game->map->tex_ea)
 		|| parse_texture(game->mlx->core, game->map->tex_ea) < 0)
-		return (-1);
+		return (-64);
 	if (!(game->map->tex_sprite)
 		|| parse_texture(game->mlx->core, game->map->tex_sprite) < 0)
-		return (-1);
+		return (-65);
 	return (1);
 }

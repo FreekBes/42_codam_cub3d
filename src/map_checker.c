@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/28 16:20:44 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 12:19:27 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 15:18:17 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	extension_valid(char *file_name, char *ext)
 	return (1);
 }
 
-int	map_characters_valid(t_map *map)
+int	map_characters_valid(t_map *map, int *err)
 {
 	int		i;
 	int		j;
@@ -43,11 +43,11 @@ int	map_characters_valid(t_map *map)
 		while (j < map->lvl_w)
 		{
 			if (!ft_strchr(" 012NSEW", map->lvl[i][j]))
-				return (0);
+				return (set_err(err, -40));
 			if (map->lvl[i][j] && ft_strchr("NSEW", map->lvl[i][j]))
 			{
 				if (start_found)
-					return (0);
+					return (set_err(err, -41));
 				start_found = 1;
 			}
 			j++;
@@ -57,14 +57,19 @@ int	map_characters_valid(t_map *map)
 	return (1);
 }
 
-int	config_valid(t_map *map)
+int	config_valid(t_map *map, int *err)
 {
+	if (map->res_x == -1 || map->res_y == -1)
+		return (set_err(err, -43));
+	if (!map->tex_no || !map->tex_so || !map->tex_ea
+		|| !map->tex_we || !map->tex_sprite)
+		return (set_err(err, -66));
+	else if (map->res_x <= 0 || map->res_y <= 0)
+		return (set_err(err, -7));
 	if (map->lvl_w == 0 || map->lvl_h == 0)
-		return (0);
-	if (map->res_x <= 0 || map->res_y <= 0)
-		return (0);
+		return (set_err(err, -42));
 	if (map->col_floor == COLOR_VALUE_UNDEFINED
 		|| map->col_ceiling == COLOR_VALUE_UNDEFINED)
-		return (0);
+		return (set_err(err, -44));
 	return (1);
 }

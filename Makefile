@@ -6,7 +6,7 @@
 #    By: fbes <fbes@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/04/21 20:02:11 by fbes          #+#    #+#                  #
-#    Updated: 2021/05/17 18:22:49 by fbes          ########   odam.nl          #
+#    Updated: 2021/05/19 13:33:26 by fbes          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ SRCS =		main.c src/helpers.c src/printer.c src/map.c src/map_reader.c \
 			src/drawer.c src/export.c src/textures.c src/start_pos.c \
 			src/colors.c src/sprites.c src/renderer_sprites.c \
 			src/renderer_inits.c src/renderer_walls.c src/renderer.c \
-			src/camera.c src/controls.c src/lin/mouse.c src/window.c
+			src/camera.c src/controls.c src/lin/mouse.c src/window.c \
+			src/errors.c
 else
 SRCS =		main.c src/helpers.c src/printer.c src/map.c src/map_reader.c \
 			src/level_parser.c src/map_parser.c src/map_checker.c \
@@ -29,7 +30,8 @@ SRCS =		main.c src/helpers.c src/printer.c src/map.c src/map_reader.c \
 			src/drawer.c src/export.c src/textures.c src/start_pos.c \
 			src/colors.c src/sprites.c src/renderer_sprites.c \
 			src/renderer_inits.c src/renderer_walls.c src/renderer.c \
-			src/camera.c src/controls.c src/mac/mouse.c src/window.c
+			src/camera.c src/controls.c src/mac/mouse.c src/window.c \
+			src/errors.c
 endif
 
 OBJS =		$(SRCS:.c=.o)

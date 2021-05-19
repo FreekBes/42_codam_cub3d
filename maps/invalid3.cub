@@ -5,6 +5,6 @@ WE ./textures/brick.xpm
 EA ./textures/stone.xpm
 S ./textures/grass.xpm
 F   120, 120, 120
-C   300, 300,  300
+C   20, 32, 25
 
 N

@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 13:05:31 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 15:19:36 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,16 @@ static int	parse_config_attr_more(t_map **map, char *c, char *id)
 			c = skip_spaces(skip_non_spaces(c));
 			if (valid_config_number(c, 0))
 				(*map)->res_y = ft_atoi(c);
+			else
+				return (-7);
 		}
+		else
+			return (-7);
 	}
 	else if (id[0] == 'F' && id[1] == ' ')
-	{
-		if (parse_color_map(&(*map)->col_floor, &c) < 0)
-			return (-4);
-	}
+		return (parse_color_map(&(*map)->col_floor, &c));
 	else if (id[0] == 'C' && id[1] == ' ')
-	{
-		if (parse_color_map(&(*map)->col_ceiling, &c) < 0)
-			return (-5);
-	}
+		return (parse_color_map(&(*map)->col_ceiling, &c));
 	else if (ft_strchr("102NSEW", id[0]) != NULL)
 		return (1);
 	return (0);
@@ -54,7 +52,7 @@ static int	parse_config_attr(t_map **map, char *c, char *id)
 {
 	int		res;
 
-	if (ft_strlen(id) < 3)
+	if (ft_strlen(id) < 3 && ft_strchr("102NSEW", id[0]) == NULL)
 		return (-2);
 	if (id[0] == 'N' && id[1] == 'O' && id[2] == ' ')
 		res = init_texture(&(*map)->tex_no, c);
@@ -114,12 +112,11 @@ static int	parse_line(int *stage, t_map **map, char *line, int *res)
 // in a .cub file. This method assumes **config has been created
 // by ft_split, and checks for NULL + frees it as such.
 
-t_map	*config_to_map(char **config)
+t_map	*config_to_map(char **config, int *err)
 {
 	t_map	*map;
 	size_t	i;
 	int		stage;
-	int		res;
 
 	if (!config)
 		return (NULL);
@@ -128,16 +125,17 @@ t_map	*config_to_map(char **config)
 	{
 		i = 0;
 		stage = 1;
-		res = 0;
-		while (config[i] && res >= 0)
+		*err = 0;
+		while (config[i] && *err >= 0)
 		{
-			if (parse_line(&stage, &map, config[i], &res) > 0)
+			if (parse_line(&stage, &map, config[i], err) > 0)
 				break ;
 			i++;
 		}
 		free_lines(config);
-		if (res < 0 || !config_valid(map) || !map_characters_valid(map))
-			return (ft_free(map));
+		if (*err < 0 || config_valid(map, err) < 0
+			|| map_characters_valid(map, err) < 0)
+			return (free_map(NULL, map));
 	}
 	return (map);
 }
