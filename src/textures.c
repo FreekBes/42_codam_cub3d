@@ -6,25 +6,31 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/29 20:47:47 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/05 20:31:02 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 11:38:05 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-t_tex	*init_texture(char *file_path)
+int	init_texture(t_tex **tex, char *file_path)
 {
-	t_tex	*tex;
-
-	tex = (t_tex *)malloc(sizeof(t_tex));
+	if (*tex)
+		return (-1);
+	*tex = (t_tex *)malloc(sizeof(t_tex));
 	if (tex)
 	{
-		tex->h = 0;
-		tex->w = 0;
-		tex->file_path = ft_strdup(file_path);
-		tex->img.img_ptr = NULL;
+		(*tex)->h = 0;
+		(*tex)->w = 0;
+		(*tex)->file_path = ft_strdup(file_path);
+		if (!(*tex)->file_path)
+		{
+			ft_free(*tex);
+			return (-1);
+		}
+		(*tex)->img.img_ptr = NULL;
+		return (0);
 	}
-	return (tex);
+	return (-1);
 }
 
 unsigned int	get_color(t_tex *tex, int x, int y)

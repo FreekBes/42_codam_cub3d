@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 11:13:03 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 11:37:18 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,18 @@
 
 static int	parse_config_attr_more(t_map **map, char *c, char *id)
 {
-	if (id[0] == 'S' && id[1] == ' ')
-		(*map)->tex_sprite = init_texture(c);
+	if (id[0] == 'R' && id[1] == ' ')
+	{
+		if ((*map)->res_x > 0 || (*map)->res_y > 0)
+			return (-1);
+		if (valid_config_number(c, 1))
+		{
+			(*map)->res_x = ft_atoi(c);
+			c = skip_spaces(skip_non_spaces(c));
+			if (valid_config_number(c, 0))
+				(*map)->res_y = ft_atoi(c);
+		}
+	}
 	else if (id[0] == 'F' && id[1] == ' ')
 	{
 		if (parse_color_map(&(*map)->col_floor, &c) < 0)
@@ -33,29 +43,23 @@ static int	parse_config_attr_more(t_map **map, char *c, char *id)
 
 static int	parse_config_attr(t_map **map, char *c, char *id)
 {
+	int		res;
+
 	if (ft_strlen(id) < 3)
-		return (0);
-	if (id[0] == 'R' && id[1] == ' ')
-	{
-		if (valid_config_number(c, 1))
-		{
-			(*map)->res_x = ft_atoi(c);
-			c = skip_spaces(skip_non_spaces(c));
-			if (valid_config_number(c, 0))
-				(*map)->res_y = ft_atoi(c);
-		}
-	}
-	else if (id[0] == 'N' && id[1] == 'O' && id[2] == ' ')
-		(*map)->tex_no = init_texture(c);
+		return (-1);
+	if (id[0] == 'N' && id[1] == 'O' && id[2] == ' ')
+		res = init_texture(&(*map)->tex_no, c);
 	else if (id[0] == 'S' && id[1] == 'O' && id[2] == ' ')
-		(*map)->tex_so = init_texture(c);
+		res = init_texture(&(*map)->tex_so, c);
 	else if (id[0] == 'W' && id[1] == 'E' && id[2] == ' ')
-		(*map)->tex_we = init_texture(c);
+		res = init_texture(&(*map)->tex_we, c);
 	else if (id[0] == 'E' && id[1] == 'A' && id[2] == ' ')
-		(*map)->tex_ea = init_texture(c);
+		res = init_texture(&(*map)->tex_ea, c);
+	else if (id[0] == 'S' && id[1] == ' ')
+		res = init_texture(&(*map)->tex_sprite, c);
 	else
 		return (parse_config_attr_more(map, c, id));
-	return (0);
+	return (res);
 }
 
 static int	parse_config(t_map **map, char *line)
