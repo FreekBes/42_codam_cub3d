@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 21:10:11 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 16:02:13 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 16:06:26 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,22 @@ static int	init_map_parser(char *map_file, char **cont, int *fd, void **buff)
 	return (1);
 }
 
-static int	read_map(int fd, void *buffer, char *contents, int *err)
+static int	read_map(int fd, void **buffer, char **contents, int *err)
 {
 	int		read_res;
 
-	read_res = read(fd, buffer, 255);
+	read_res = read(fd, *buffer, 255);
 	while (read_res > 0)
 	{
-		contents = append_buffer(contents, buffer, 255);
-		if (!contents)
+		*contents = append_buffer(*contents, *buffer, 255);
+		if (!*contents)
 		{
 			*err = -6;
 			read_res = 1;
 			break ;
 		}
-		ft_bzero(buffer, 255);
-		read_res = read(fd, buffer, 255);
+		ft_bzero(*buffer, 255);
+		read_res = read(fd, *buffer, 255);
 	}
 	return (read_res);
 }
@@ -85,7 +85,7 @@ t_map	*parse_map(char *map_file, int *err)
 	*err = init_map_parser(map_file, &contents, &fd, &buffer);
 	if (*err < 0)
 		return (NULL);
-	read_res = read_map(fd, buffer, contents, err);
+	read_res = read_map(fd, &buffer, &contents, err);
 	if (read_res == 0)
 		map = config_to_map(ft_split(contents, '\n'), err);
 	else if (read_res < 0)
