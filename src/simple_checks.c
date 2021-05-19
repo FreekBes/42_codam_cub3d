@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/17 18:18:24 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 12:43:48 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 13:16:25 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ int	valid_color_string(char *s)
 	while (*s && comma_count < 3)
 	{
 		num_count = 0;
-		while (*s && *s != ',')
+		while (*s && *s != ',' && num_count < 4)
 		{
-			if (num_count < 4 && ft_isdigit(*s))
+			if (ft_isdigit(*s))
 				num_count++;
-			else if (num_count > 3)
-				return (0);
 			else if (!ft_iswhitespace(*s))
 				return (0);
 			s++;
 		}
+		if (num_count > 3)
+			return (0);
 		if (*s == ',')
 			comma_count++;
 		if (*s)
