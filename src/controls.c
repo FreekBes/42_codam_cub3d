@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/13 20:03:29 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 14:39:02 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 16:29:17 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	handle_key_presses(t_game *game)
 int	keypress(int keycode, t_game *game)
 {
 	if (keycode == KEY_ESC)
-		exit_game(game, NULL, NULL);
+		exit_game(game, 0, NULL, NULL);
 	else if (keycode == KEY_LEFT)
 		game->key_stat.left = 1;
 	else if (keycode == KEY_RIGHT)

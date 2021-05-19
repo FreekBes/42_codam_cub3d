@@ -25,3 +25,10 @@
 -65: failed to parse sprite texture
 -66: one or more texture(s) is not defined in config file
 -67: invalid extension for texture file
+
+-100: start position in map is invalid or not set
+-101: map is not surrounded by walls
+-102: failed to create an MLX instance
+-103: failed to parse textures
+-104: failed to allocate memory for z_buffer
+-105: failed to export frame to BMP
