@@ -6,28 +6,29 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/17 19:02:23 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 12:52:51 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	exit_game(t_game game, char *error_msg)
+int	exit_game(t_game *game, char *error_msg)
 {
-	mouse_show_hide(&game, 0);
+	if (game->bmp_export == 0)
+		mouse_show_hide(game, 0);
 	if (error_msg)
 		print_error(error_msg);
-	free_map(game.mlx->core, game.map);
-	free_mlx_context(game.mlx);
-	if (game.cam.z_buffer)
-		free(game.cam.z_buffer);
+	free_map(game->mlx->core, game->map);
+	free_mlx_context(game->mlx);
+	if (game->cam.z_buffer)
+		free(game->cam.z_buffer);
 	exit(0);
 	return (0);
 }
 
 static int	exit_hook(t_game *game)
 {
-	return (exit_game(*game, NULL));
+	return (exit_game(game, NULL));
 }
 
 static void	init_game_win(t_game *game)
@@ -53,37 +54,36 @@ static int	setup_map(t_game *game, int save_bmp, char **argv)
 	if (!game->map)
 		return (print_error(ERR_MAP_READ_PARSE));
 	if (set_starting_pos(game) < 0)
-		return (print_error(ERR_START_POS));
+		exit_game(game, ERR_START_POS);
 	if (!map_surrounded_by_walls(game))
-		return (print_error(ERR_MAP_WALLS_MISSING));
+		exit_game(game, ERR_MAP_WALLS_MISSING);
 	if (save_bmp == 0)
 		game->mlx = get_mlx_context(game->map, argv[0]);
 	else
 		game->mlx = get_mlx_context(game->map, NULL);
 	if (!game->mlx)
-		exit_game(*game, ERR_CREATE_MLX_CONTEXT);
+		exit_game(game, ERR_CREATE_MLX_CONTEXT);
 	if (parse_textures(game) < 0)
-		exit_game(*game, ERR_TEXTURE_PARSE);
+		exit_game(game, ERR_TEXTURE_PARSE);
 	parse_sprites(game);
 	game->cam.z_buffer = (double *)malloc(sizeof(double) * game->map->res_x);
 	if (!game->cam.z_buffer)
-		exit_game(*game, ERR_Z_BUFFER_ALLOC);
+		exit_game(game, ERR_Z_BUFFER_ALLOC);
 	return (1);
 }
 
 int	main(int argc, char **argv)
 {
 	t_game		game;
-	int			save_bmp;
 
-	save_bmp = 0;
+	game.bmp_export = 0;
 	if (argc > 2 && ft_strncmp(argv[2], "--save", 7) == 0)
-		save_bmp = 1;
+		game.bmp_export = 1;
 	if (argc < 2)
 		return (print_error(ERR_MAP_MISSING));
-	if (setup_map(&game, save_bmp, argv) != 1)
+	if (setup_map(&game, game.bmp_export, argv) != 1)
 		return (0);
-	if (save_bmp == 0)
+	if (game.bmp_export == 0)
 	{
 		init_game_win(&game);
 		mlx_loop(game.mlx->core);
@@ -92,7 +92,7 @@ int	main(int argc, char **argv)
 	{
 		render_next_frame(&game);
 		if (export_frame_as_bmp(&game, "cub3d.bmp") != 1)
-			exit_game(game, ERR_BMP_EXPORT);
+			exit_game(&game, ERR_BMP_EXPORT);
 	}
-	return (exit_game(game, NULL));
+	return (exit_game(&game, NULL));
 }

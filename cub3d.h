@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 12:08:15 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 12:52:24 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ typedef struct s_game
 	t_mlx_ctx		*mlx;
 	t_map			*map;
 	t_cam			cam;
+	int				bmp_export;
 }					t_game;
 
 typedef struct s_render_holder_sprites
@@ -257,7 +258,7 @@ int					keyrelease(int keycode, t_game *game);
 int					keypress(int keycode, t_game *game);
 void				handle_key_presses(t_game *game);
 void				reset_key_presses(t_keys_status *key_status);
-int					exit_game(t_game game, char *error_msg);
+int					exit_game(t_game *game, char *error_msg);
 int					mouse_show_hide(t_game *game, int hidden);
 int					move_mouse(t_game *game, int x, int y);
 void				init_ray(t_game *game, t_render_holder_walls *hold);
