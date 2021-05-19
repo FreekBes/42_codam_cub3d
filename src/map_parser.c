@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 11:37:18 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 11:52:01 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	parse_config_attr_more(t_map **map, char *c, char *id)
 	if (id[0] == 'R' && id[1] == ' ')
 	{
 		if ((*map)->res_x > 0 || (*map)->res_y > 0)
-			return (-1);
+			return (-3);
 		if (valid_config_number(c, 1))
 		{
 			(*map)->res_x = ft_atoi(c);
@@ -29,12 +29,12 @@ static int	parse_config_attr_more(t_map **map, char *c, char *id)
 	else if (id[0] == 'F' && id[1] == ' ')
 	{
 		if (parse_color_map(&(*map)->col_floor, &c) < 0)
-			return (-1);
+			return (-4);
 	}
 	else if (id[0] == 'C' && id[1] == ' ')
 	{
 		if (parse_color_map(&(*map)->col_ceiling, &c) < 0)
-			return (-1);
+			return (-5);
 	}
 	else if (ft_strchr("102NSEW", id[0]) != NULL)
 		return (1);
@@ -46,7 +46,7 @@ static int	parse_config_attr(t_map **map, char *c, char *id)
 	int		res;
 
 	if (ft_strlen(id) < 3)
-		return (-1);
+		return (-2);
 	if (id[0] == 'N' && id[1] == 'O' && id[2] == ' ')
 		res = init_texture(&(*map)->tex_no, c);
 	else if (id[0] == 'S' && id[1] == 'O' && id[2] == ' ')
@@ -68,6 +68,8 @@ static int	parse_config(t_map **map, char *line)
 	char	*id;
 
 	id = skip_spaces(line);
+	if (*id == '\0')
+		return (0);
 	c = skip_spaces(skip_non_spaces(id));
 	return (parse_config_attr(map, c, id));
 }

@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/07 16:35:40 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/12 21:36:12 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/19 11:56:20 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ void	item_free_simple(void *content)
 
 char	*skip_spaces(char *c)
 {
-	while (*c && *c == ' ')
+	while (*c && ft_iswhitespace(*c))
 		c++;
 	return (c);
 }
 
 char	*skip_non_spaces(char *c)
 {
-	while (*c && *c != ' ')
+	while (*c && !ft_iswhitespace(*c))
 		c++;
 	return (c);
 }
