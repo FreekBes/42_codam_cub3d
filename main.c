@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/21 14:00:39 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/21 15:34:47 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 int	exit_game(t_game *game, int exit_code, char *error_msg, char *m_error_msg)
 {
 	if (game->bmp_export == 0)
+	{
 		mouse_show_hide(game, 0);
+		mlx_do_key_autorepeaton(game->mlx->core);
+	}
 	if (error_msg && !m_error_msg)
 		print_error(error_msg);
 	if (m_error_msg)
@@ -46,6 +49,7 @@ static void	init_game_win(t_game *game)
 {
 	reset_key_presses(&game->key_stat);
 	mouse_show_hide(game, 1);
+	mlx_do_key_autorepeatoff(game->mlx->core);
 	move_mouse(game, game->map->res_x / 2, game->map->res_y / 2);
 	mlx_hook(game->mlx->win, 17, 1L << 17, &exit_hook, game);
 	mlx_hook(game->mlx->win, 2, 1L << 0, &keypress, game);
