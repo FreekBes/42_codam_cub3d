@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/13 20:01:14 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/21 13:48:42 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/21 15:53:29 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ static void	render_floor_ceil(t_game *game)
 	ceil_rect.w = game->map->res_x;
 	ceil_rect.h = game->map->res_y * 0.5;
 	ceil_rect.c = game->map->col_ceiling;
-	put_rect(&game->mlx->img, &ceil_rect);
+	put_rect(game->mlx, &ceil_rect);
 	floor_rect.x = 0;
 	floor_rect.y = game->map->res_y * 0.5;
 	floor_rect.w = game->map->res_x;
 	floor_rect.h = floor_rect.y;
 	floor_rect.c = game->map->col_floor;
-	put_rect(&game->mlx->img, &floor_rect);
+	put_rect(game->mlx, &floor_rect);
 }
 
 // render the next frame. An overview of the steps:

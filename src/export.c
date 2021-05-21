@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/29 16:40:22 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/21 15:26:56 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/21 15:44:28 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	write_bmp_line(t_game *game, char **data, int y)
 	x = 0;
 	while (x < (int)(game->map->res_x))
 	{
-		c = get_pixel(&game->mlx->img, x, y);
+		c = get_color(&game->mlx->img, x, y);
 		if (game->mlx->img.endian == 1)
 			c = convert_endian(1, c);
 		*(unsigned int *)(*data) = c;

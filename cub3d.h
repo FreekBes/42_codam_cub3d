@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/21 15:09:17 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/21 15:53:07 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,7 @@ void				free_texture(void *mlx, t_tex *tex);
 int					parse_textures(t_game *game);
 void				parse_sprites(t_game *game);
 void				render_sprites(t_game *game);
-unsigned int		get_color(t_tex *tex, int x, int y);
+unsigned int		get_color(t_img *img, int x, int y);
 int					parse_color_map(unsigned int *p, char **c);
 int					free_lvl(char **lvl, size_t lvl_h);
 char				**lvl_copy(t_map *map);
@@ -240,12 +240,11 @@ void				*free_mlx_context(t_mlx_ctx *ctx);
 unsigned int		color_to_uint(t_col_rgba *color);
 t_col_rgba			uint_to_color(unsigned int color);
 unsigned int		convert_endian(int from_endian, unsigned int c);
-void				put_pixel(t_img *img, int x, int y, unsigned int color);
-void				put_pixel_endian(t_img *img, t_coords *p,
+void				put_pixel(t_mlx_ctx *mlx, int x, int y, unsigned int color);
+void				put_pixel_endian(t_mlx_ctx *mlx, t_coords *p,
 						unsigned int c, int c_endian);
-unsigned int		get_pixel(t_img *img, int x, int y);
-void				put_rect(t_img *img, t_rect *rect);
-void				clear_img(t_img *img, t_map *map);
+void				put_rect(t_mlx_ctx *mlx, t_rect *rect);
+void				clear_img(t_mlx_ctx *mlx, t_map *map);
 int					export_frame_as_bmp(t_game *game, char *file_name);
 t_map_node			*new_map_node(int x, int y, char c);
 int					clear_queue(t_list *queue, char **temp_lvl, size_t lvl_h);

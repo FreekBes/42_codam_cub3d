@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/13 19:54:55 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/21 15:39:52 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/21 15:49:42 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,10 @@ static void	render_sprite(t_game *game, t_render_holder_sprites *h)
 					+ h->sprite_dims.h * 128;
 				h->tex_c.y = ((h->d * h->sprite->tex->h)
 						/ h->sprite_dims.h) / 256;
-				h->color = get_color(h->sprite->tex, h->tex_c.x, h->tex_c.y);
+				h->color = get_color(&(h->sprite->tex->img),
+						h->tex_c.x, h->tex_c.y);
 				if ((h->color & 0x00FFFFFF) != 0)
-					put_pixel(&game->mlx->img, h->stripe, h->y, h->color);
+					put_pixel(game->mlx, h->stripe, h->y, h->color);
 				h->y++;
 			}
 		}

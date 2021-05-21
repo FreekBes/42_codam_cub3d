@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/13 19:57:36 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 12:39:49 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/21 15:49:52 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,13 @@ static void	draw_wall_y(t_game *game, t_render_holder_walls *hold)
 	{
 		hold->tex_c.y = (int)hold->tex_pos & (hold->tex->h - 1);
 		hold->tex_pos += hold->tex_step;
-		hold->color = get_color(hold->tex, hold->tex_c.x, hold->tex_c.y);
+		hold->color = get_color(&(hold->tex->img),
+				hold->tex_c.x, hold->tex_c.y);
 		if (hold->side == 1 && hold->ray_dir.y > 0)
 			hold->color = brighten(hold->color);
 		else if (hold->side == 1 && hold->ray_dir.y <= 0)
 			hold->color = darken(hold->color);
-		put_pixel(&game->mlx->img, hold->pixel.x, hold->pixel.y, hold->color);
+		put_pixel(game->mlx, hold->pixel.x, hold->pixel.y, hold->color);
 		hold->pixel.y++;
 	}
 }

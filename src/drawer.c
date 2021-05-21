@@ -6,40 +6,34 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/31 15:38:00 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/21 15:11:53 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/21 15:52:57 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	put_pixel(t_img *img, int x, int y, unsigned int c)
+void	put_pixel(t_mlx_ctx *mlx, int x, int y, unsigned int c)
 {
 	char	*dst;
 
-	dst = img->address + y * img->line_size + x * (img->bits_per_pixel / 8);
-	*(unsigned int *)dst = c;
+	dst = mlx->img.address + y * mlx->img.line_size
+		+ x * (mlx->img.bits_per_pixel / 8);
+	*(unsigned int *)dst = mlx_get_color_value(mlx->core, c);
 }
 
-void	put_pixel_endian(t_img *img, t_coords *p, unsigned int c, int c_endian)
+void	put_pixel_endian(t_mlx_ctx *mlx, t_coords *pos,
+			unsigned int c, int c_endian)
 {
 	char	*dst;
 
-	dst = img->address + p->y * img->line_size
-		+ p->x * (img->bits_per_pixel / 8);
-	if (img->endian != c_endian)
+	dst = mlx->img.address + pos->y * mlx->img.line_size
+		+ pos->x * (mlx->img.bits_per_pixel / 8);
+	if (mlx->img.endian != c_endian)
 		c = convert_endian(c_endian, c);
-	*(unsigned int *)dst = c;
+	*(unsigned int *)dst = mlx_get_color_value(mlx->core, c);
 }
 
-unsigned int	get_pixel(t_img *img, int x, int y)
-{
-	char	*dst;
-
-	dst = img->address + y * img->line_size + x * (img->bits_per_pixel / 8);
-	return (*(unsigned int *)dst);
-}
-
-void	put_rect(t_img *img, t_rect *rect)
+void	put_rect(t_mlx_ctx *mlx, t_rect *rect)
 {
 	t_coords		pos;
 
@@ -49,14 +43,14 @@ void	put_rect(t_img *img, t_rect *rect)
 		pos.x = rect->x;
 		while (pos.x < rect->w + rect->x)
 		{
-			put_pixel_endian(img, &pos, rect->c, 0);
+			put_pixel_endian(mlx, &pos, rect->c, 0);
 			pos.x++;
 		}
 		pos.y++;
 	}
 }
 
-void	clear_img(t_img *img, t_map *map)
+void	clear_img(t_mlx_ctx *mlx, t_map *map)
 {
 	t_rect	temp_rect;
 
@@ -65,5 +59,5 @@ void	clear_img(t_img *img, t_map *map)
 	temp_rect.y = 0;
 	temp_rect.w = map->res_x;
 	temp_rect.h = map->res_y;
-	put_rect(img, &temp_rect);
+	put_rect(mlx, &temp_rect);
 }
