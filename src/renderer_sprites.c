@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/13 19:54:55 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/21 15:12:53 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/21 15:39:52 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	render_sprite(t_game *game, t_render_holder_sprites *h)
 		h->tex_c.x = (int)(256 * (h->stripe - (-h->sprite_dims.w / 2
 						+ h->sprite_screen_x)) * h->sprite->tex->w
 				/ h->sprite_dims.w) / 256;
-		if (h->transform.y > 0 && h->stripe > 0
+		if (h->transform.y > 0 && h->stripe >= 0
 			&& h->stripe < (int)(game->map->res_x)
 			&& h->transform.y < game->cam.z_buffer[h->stripe])
 		{
