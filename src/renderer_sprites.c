@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/13 19:54:55 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 12:39:06 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/21 15:12:53 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void	render_sprites(t_game *game)
 		item = game->map->sprites;
 		while (item)
 		{
-			mlx_do_sync(game->mlx->core);
 			hold.sprite = (t_sprite *)item->content;
 			init_sprite_render(game, &hold);
 			render_sprite(game, &hold);

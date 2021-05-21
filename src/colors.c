@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/31 15:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 15:56:03 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/21 14:38:04 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 // are shifted to the left by 1 bit. The blank spaces
 // at the end are filled by zeroes. The | is an OR operator.
 // see https://en.wikipedia.org/wiki/Bitwise_operations_in_C
+// all unsigned ints returned here are stored in little-endian format.
 
 unsigned int	color_to_uint(t_col_rgba *color)
 {

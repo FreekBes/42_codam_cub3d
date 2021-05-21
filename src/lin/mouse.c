@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/13 20:04:23 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/17 18:54:49 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/21 14:00:11 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	move_mouse(t_game *game, int x, int y)
 int	win_focus(t_game *game)
 {
 	move_mouse(game, game->map->res_x / 2, game->map->res_y / 2);
+	reset_key_presses(&(game->key_stat));
 	return (1);
 }
 

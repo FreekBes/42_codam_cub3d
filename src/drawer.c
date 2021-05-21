@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/31 15:38:00 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/05 19:44:18 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/21 15:11:53 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,17 @@ void	put_pixel(t_img *img, int x, int y, unsigned int c)
 	*(unsigned int *)dst = c;
 }
 
+void	put_pixel_endian(t_img *img, t_coords *p, unsigned int c, int c_endian)
+{
+	char	*dst;
+
+	dst = img->address + p->y * img->line_size
+		+ p->x * (img->bits_per_pixel / 8);
+	if (img->endian != c_endian)
+		c = convert_endian(c_endian, c);
+	*(unsigned int *)dst = c;
+}
+
 unsigned int	get_pixel(t_img *img, int x, int y)
 {
 	char	*dst;
@@ -30,19 +41,18 @@ unsigned int	get_pixel(t_img *img, int x, int y)
 
 void	put_rect(t_img *img, t_rect *rect)
 {
-	unsigned int	temp_x;
-	unsigned int	temp_y;
+	t_coords		pos;
 
-	temp_y = rect->y;
-	while (temp_y < rect->h + rect->y)
+	pos.y = rect->y;
+	while (pos.y < rect->h + rect->y)
 	{
-		temp_x = rect->x;
-		while (temp_x < rect->w + rect->x)
+		pos.x = rect->x;
+		while (pos.x < rect->w + rect->x)
 		{
-			put_pixel(img, temp_x, temp_y, rect->c);
-			temp_x++;
+			put_pixel_endian(img, &pos, rect->c, 0);
+			pos.x++;
 		}
-		temp_y++;
+		pos.y++;
 	}
 }
 

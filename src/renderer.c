@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/13 20:01:14 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 12:29:59 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/21 13:48:42 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static void	render_floor_ceil(t_game *game)
 void	render_next_frame(t_game *game)
 {
 	handle_key_presses(game);
-	mlx_do_sync(game->mlx->core);
 	render_floor_ceil(game);
 	render_walls(game);
 	render_sprites(game);
@@ -58,6 +57,8 @@ void	render_next_frame(t_game *game)
 int	draw_next_frame(t_game *game)
 {
 	render_next_frame(game);
-	return (mlx_put_image_to_window(game->mlx->core, game->mlx->win,
-			game->mlx->img.img_ptr, 0, 0));
+	mlx_put_image_to_window(game->mlx->core, game->mlx->win,
+		game->mlx->img.img_ptr, 0, 0);
+	mlx_do_sync(game->mlx->core);
+	return (1);
 }

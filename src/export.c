@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/29 16:40:22 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 13:44:59 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/21 15:26:56 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,41 @@
 // made use of the way integers are stored in memory below.
 // integers are stored backwards in memory, and the BMP format
 // does not use RGB, but "BGR", so that comes in handy.
+// (big-endian vs little-endian)
 // there's no need to modify the color value that get_pixel returns,
 // as the alpha channel will just get overwritten by the next pixel
 // (or, in the case of padding, will be ignored).
 
-static void	frame_to_bmp_img_data(t_game *game, char *bmp_img_data)
+static void	write_bmp_line(t_game *game, char **data, int y)
 {
-	int			x;
-	int			y;
-	int			padding;
+	int				x;
+	unsigned int	c;
+
+	x = 0;
+	while (x < (int)(game->map->res_x))
+	{
+		c = get_pixel(&game->mlx->img, x, y);
+		if (game->mlx->img.endian == 1)
+			c = convert_endian(1, c);
+		*(unsigned int *)(*data) = c;
+		*data += 3;
+		x++;
+	}
+}
+
+static void	frame_to_bmp_img_data(t_game *game, char *data)
+{
+	int		y;
+	int		padding;
 
 	y = (int)(game->map->res_y) - 1;
 	while (y >= 0)
 	{
-		x = 0;
-		while (x < (int)(game->map->res_x))
-		{
-			*(unsigned int *)bmp_img_data = get_pixel(&game->mlx->img, x, y);
-			bmp_img_data += 3;
-			x++;
-		}
+		write_bmp_line(game, &data, y);
 		padding = game->map->res_x * 3 % 4;
 		while (padding > 0 && padding < 4)
 		{
-			bmp_img_data++;
+			data++;
 			padding++;
 		}
 		y--;

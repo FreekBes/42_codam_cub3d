@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 16:39:09 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/21 14:00:39 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	init_game_win(t_game *game)
 	mlx_hook(game->mlx->win, 3, 1L << 1, &keyrelease, game);
 	mlx_hook(game->mlx->win, 4, 1L << 2, &mousebtnpress, game);
 	mlx_hook(game->mlx->win, 6, 1L << 6, &mousemove, game);
-	mlx_hook(game->mlx->win, 9, 1L << 21, &win_focus, game);
+	mlx_expose_hook(game->mlx->win, win_focus, game);
 	mlx_loop_hook(game->mlx->core, draw_next_frame, game);
 }
 

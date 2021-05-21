@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 16:30:01 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/21 15:09:17 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ typedef struct s_col_rgba
 
 typedef struct s_rect
 {
-	unsigned int	x;
-	unsigned int	y;
-	unsigned int	w;
-	unsigned int	h;
+	int				x;
+	int				y;
+	int				w;
+	int				h;
 	unsigned int	c;
 }					t_rect;
 
@@ -239,7 +239,10 @@ t_mlx_ctx			*get_mlx_context(t_map *map, char *win_title);
 void				*free_mlx_context(t_mlx_ctx *ctx);
 unsigned int		color_to_uint(t_col_rgba *color);
 t_col_rgba			uint_to_color(unsigned int color);
+unsigned int		convert_endian(int from_endian, unsigned int c);
 void				put_pixel(t_img *img, int x, int y, unsigned int color);
+void				put_pixel_endian(t_img *img, t_coords *p,
+						unsigned int c, int c_endian);
 unsigned int		get_pixel(t_img *img, int x, int y);
 void				put_rect(t_img *img, t_rect *rect);
 void				clear_img(t_img *img, t_map *map);
