@@ -32,3 +32,6 @@
 -103: failed to parse textures
 -104: failed to allocate memory for z_buffer
 -105: failed to export frame to BMP
+-106: failed to open MLX window
+-107: invalid argument
+-108: no config (.cub) file specified as first argument

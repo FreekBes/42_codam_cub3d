@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/26 19:17:36 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/26 19:52:38 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,45 +61,12 @@ static void	init_game_win(t_game *game)
 	mlx_loop_hook(game->mlx->core, draw_next_frame, game);
 }
 
-static void	setup_map(t_game *game, int save_bmp, char **argv)
-{
-	int		err;
-
-	game->cam.speed_mod = 1;
-	game->cam.mouse_sens = CAM_DEFAULT_MOUSE_SENSITIVITY;
-	game->cam.z_buffer = NULL;
-	game->map = parse_map(argv[1], &err);
-	if (!game->map)
-		exit_game(game, ft_abs(err), NULL, get_config_error(&err));
-	if (set_starting_pos(game) < 0)
-		exit_game(game, 100, ERR_START_POS, NULL);
-	if (!map_surrounded_by_walls(game))
-		exit_game(game, 101, ERR_MAP_WALLS_MISSING, NULL);
-	if (save_bmp == 0)
-		game->mlx = get_mlx_context(game->map, argv[0]);
-	else
-		game->mlx = get_mlx_context(game->map, NULL);
-	if (!game->mlx)
-		exit_game(game, 102, ERR_CREATE_MLX_CONTEXT, NULL);
-	err = parse_textures(game);
-	if (err < 0)
-		exit_game(game, ft_abs(err), ERR_TEXTURE_PARSE, get_config_error(&err));
-	parse_sprites(game);
-	game->cam.z_buffer = (double *)malloc(sizeof(double) * game->map->res_x);
-	if (!game->cam.z_buffer)
-		exit_game(game, 104, ERR_Z_BUFFER_ALLOC, NULL);
-}
-
 int	main(int argc, char **argv)
 {
 	t_game		game;
 
 	errno = 0;
-	game.bmp_export = 0;
-	if (argc > 2 && ft_strncmp(argv[2], "--save", 7) == 0)
-		game.bmp_export = 1;
-	if (argc < 2)
-		return (print_error(ERR_CONF_MISSING));
+	setup_args(argc, argv, &game);
 	setup_map(&game, game.bmp_export, argv);
 	if (game.bmp_export == 0)
 	{

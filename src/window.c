@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/29 20:24:02 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/17 18:31:34 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/26 19:34:31 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	*free_mlx_context(t_mlx_ctx *ctx)
 	return (NULL);
 }
 
-t_mlx_ctx	*get_mlx_context(t_map *map, char *win_title)
+t_mlx_ctx	*get_mlx_context(t_map *map)
 {
 	t_mlx_ctx	*mlx_ctx;
 
@@ -52,19 +52,20 @@ t_mlx_ctx	*get_mlx_context(t_map *map, char *win_title)
 		mlx_ctx->core = mlx_init();
 		if (!mlx_ctx->core)
 			return (free_mlx_context(mlx_ctx));
-		if (win_title)
-		{
-			catch_max_res_exception(map, mlx_ctx->core);
-			mlx_ctx->win = mlx_new_window(mlx_ctx->core,
-					map->res_x, map->res_y, win_title);
-			if (!mlx_ctx->win)
-				return (free_mlx_context(mlx_ctx));
-		}
-		else
-			mlx_ctx->win = NULL;
+		mlx_ctx->win = NULL;
 		create_img(mlx_ctx, map);
 		if (!mlx_ctx->img.img_ptr)
 			return (free_mlx_context(mlx_ctx));
 	}
 	return (mlx_ctx);
+}
+
+int	create_win(t_game *game, char *win_title)
+{
+	catch_max_res_exception(game->map, game->mlx->core);
+	game->mlx->win = mlx_new_window(game->mlx->core,
+			game->map->res_x, game->map->res_y, win_title);
+	if (!game->mlx->win)
+		return (-1);
+	return (0);
 }

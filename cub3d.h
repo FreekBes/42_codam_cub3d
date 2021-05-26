@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/21 15:53:07 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/26 19:53:18 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,8 @@ typedef struct s_render_holder_walls
 	double			tex_step;
 }					t_render_holder_walls;
 
+void				setup_args(int argc, char **argv, t_game *game);
+void				setup_map(t_game *game, int save_bmp, char **argv);
 int					set_err(int *err, int n);
 char				*get_config_error(int *err);
 void				free_lines(char **lines);
@@ -235,7 +237,8 @@ t_map				*config_to_map(char **config, int *err);
 t_map				*parse_map(char *map_file, int *err);
 int					set_starting_pos(t_game *game);
 int					map_surrounded_by_walls(t_game *game);
-t_mlx_ctx			*get_mlx_context(t_map *map, char *win_title);
+t_mlx_ctx			*get_mlx_context(t_map *map);
+int					create_win(t_game *game, char *win_title);
 void				*free_mlx_context(t_mlx_ctx *ctx);
 unsigned int		color_to_uint(t_col_rgba *color);
 t_col_rgba			uint_to_color(unsigned int color);

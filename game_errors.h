@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/17 18:58:11 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 15:26:58 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/26 19:47:20 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define ERR_START_POS "Start position in map is invalid or not set"
 # define ERR_MAP_WALLS_MISSING "Map is not surrounded by walls"
 # define ERR_CREATE_MLX_CONTEXT "Failed to create an MLX instance"
+# define ERR_CREATE_WIN "Failed to open an MLX window"
 # define ERR_TEXTURE_PARSE "Failed to parse textures, do the files exist?"
 # define ERR_Z_BUFFER_ALLOC "Could not allocate memory for z_buffer"
 # define ERR_BMP_EXPORT "Failed to export first frame as BMP"
@@ -48,6 +49,7 @@
 # define ERR_TEX_SPRITE "Failed to parse sprite texture"
 # define ERR_TEX_MISSING "One or more texture(s) is not defined in config file"
 # define ERR_TEX_EXT_INV "Invalid extension for texture file, should be .xpm"
+# define ERR_INVALID_ARG "Invalid argument"
 # define ERR_UNKNOWN "An unknown error occurred"
 
 #endif
