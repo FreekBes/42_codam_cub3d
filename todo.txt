@@ -1,3 +1,2 @@
 - check for leaks
 - fix leaks
-- fix sprite flickering
