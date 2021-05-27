@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/27 17:38:13 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 17:45:42 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ unsigned int		darken(unsigned int color);
 void				print_map(t_map map, char **lvl);
 void				handle_key_presses(t_game *game);
 void				reset_key_presses(t_keys_status *key_status);
-int					free_lvl(char **lvl, size_t lvl_h);
+int					free_lvl(char **lvl, int lvl_h);
 char				**lvl_copy(t_map *map);
 t_map				*new_map(void);
 void				*free_map(void *mlx, t_map *map);
