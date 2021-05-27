@@ -6,10 +6,12 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/27 17:25:01 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 17:38:43 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
+#include "mlx.h"
 #include "c3d.h"
 #include "c3d_game_errors.h"
 

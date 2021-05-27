@@ -6,11 +6,12 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/29 20:24:02 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/27 17:28:59 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 17:39:12 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "c3d.h"
+#include "mlx.h"
 
 static void	create_img(t_mlx_ctx *ctx, t_map *map)
 {

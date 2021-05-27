@@ -6,21 +6,14 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/27 17:24:41 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 17:38:13 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef C3D_H
 # define C3D_H
-# include <string.h>
-# include <errno.h>
-# include <stdio.h>
-# include <unistd.h>
 # include <stdlib.h>
-# include <fcntl.h>
-# include <math.h>
 # include "libft.h"
-# include "mlx.h"
 # include "c3d_structs.h"
 # include "c3d_os_specifics.h"
 # include "c3d_render.h"

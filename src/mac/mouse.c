@@ -6,11 +6,12 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/13 20:04:23 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/27 16:02:38 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 17:39:20 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "c3d.h"
+#include "mlx.h"
 
 int	mouse_show_hide(t_game *game, int hidden)
 {
