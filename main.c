@@ -6,11 +6,12 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/26 19:52:38 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 16:06:03 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "c3d.h"
+#include "c3d_game_errors.h"
 
 int	exit_game(t_game *game, int exit_code, char *error_msg, char *m_error_msg)
 {

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   game_errors.h                                      :+:    :+:            */
+/*   c3d_game_errors.h                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/17 18:58:11 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/26 19:47:20 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 15:51:22 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GAME_ERRORS_H
-# define GAME_ERRORS_H
+#ifndef C3D_GAME_ERRORS_H
+# define C3D_GAME_ERRORS_H
 
 # define ERR_CONF_MISSING "No config (.cub) file specified as first argument"
 # define ERR_CONF_READ_PARSE "Failed to read or parse config (.cub) file"

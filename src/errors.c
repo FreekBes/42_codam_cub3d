@@ -6,11 +6,12 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/19 13:29:15 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 15:27:57 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 16:07:09 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "c3d.h"
+#include "c3d_game_errors.h"
 
 static char	*get_config_error_basic(int *err)
 {

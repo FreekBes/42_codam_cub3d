@@ -6,11 +6,11 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 21:24:49 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 13:46:17 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 16:02:08 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "c3d.h"
 
 static int	remalloc_lvl_line(char **line, size_t len)
 {

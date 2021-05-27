@@ -6,11 +6,11 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/19 10:20:18 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 12:46:20 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 16:02:08 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "c3d.h"
 
 // modified from
 // https://www.geeksforgeeks.org/boundary-fill-algorithm/

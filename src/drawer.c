@@ -6,11 +6,11 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/31 15:38:00 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/21 15:52:57 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 16:02:08 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "c3d.h"
 
 void	put_pixel(t_mlx_ctx *mlx, int x, int y, unsigned int c)
 {

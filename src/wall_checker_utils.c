@@ -6,11 +6,11 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 22:15:56 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 12:05:49 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 16:02:08 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "c3d.h"
 
 t_map_node	*new_map_node(int x, int y, char c)
 {

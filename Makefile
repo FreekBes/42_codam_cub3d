@@ -6,7 +6,7 @@
 #    By: fbes <fbes@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/04/21 20:02:11 by fbes          #+#    #+#                  #
-#    Updated: 2021/05/26 19:53:32 by fbes          ########   odam.nl          #
+#    Updated: 2021/05/27 16:33:28 by fbes          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME =		cub3D
 UNAME =		$(shell uname)
 
 ifeq ($(UNAME), Linux)
+
 SRCS =		main.c src/helpers.c src/printer.c src/map.c src/map_reader.c \
 			src/level_parser.c src/map_parser.c src/map_checker.c \
 			src/wall_checker_utils.c src/wall_checker.c src/simple_checks.c \
@@ -23,7 +24,11 @@ SRCS =		main.c src/helpers.c src/printer.c src/map.c src/map_reader.c \
 			src/renderer_inits.c src/renderer_walls.c src/renderer.c \
 			src/camera.c src/controls.c src/lin/mouse.c src/window.c \
 			src/errors.c src/color_mods.c src/setup.c
+
+INCLUDES =	-Ilib/libft -Iincludes -Ilib/mlx_lin
+
 else
+
 SRCS =		main.c src/helpers.c src/printer.c src/map.c src/map_reader.c \
 			src/level_parser.c src/map_parser.c src/map_checker.c \
 			src/wall_checker_utils.c src/wall_checker.c src/simple_checks.c \
@@ -32,6 +37,9 @@ SRCS =		main.c src/helpers.c src/printer.c src/map.c src/map_reader.c \
 			src/renderer_inits.c src/renderer_walls.c src/renderer.c \
 			src/camera.c src/controls.c src/mac/mouse.c src/window.c \
 			src/errors.c src/color_mods.c src/setup.c
+
+INCLUDES =	-Ilib/libft -Iincludes -Ilib/mlx
+
 endif
 
 OBJS =		$(SRCS:.c=.o)
@@ -42,16 +50,18 @@ all: $(NAME)
 
 $(NAME): $(OBJS) libft mlx
 ifeq ($(UNAME), Linux)
-	$(CC) $(CFLAGS) $(SRCS) lib/libft/libft.a lib/mlx_lin/libmlx.a -lXext -lX11 -lm -lz -fsanitize=address -o $(NAME)
+	$(CC) $(CFLAGS) $(INCLUDES) $(SRCS) \
+	lib/libft/libft.a lib/mlx_lin/libmlx.a -lXext -lX11 -lm -lz -o $(NAME)
 else
-	$(CC) $(CFLAGS) $(SRCS) lib/libft/libft.a libmlx.dylib -framework OpenGL -framework AppKit -fsanitize=address -o $(NAME)
+	$(CC) $(CFLAGS) $(INCLUDES) $(SRCS) \
+	lib/libft/libft.a libmlx.dylib -o $(NAME)
 endif
 
 .c.o:
 ifeq ($(UNAME), Linux)
-	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $(<:.c=.o)
 else
-	$(CC) $(CFLAGS) -Imlx -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 endif
 
 libft: FORCE
@@ -62,7 +72,7 @@ ifeq ($(UNAME), Linux)
 	make -C lib/mlx_lin
 else
 	make -C lib/mlx
-	ln -f lib/mlx/libmlx.dylib libmlx.dylib
+	test -L libmlx.dylib || ln -sf lib/mlx/libmlx.dylib libmlx.dylib
 endif
 
 bonus: all

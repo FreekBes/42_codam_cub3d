@@ -6,11 +6,11 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:57:41 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 15:19:36 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 16:02:08 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "c3d.h"
 
 // parse resolution, floor and ceiling colors in the config.
 // the function returns 1 as soon as a start of a map was found,

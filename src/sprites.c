@@ -6,11 +6,11 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/07 15:58:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/13 19:55:22 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 16:02:08 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "c3d.h"
 
 static t_sprite	*new_sprite(t_game *game, t_tex *tex, t_coords *pos, int do_add)
 {

@@ -6,11 +6,12 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/26 19:51:04 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/26 19:55:22 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 16:07:22 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "c3d.h"
+#include "c3d_game_errors.h"
 
 void	setup_map(t_game *game, int save_bmp, char **argv)
 {

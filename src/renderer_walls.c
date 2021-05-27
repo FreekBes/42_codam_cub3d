@@ -6,11 +6,11 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/13 19:57:36 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/21 15:49:52 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 16:02:08 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "c3d.h"
 
 // see https://lodev.org/cgtutor/raycasting.html and renderer_inits.c
 // for an explanation of all methods below.

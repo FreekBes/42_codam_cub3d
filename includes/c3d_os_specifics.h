@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   os_specifics.h                                     :+:    :+:            */
+/*   c3d_os_specifics.h                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/15 19:50:02 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/13 21:32:56 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 16:01:05 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef OS_SPECIFICS_H
-# define OS_SPECIFICS_H
+#ifndef C3D_OS_SPECIFICS_H
+# define C3D_OS_SPECIFICS_H
 # ifdef __linux__
 #  define KEY_W 119
 #  define KEY_A 97
