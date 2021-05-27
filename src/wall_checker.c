@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/19 10:20:18 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/27 16:02:08 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 16:44:56 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ int	map_surrounded_by_walls(t_game *game)
 		return (-1);
 	if (b_fill(game, temp_lvl, game->cam.pos_x, game->cam.pos_y))
 	{
-		ft_free(temp_lvl);
+		free_lvl(temp_lvl, game->map->lvl_h);
 		return (0);
 	}
-	ft_free(temp_lvl);
+	free_lvl(temp_lvl, game->map->lvl_h);
 	return (1);
 }
