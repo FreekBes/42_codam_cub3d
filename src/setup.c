@@ -6,20 +6,26 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/26 19:51:04 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/27 16:07:22 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 17:28:50 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "c3d.h"
 #include "c3d_game_errors.h"
 
-void	setup_map(t_game *game, int save_bmp, char **argv)
+void	init_game(t_game *game)
 {
-	int		err;
-
+	game->map = NULL;
+	game->mlx = NULL;
 	game->cam.speed_mod = 1;
 	game->cam.mouse_sens = CAM_DEFAULT_MOUSE_SENSITIVITY;
 	game->cam.z_buffer = NULL;
+}
+
+void	setup_game(t_game *game, int save_bmp, char **argv)
+{
+	int		err;
+
 	game->map = parse_map(argv[1], &err);
 	if (!game->map)
 		exit_game(game, ft_abs(err), NULL, get_config_error(&err));

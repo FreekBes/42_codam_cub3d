@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/27 16:06:03 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 17:25:01 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,9 @@ int	main(int argc, char **argv)
 	t_game		game;
 
 	errno = 0;
+	init_game(&game);
 	setup_args(argc, argv, &game);
-	setup_map(&game, game.bmp_export, argv);
+	setup_game(&game, game.bmp_export, argv);
 	if (game.bmp_export == 0)
 	{
 		init_game_win(&game);
