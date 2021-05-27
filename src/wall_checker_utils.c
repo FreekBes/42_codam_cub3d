@@ -6,33 +6,11 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 22:15:56 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/27 16:02:08 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 16:49:16 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "c3d.h"
-
-t_map_node	*new_map_node(int x, int y, char c)
-{
-	t_map_node	*helper;
-
-	helper = (t_map_node *)malloc(sizeof(t_map_node));
-	if (helper)
-	{
-		helper->x = x;
-		helper->y = y;
-		helper->c = c;
-	}
-	return (helper);
-}
-
-int	clear_queue(t_list *queue, char **temp_lvl, size_t lvl_h)
-{
-	if (temp_lvl)
-		free_lvl(temp_lvl, lvl_h);
-	ft_lstclear(&queue, &item_free_simple);
-	return (0);
-}
 
 // while a space is technically not inside, for the algorithm in this file
 // it needs to be checked for (or maps like maps/invalid.cub are marked valid)

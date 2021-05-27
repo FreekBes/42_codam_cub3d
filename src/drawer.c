@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/31 15:38:00 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/27 16:02:08 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 16:51:25 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,4 @@ void	put_rect(t_mlx_ctx *mlx, t_rect *rect)
 		}
 		pos.y++;
 	}
-}
-
-void	clear_img(t_mlx_ctx *mlx, t_map *map)
-{
-	t_rect	temp_rect;
-
-	temp_rect.c = 0x00000000;
-	temp_rect.x = 0;
-	temp_rect.y = 0;
-	temp_rect.w = map->res_x;
-	temp_rect.h = map->res_y;
-	put_rect(mlx, &temp_rect);
 }

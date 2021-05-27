@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:50:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/27 16:06:12 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 16:49:34 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ int					set_starting_pos(t_game *game);
 int					map_surrounded_by_walls(t_game *game);
 unsigned int		color_to_uint(t_col_rgba *color);
 t_col_rgba			uint_to_color(unsigned int color);
-t_map_node			*new_map_node(int x, int y, char c);
-int					clear_queue(t_list *queue, char **temp_lvl, size_t lvl_h);
 int					inside(char **temp_lvl, int x, int y);
 int					outside(t_game *game, char **temp_lvl, int x, int y);
 int					exit_game(t_game *game, int exit_code,

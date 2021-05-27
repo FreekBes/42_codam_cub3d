@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/27 15:44:29 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/27 15:52:57 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 16:51:39 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void				put_pixel(t_mlx_ctx *mlx, int x, int y, unsigned int color);
 void				put_pixel_endian(t_mlx_ctx *mlx, t_coords *p,
 						unsigned int c, int c_endian);
 void				put_rect(t_mlx_ctx *mlx, t_rect *rect);
-void				clear_img(t_mlx_ctx *mlx, t_map *map);
 int					export_frame_as_bmp(t_game *game, char *file_name);
 void				move_cam(t_game *game, double dir_fb, double dir_side);
 void				rotate_cam(t_game *game, double dir);

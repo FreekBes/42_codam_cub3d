@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/27 15:52:38 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/27 15:54:45 by fbes          ########   odam.nl         */
+/*   Updated: 2021/05/27 16:49:24 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,6 @@ typedef struct s_dimensions
 	int				w;
 	int				h;
 }					t_dimensions;
-
-typedef struct s_map_node
-{
-	char			c;
-	int				x;
-	int				y;
-}					t_map_node;
 
 typedef struct s_col_rgba
 {
