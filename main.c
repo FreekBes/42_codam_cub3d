@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/06/14 22:16:13 by fbes          ########   odam.nl         */
+/*   Updated: 2021/06/14 22:23:21 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ static void	init_game_win(t_game *game)
 	mlx_do_key_autorepeatoff(game->mlx->core);
 	move_mouse(game, game->map->res_x / 2, game->map->res_y / 2);
 	mlx_hook(game->mlx->win, 17, 1L << 17, &exit_hook, game);
-	mlx_hook(game->mlx->win, 33, 1L << 17, &exit_hook, game);
+	if (IS_LIN)
+		mlx_hook(game->mlx->win, 33, 1L << 17, &exit_hook, game);
 	mlx_hook(game->mlx->win, 2, 1L << 0, &keypress, game);
 	mlx_hook(game->mlx->win, 3, 1L << 1, &keyrelease, game);
 	mlx_hook(game->mlx->win, 4, 1L << 2, &mousebtnpress, game);

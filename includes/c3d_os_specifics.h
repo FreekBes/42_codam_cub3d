@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/15 19:50:02 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/27 16:01:05 by fbes          ########   odam.nl         */
+/*   Updated: 2021/06/14 22:23:16 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #  define KEY_RSHIFT 65506
 #  define BTN_SCROLL_UP 4
 #  define BTN_SCROLL_DOWN 5
+#  define IS_LIN 1
 # else
 #  define KEY_W 13
 #  define KEY_A 0
@@ -40,5 +41,6 @@
 #  define KEY_RSHIFT 258
 #  define BTN_SCROLL_UP 4
 #  define BTN_SCROLL_DOWN 5
+#  define IS_LIN 0
 # endif
 #endif
