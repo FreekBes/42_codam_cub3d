@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/26 14:35:23 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/19 10:55:52 by fbes          ########   odam.nl         */
+/*   Updated: 2021/06/14 21:51:07 by freek         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void			*ft_memmove(void *dest, const void *src, size_t n);
 void			*ft_memchr(const void *s, int c, size_t n);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
 size_t			ft_strlen(const char *s);
+size_t			ft_strclen(const char *s, char c);
 int				ft_numlen(unsigned long long int n, unsigned int base);
 int				ft_ptrlen(intptr_t ptr);
 size_t			ft_strlcpy(char *dest, const char *src, size_t size);
@@ -59,6 +60,7 @@ char			*ft_strtrim(char const *s1, char const *set);
 char			*ft_strtrimstr(char const *s1, char const *s2);
 char			**ft_splitset(char const *s, char const *set);
 char			**ft_split(char const *s, char c);
+char			**ft_split_js(char const *s, char c);
 char			*ft_itoa(int n);
 char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 int				ft_putchar_fd(char c, int fd);
