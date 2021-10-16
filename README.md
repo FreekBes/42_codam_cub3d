@@ -17,3 +17,7 @@ Compile by running `make all`, then open the engine by running `./cub3D <config_
 - 2 leaks from MLX that are somehow solvable, probably caused by the mlx_do_sync function (which should be mlx_sync instead)
 - Everything under a newline starting from the map is ignored, even faulty characters
 - The MLX Dynamic Library (on macOS) is removed by running `make -f lib/mlx clean`
+
+## Grade
+
+[![94/100](https://badge42.herokuapp.com/api/project/fbes/cub3d)](https://github.com/JaeSeoKim/badge42)
