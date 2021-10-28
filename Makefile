@@ -6,7 +6,7 @@
 #    By: fbes <fbes@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/04/21 20:02:11 by fbes          #+#    #+#                  #
-#    Updated: 2021/05/27 16:33:28 by fbes          ########   odam.nl          #
+#    Updated: 2021/10/28 20:58:39 by fbes          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ SRCS =		main.c src/helpers.c src/printer.c src/map.c src/map_reader.c \
 			src/camera.c src/controls.c src/mac/mouse.c src/window.c \
 			src/errors.c src/color_mods.c src/setup.c
 
-INCLUDES =	-Ilib/libft -Iincludes -Ilib/mlx
+INCLUDES =	-I lib/libft -I includes -I lib/mlx
 
 endif
 
@@ -48,7 +48,7 @@ CFLAGS =	-Wall -Werror -Wextra
 
 all: $(NAME)
 
-$(NAME): $(OBJS) libft mlx
+$(NAME): $(OBJS) lib/libft/libft.a libmlx.dylib
 ifeq ($(UNAME), Linux)
 	$(CC) $(CFLAGS) $(INCLUDES) $(SRCS) \
 	lib/libft/libft.a lib/mlx_lin/libmlx.a -lXext -lX11 -lm -lz -o $(NAME)
@@ -64,10 +64,10 @@ else
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 endif
 
-libft: FORCE
+lib/libft/libft.a:
 	make -C lib/libft
 
-mlx: FORCE
+libmlx.dylib:
 ifeq ($(UNAME), Linux)
 	make -C lib/mlx_lin
 else
@@ -76,8 +76,6 @@ else
 endif
 
 bonus: all
-
-FORCE:
 
 clean:
 	rm -f $(OBJS)
