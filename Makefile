@@ -80,8 +80,6 @@ bonus: all
 clean:
 	rm -f $(OBJS)
 	make -C lib/libft clean
-	make -C lib/mlx clean
-	make -C lib/mlx_lin clean
 
 fclean:
 	rm -f $(OBJS) $(NAME)
