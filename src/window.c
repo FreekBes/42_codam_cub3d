@@ -38,8 +38,6 @@ void	*free_mlx_context(t_mlx_ctx *ctx)
 		mlx_destroy_image(ctx->core, ctx->img.img_ptr);
 	if (ctx->win)
 		mlx_destroy_window(ctx->core, ctx->win);
-	if (ctx->core)
-		ft_free(ctx->core);
 	ft_free(ctx);
 	return (NULL);
 }
