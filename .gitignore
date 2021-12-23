@@ -4,12 +4,16 @@ cub3D.bmp
 lib/mlx_lin/test/mlx-test
 cub3d_destroyer/*
 
+# MLX library
+*.dylib
+lib/mlx/*.swiftdoc
+lib/mlx/*.swiftmodule
+lib/mlx/*.json
+lib/mlx/*.swiftsourceinfo
+lib/mlx/*.tmp
+
 # Prerequisites
 *.d
-
-# Swift files
-*.swiftdoc
-*.swiftmodule
 
 # Object files
 *.o
