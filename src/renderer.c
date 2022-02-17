@@ -24,11 +24,11 @@ static void	render_floor_ceil(t_game *game)
 	ceil_rect.x = 0;
 	ceil_rect.y = 0;
 	ceil_rect.w = game->map->res_x;
-	ceil_rect.h = game->map->res_y * 0.5;
+	ceil_rect.h = game->map->res_y >> 1;
 	ceil_rect.c = game->map->col_ceiling;
 	put_rect(game->mlx, &ceil_rect);
 	floor_rect.x = 0;
-	floor_rect.y = game->map->res_y * 0.5;
+	floor_rect.y = game->map->res_y >> 1;
 	floor_rect.w = game->map->res_x;
 	floor_rect.h = floor_rect.y;
 	floor_rect.c = game->map->col_floor;
