@@ -51,18 +51,18 @@ int	free_lvl(char **lvl, int lvl_h)
 	return (0);
 }
 
-void	*free_map(void *mlx, t_map *map)
+void	*free_map(t_map *map)
 {
 	if (map->tex_no)
-		free_texture(mlx, map->tex_no);
+		free_texture(map->tex_no);
 	if (map->tex_so)
-		free_texture(mlx, map->tex_so);
+		free_texture(map->tex_so);
 	if (map->tex_we)
-		free_texture(mlx, map->tex_we);
+		free_texture(map->tex_we);
 	if (map->tex_ea)
-		free_texture(mlx, map->tex_ea);
+		free_texture(map->tex_ea);
 	if (map->tex_sprite)
-		free_texture(mlx, map->tex_sprite);
+		free_texture(map->tex_sprite);
 	if (map->lvl)
 		free_lvl(map->lvl, map->lvl_h);
 	if (map->sprites)

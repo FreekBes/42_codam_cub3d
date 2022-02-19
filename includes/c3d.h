@@ -15,7 +15,6 @@
 # include <stdlib.h>
 # include "libft.h"
 # include "c3d_structs.h"
-# include "c3d_os_specifics.h"
 # include "c3d_render.h"
 
 # define CAM_MOV_SPEED_FORW_BACKW 0.05
@@ -26,7 +25,7 @@
 
 void				init_game(t_game *game);
 void				setup_args(int argc, char **argv, t_game *game);
-void				setup_game(t_game *game, int save_bmp, char **argv);
+void				setup_game(t_game *game, char **argv);
 int					set_err(int *err, int n);
 char				*get_config_error(int *err);
 void				free_lines(char **lines);
@@ -41,11 +40,10 @@ unsigned int		brighten(unsigned int color);
 unsigned int		darken(unsigned int color);
 void				print_map(t_map map, char **lvl);
 void				handle_key_presses(t_game *game);
-void				reset_key_presses(t_keys_status *key_status);
 int					free_lvl(char **lvl, int lvl_h);
 char				**lvl_copy(t_map *map);
 t_map				*new_map(void);
-void				*free_map(void *mlx, t_map *map);
+void				*free_map(t_map *map);
 int					extension_valid(char *file_name, char *ext);
 int					map_characters_valid(t_map *map, int *err);
 int					config_valid(t_map *map, int *err);

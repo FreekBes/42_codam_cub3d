@@ -11,28 +11,7 @@
 /* ************************************************************************** */
 
 #include "c3d.h"
-#include "mlx.h"
-
-void	put_pixel(t_mlx_ctx *mlx, int x, int y, unsigned int c)
-{
-	char	*dst;
-
-	dst = mlx->img.address + y * mlx->img.line_size
-		+ x * (mlx->img.bits_per_pixel / 8);
-	*(unsigned int *)dst = mlx_get_color_value(mlx->core, c);
-}
-
-void	put_pixel_endian(t_mlx_ctx *mlx, t_coords *pos,
-			unsigned int c, int c_endian)
-{
-	char	*dst;
-
-	dst = mlx->img.address + pos->y * mlx->img.line_size
-		+ pos->x * (mlx->img.bits_per_pixel / 8);
-	if (mlx->img.endian != c_endian)
-		c = convert_endian(c_endian, c);
-	*(unsigned int *)dst = mlx_get_color_value(mlx->core, c);
-}
+#include "MLX42/MLX42.h"
 
 void	put_rect(t_mlx_ctx *mlx, t_rect *rect)
 {
@@ -44,7 +23,8 @@ void	put_rect(t_mlx_ctx *mlx, t_rect *rect)
 		pos.x = rect->x;
 		while (pos.x < rect->w + rect->x)
 		{
-			put_pixel_endian(mlx, &pos, rect->c, 0);
+			// put_pixel(mlx, &pos, rect->c, 0);
+			mlx_putpixel(mlx->img, pos.x, pos.y, 0);
 			pos.x++;
 		}
 		pos.y++;

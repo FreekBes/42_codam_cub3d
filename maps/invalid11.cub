@@ -1,9 +1,9 @@
 R 1080 720
-NO ./textures/brick.xpm
-SO ./textures/brick.xpm
-EA ./textures/brick.xpm
-WE ./textures/brick.xpm
-S ./textures/brick.xpm
+NO ./textures/brick.xpm42
+SO ./textures/brick.xpm42
+EA ./textures/brick.xpm42
+WE ./textures/brick.xpm42
+S ./textures/brick.xpm42
 C 255,200,160
 F 122,122,122
 

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "c3d.h"
-#include "mlx.h"
+#include "MLX42/MLX42.h"
 
 // render the floor and the ceiling, basically just two rectangles
 // each the size of half the window.
@@ -46,6 +46,7 @@ static void	render_floor_ceil(t_game *game)
 void	render_next_frame(t_game *game)
 {
 	handle_key_presses(game);
+	check_mouse_movement(game);
 	render_floor_ceil(game);
 	render_walls(game);
 	render_sprites(game);
@@ -55,11 +56,7 @@ void	render_next_frame(t_game *game)
 // these functions are separated in order to support the BMP export
 // functionality without opening an MLX window.
 
-int	draw_next_frame(t_game *game)
+void	draw_next_frame(void *game)
 {
-	render_next_frame(game);
-	mlx_put_image_to_window(game->mlx->core, game->mlx->win,
-		game->mlx->img.img_ptr, 0, 0);
-	mlx_do_sync(game->mlx->core);
-	return (1);
+	render_next_frame((t_game *)game);
 }

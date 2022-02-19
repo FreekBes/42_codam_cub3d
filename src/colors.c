@@ -21,17 +21,17 @@
 
 unsigned int	color_to_uint(t_col_rgba *color)
 {
-	return (color->a << 24 | color->r << 16 | color->g << 8 | color->b);
+	return (color->r << 24 | color->g << 16 | color->b << 8 | color->a);
 }
 
 t_col_rgba	uint_to_color(unsigned int color)
 {
 	t_col_rgba	tcol;
 
-	tcol.a = 0xFF & (color >> 24);
-	tcol.r = 0xFF & (color >> 16);
-	tcol.g = 0xFF & (color >> 8);
-	tcol.b = 0xFF & (color);
+	tcol.r = 0xFF & (color >> 24);
+	tcol.g = 0xFF & (color >> 16);
+	tcol.b = 0xFF & (color >> 8);
+	tcol.a = 0xFF & (color);
 	return (tcol);
 }
 

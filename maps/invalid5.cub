@@ -1,11 +1,11 @@
 R 852 480
-NO ./textures/brick.xpm
+NO ./textures/brick.xpm42
 
 
-WE ./textures/brick.xpm
+WE ./textures/brick.xpm42
 
-EA ./textures/stone.xpm
-S ./textures/sprite.xpm
+EA ./textures/stone.xpm42
+S ./textures/sprite.xpm42
 
 F   120, 120, 120
 C   135, 206, 235

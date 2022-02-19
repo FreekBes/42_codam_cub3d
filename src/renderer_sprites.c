@@ -41,7 +41,7 @@ static void	render_sprite(t_game *game, t_render_holder_sprites *h)
 	while (h->stripe < h->draw_end.x)
 	{
 		h->tex_c.x = (int)(256 * (h->stripe - (-h->sprite_dims.w / 2
-						+ h->sprite_screen_x)) * h->sprite->tex->w
+						+ h->sprite_screen_x)) * h->sprite->tex->xpm->texture.width
 				/ h->sprite_dims.w) / 256;
 		if (h->transform.y > 0 && h->stripe >= 0
 			&& h->stripe < (int)(game->map->res_x)
@@ -52,12 +52,12 @@ static void	render_sprite(t_game *game, t_render_holder_sprites *h)
 			{
 				h->d = h->y * 256 - game->map->res_y * 128
 					+ h->sprite_dims.h * 128;
-				h->tex_c.y = ((h->d * h->sprite->tex->h)
+				h->tex_c.y = ((h->d * h->sprite->tex->xpm->texture.height)
 						/ h->sprite_dims.h) / 256;
-				h->color = get_color(&(h->sprite->tex->img),
+				h->color = get_color(&h->sprite->tex->xpm->texture,
 						h->tex_c.x, h->tex_c.y);
 				if ((h->color & 0x00FFFFFF) != 0)
-					put_pixel(game->mlx, h->stripe, h->y, h->color);
+					mlx_putpixel(game->mlx->img, h->stripe, h->y, h->color);
 				h->y++;
 			}
 		}

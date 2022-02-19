@@ -11,81 +11,35 @@
 /* ************************************************************************** */
 
 #include "c3d.h"
-
-void	reset_key_presses(t_keys_status *key_status)
-{
-	key_status->w = 0;
-	key_status->a = 0;
-	key_status->s = 0;
-	key_status->d = 0;
-	key_status->left = 0;
-	key_status->right = 0;
-	key_status->shift = 0;
-}
+#include "MLX42/MLX42.h"
 
 void	handle_key_presses(t_game *game)
 {
 	double	move_dir_fb;
 	double	move_dir_side;
+	bool	right;
+	bool	left;
 
 	move_dir_fb = 0;
 	move_dir_side = 0;
-	if (game->key_stat.shift)
+	right = mlx_is_key_down(game->mlx->core, MLX_KEY_RIGHT);
+	left = mlx_is_key_down(game->mlx->core, MLX_KEY_LEFT);
+	if (mlx_is_key_down(game->mlx->core, MLX_KEY_LEFT_SHIFT))
 		game->cam.speed_mod = CAM_SPRINT_SPEED_MOD;
 	else
 		game->cam.speed_mod = 1;
-	if (game->key_stat.w)
+	if (mlx_is_key_down(game->mlx->core, MLX_KEY_W))
 		move_dir_fb += 1;
-	if (game->key_stat.s)
+	if (mlx_is_key_down(game->mlx->core, MLX_KEY_S))
 		move_dir_fb -= 1;
-	if (game->key_stat.d)
+	if (mlx_is_key_down(game->mlx->core, MLX_KEY_D))
 		move_dir_side += 1;
-	if (game->key_stat.a)
+	if (mlx_is_key_down(game->mlx->core, MLX_KEY_A))
 		move_dir_side -= 1;
 	if (move_dir_fb != 0 || move_dir_side != 0)
 		move_cam(game, move_dir_fb, move_dir_side);
-	if (game->key_stat.right && !game->key_stat.left)
+	if (right && !left)
 		rotate_cam(game, 1);
-	else if (game->key_stat.left && !game->key_stat.right)
+	else if (left && !right)
 		rotate_cam(game, -1);
-}
-
-int	keypress(int keycode, t_game *game)
-{
-	if (keycode == KEY_ESC)
-		exit_game(game, 0, NULL, NULL);
-	else if (keycode == KEY_LEFT)
-		game->key_stat.left = 1;
-	else if (keycode == KEY_RIGHT)
-		game->key_stat.right = 1;
-	else if (keycode == KEY_W)
-		game->key_stat.w = 1;
-	else if (keycode == KEY_A)
-		game->key_stat.a = 1;
-	else if (keycode == KEY_S)
-		game->key_stat.s = 1;
-	else if (keycode == KEY_D)
-		game->key_stat.d = 1;
-	else if (keycode == KEY_LSHIFT || keycode == KEY_RSHIFT)
-		game->key_stat.shift = 1;
-	return (1);
-}
-
-int	keyrelease(int keycode, t_game *game)
-{
-	if (keycode == KEY_LEFT)
-		game->key_stat.left = 0;
-	else if (keycode == KEY_RIGHT)
-		game->key_stat.right = 0;
-	else if (keycode == KEY_W)
-		game->key_stat.w = 0;
-	else if (keycode == KEY_A)
-		game->key_stat.a = 0;
-	else if (keycode == KEY_S)
-		game->key_stat.s = 0;
-	else if (keycode == KEY_D)
-		game->key_stat.d = 0;
-	else if (keycode == KEY_LSHIFT || keycode == KEY_RSHIFT)
-		game->key_stat.shift = 0;
-	return (1);
 }

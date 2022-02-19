@@ -13,6 +13,8 @@
 #ifndef C3D_STRUCTS_H
 # define C3D_STRUCTS_H
 
+# include "MLX42/MLX42.h"
+
 typedef struct s_coords
 {
 	int				x;
@@ -48,21 +50,10 @@ typedef struct s_rect
 	unsigned int	c;
 }					t_rect;
 
-typedef struct s_img
-{
-	void			*img_ptr;
-	char			*address;
-	int				bits_per_pixel;
-	int				line_size;
-	int				endian;
-}					t_img;
-
 typedef struct s_tex
 {
 	char			*file_path;
-	t_img			img;
-	int				w;
-	int				h;
+	t_xpm			*xpm;
 }					t_tex;
 
 typedef struct s_sprite
@@ -89,8 +80,7 @@ typedef struct s_cam
 typedef struct s_mlx_ctx
 {
 	void			*core;
-	void			*win;
-	t_img			img;
+	t_mlx_image		*img;
 }					t_mlx_ctx;
 
 typedef struct s_render_holder_sprites
@@ -133,25 +123,14 @@ typedef struct s_render_holder_walls
 	double			tex_step;
 }					t_render_holder_walls;
 
-typedef struct s_keys_status
-{
-	int				w;
-	int				a;
-	int				s;
-	int				d;
-	int				left;
-	int				right;
-	int				shift;
-}					t_keys_status;
-
 typedef struct s_map
 {
 	char			**lvl;
 	t_list			*sprites;
 	int				lvl_w;
 	int				lvl_h;
-	int				res_x;
-	int				res_y;
+	int32_t			res_x;
+	int32_t			res_y;
 	t_tex			*tex_no;
 	t_tex			*tex_so;
 	t_tex			*tex_we;
@@ -163,7 +142,6 @@ typedef struct s_map
 
 typedef struct s_game
 {
-	t_keys_status	key_stat;
 	t_mlx_ctx		*mlx;
 	t_map			*map;
 	t_cam			cam;

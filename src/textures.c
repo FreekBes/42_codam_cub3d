@@ -11,27 +11,25 @@
 /* ************************************************************************** */
 
 #include "c3d.h"
-#include "mlx.h"
+#include "MLX42/MLX42.h"
 
 int	init_texture(t_tex **tex, char *file_path)
 {
-	if (!extension_valid(file_path, ".xpm")
-		&& !extension_valid(file_path, ".XPM"))
+	if (!extension_valid(file_path, ".xpm42")
+		&& !extension_valid(file_path, ".XPM42"))
 		return (-67);
 	if (*tex)
 		return (-8);
 	*tex = (t_tex *)malloc(sizeof(t_tex));
 	if (tex)
 	{
-		(*tex)->h = 0;
-		(*tex)->w = 0;
 		(*tex)->file_path = ft_strdup(file_path);
 		if (!(*tex)->file_path)
 		{
 			ft_free(*tex);
 			return (-6);
 		}
-		(*tex)->img.img_ptr = NULL;
+		(*tex)->xpm = NULL;
 		return (0);
 	}
 	return (-6);
@@ -39,50 +37,44 @@ int	init_texture(t_tex **tex, char *file_path)
 
 // get color at position x, y from a texture
 
-unsigned int	get_color(t_img *img, int x, int y)
+unsigned int	get_color(t_mlx_texture *img, int x, int y)
 {
-	char	*dst;
+	uint8_t	*dst;
 
-	dst = img->address + y * img->line_size + x * (img->bits_per_pixel / 8);
+	dst = img->pixels + y * img->width + x;
 	return (*(unsigned int *)dst);
 }
 
-void	free_texture(void *mlx, t_tex *tex)
+void	free_texture(t_tex *tex)
 {
-	if (mlx && tex->img.img_ptr)
-		mlx_destroy_image(mlx, tex->img.img_ptr);
 	free(tex->file_path);
 	free(tex);
 }
 
-static int	parse_texture(void *mlx, t_tex *tex)
+static int	parse_texture(t_tex *tex)
 {
-	tex->img.img_ptr = mlx_xpm_file_to_image(mlx, tex->file_path,
-			&(tex->w), &(tex->h));
-	if (tex->img.img_ptr == NULL)
+	tex->xpm = mlx_load_xpm42(tex->file_path);
+	if (tex->xpm == NULL)
 		return (-1);
-	tex->img.address = mlx_get_data_addr(tex->img.img_ptr,
-			&(tex->img.bits_per_pixel), &(tex->img.line_size),
-			&(tex->img.endian));
 	return (1);
 }
 
 int	parse_textures(t_game *game)
 {
 	if (!(game->map->tex_no)
-		|| parse_texture(game->mlx->core, game->map->tex_no) < 0)
+		|| parse_texture(game->map->tex_no) < 0)
 		return (-61);
 	if (!(game->map->tex_so)
-		|| parse_texture(game->mlx->core, game->map->tex_so) < 0)
+		|| parse_texture(game->map->tex_so) < 0)
 		return (-62);
 	if (!(game->map->tex_we)
-		|| parse_texture(game->mlx->core, game->map->tex_we) < 0)
+		|| parse_texture(game->map->tex_we) < 0)
 		return (-63);
 	if (!(game->map->tex_ea)
-		|| parse_texture(game->mlx->core, game->map->tex_ea) < 0)
+		|| parse_texture(game->map->tex_ea) < 0)
 		return (-64);
 	if (!(game->map->tex_sprite)
-		|| parse_texture(game->mlx->core, game->map->tex_sprite) < 0)
+		|| parse_texture(game->map->tex_sprite) < 0)
 		return (-65);
 	return (1);
 }

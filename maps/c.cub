@@ -1,10 +1,10 @@
 F 122,122,122
- NO ./textures/brick.xpm
-SO ./textures/metal.xpm
-WE ./textures/brick.xpm
-EA ./textures/stone.xpm
+ NO ./textures/brick.xpm42
+SO ./textures/metal.xpm42
+WE ./textures/brick.xpm42
+EA ./textures/stone.xpm42
 R 1080 720
-S ./textures/grass.xpm
+S ./textures/grass.xpm42
 C 255,200,160
 
 11111111111111111

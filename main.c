@@ -11,17 +11,14 @@
 /* ************************************************************************** */
 
 #include <errno.h>
-#include "mlx.h"
+#include "MLX42/MLX42.h"
 #include "c3d.h"
 #include "c3d_game_errors.h"
 
 int	exit_game(t_game *game, int exit_code, char *error_msg, char *m_error_msg)
 {
 	if (game->bmp_export == 0 && game->mlx)
-	{
-		mouse_show_hide(game, 0);
-		mlx_do_key_autorepeaton(game->mlx->core);
-	}
+		mlx_set_cursor_mode(game->mlx->core, MLX_MOUSE_NORMAL);
 	if (error_msg && !m_error_msg)
 		print_error(error_msg);
 	if (m_error_msg)
@@ -32,36 +29,33 @@ int	exit_game(t_game *game, int exit_code, char *error_msg, char *m_error_msg)
 	if (game->mlx)
 	{
 		if (game->map)
-			free_map(game->mlx->core, game->map);
-		free_mlx_context(game->mlx);
+			free_map(game->map);
+		mlx_quit(game->mlx->core);
+		mlx_terminate(game->mlx->core);
 	}
 	else if (game->map)
-		free_map(NULL, game->map);
+		free_map(game->map);
 	if (game->cam.z_buffer)
 		free(game->cam.z_buffer);
 	exit(exit_code);
 	return (exit_code);
 }
 
-static int	exit_hook(t_game *game)
+static void	exit_hook(t_keys key, t_action action, void *game)
 {
-	return (exit_game(game, 0, NULL, NULL));
+	if (key == MLX_KEY_ESCAPE && action == MLX_PRESS)
+		exit_game((t_game *)game, 0, NULL, NULL);
 }
 
 static void	init_game_win(t_game *game)
 {
-	reset_key_presses(&game->key_stat);
-	mouse_show_hide(game, 1);
-	mlx_do_key_autorepeatoff(game->mlx->core);
-	move_mouse(game, game->map->res_x / 2, game->map->res_y / 2);
-	mlx_hook(game->mlx->win, 17, 1L << 17, &exit_hook, game);
-	if (IS_LIN)
-		mlx_hook(game->mlx->win, 33, 1L << 17, &exit_hook, game);
-	mlx_hook(game->mlx->win, 2, 1L << 0, &keypress, game);
-	mlx_hook(game->mlx->win, 3, 1L << 1, &keyrelease, game);
-	mlx_hook(game->mlx->win, 4, 1L << 2, &mousebtnpress, game);
-	mlx_hook(game->mlx->win, 6, 1L << 6, &mousemove, game);
-	mlx_expose_hook(game->mlx->win, win_focus, game);
+	mlx_set_cursor_mode(game->mlx->core, MLX_MOUSE_HIDDEN);
+	mlx_set_mouse_pos(game->mlx->core, game->map->res_x / 2, game->map->res_y / 2);
+	mlx_key_hook(game->mlx->core, &exit_hook, game);
+	// mlx_hook(game->mlx->win, 17, 1L << 17, &exit_hook, game);
+	mlx_scroll_hook(game->mlx->core, &mousescrollwheel, game);
+	// mlx_hook(game->mlx->win, 6, 1L << 6, &mousemove, game);
+	// mlx_expose_hook(game->mlx->win, win_focus, game);
 	mlx_loop_hook(game->mlx->core, draw_next_frame, game);
 }
 
@@ -72,17 +66,8 @@ int	main(int argc, char **argv)
 	errno = 0;
 	init_game(&game);
 	setup_args(argc, argv, &game);
-	setup_game(&game, game.bmp_export, argv);
-	if (game.bmp_export == 0)
-	{
-		init_game_win(&game);
-		mlx_loop(game.mlx->core);
-	}
-	else
-	{
-		render_next_frame(&game);
-		if (export_frame_as_bmp(&game, "cub3d.bmp") != 1)
-			exit_game(&game, 105, ERR_BMP_EXPORT, NULL);
-	}
+	setup_game(&game, argv);
+	init_game_win(&game);
+	mlx_loop(game.mlx->core);
 	return (exit_game(&game, 0, NULL, NULL));
 }

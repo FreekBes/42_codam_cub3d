@@ -135,7 +135,7 @@ t_map	*config_to_map(char **config, int *err)
 		free_lines(config);
 		if (*err < 0 || config_valid(map, err) < 0
 			|| map_characters_valid(map, err) < 0)
-			return (free_map(NULL, map));
+			return (free_map(map));
 	}
 	return (map);
 }

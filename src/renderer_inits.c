@@ -92,9 +92,9 @@ void	init_texture_draw(t_game *game, t_render_holder_walls *hold)
 		hold->tex = game->map->tex_ea;
 	else if (hold->side == 1 && hold->ray_dir.y <= 0)
 		hold->tex = game->map->tex_we;
-	hold->tex_c.x = (int)(hold->wall_x * (double)(hold->tex->w));
-	hold->tex_c.x = hold->tex->w - hold->tex_c.x - 1;
-	hold->tex_step = 1.0 * hold->tex->h / hold->line_height;
+	hold->tex_c.x = (int)(hold->wall_x * (double)(hold->tex->xpm->texture.width));
+	hold->tex_c.x = hold->tex->xpm->texture.width - hold->tex_c.x - 1;
+	hold->tex_step = 1.0 * hold->tex->xpm->texture.height / hold->line_height;
 	hold->tex_pos = (hold->draw_start - game->map->res_y
 			/ 2 + hold->line_height / 2) * hold->tex_step;
 }

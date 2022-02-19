@@ -22,7 +22,7 @@ void	init_game(t_game *game)
 	game->cam.z_buffer = NULL;
 }
 
-void	setup_game(t_game *game, int save_bmp, char **argv)
+void	setup_game(t_game *game, char **argv)
 {
 	int		err;
 
@@ -33,7 +33,7 @@ void	setup_game(t_game *game, int save_bmp, char **argv)
 		exit_game(game, 100, ERR_START_POS, NULL);
 	if (!map_surrounded_by_walls(game))
 		exit_game(game, 101, ERR_MAP_WALLS_MISSING, NULL);
-	game->mlx = get_mlx_context(game->map);
+	game->mlx = get_mlx_context(game->map, argv[0]);
 	if (!game->mlx)
 		exit_game(game, 102, ERR_CREATE_MLX_CONTEXT, NULL);
 	err = parse_textures(game);
@@ -43,8 +43,6 @@ void	setup_game(t_game *game, int save_bmp, char **argv)
 	game->cam.z_buffer = (double *)malloc(sizeof(double) * game->map->res_x);
 	if (!game->cam.z_buffer)
 		exit_game(game, 104, ERR_Z_BUFFER_ALLOC, NULL);
-	if (save_bmp == 0 && create_win(game, argv[0]) < 0)
-		exit_game(game, 106, ERR_CREATE_WIN, NULL);
 }
 
 void	setup_args(int argc, char **argv, t_game *game)
