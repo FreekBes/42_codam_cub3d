@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2021/06/14 22:23:21 by fbes          ########   odam.nl         */
+/*   Updated: 2022/02/22 16:25:27 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	exit_game(t_game *game, int exit_code, char *error_msg, char *m_error_msg)
 	{
 		if (game->map)
 			free_map(game->map);
-		mlx_quit(game->mlx->core);
+		mlx_close_window(game->mlx->core);
 		mlx_terminate(game->mlx->core);
 	}
 	else if (game->map)
@@ -41,9 +41,9 @@ int	exit_game(t_game *game, int exit_code, char *error_msg, char *m_error_msg)
 	return (exit_code);
 }
 
-static void	exit_hook(t_keys key, t_action action, void *game)
+static void	exit_hook(t_mlx_key_cbdata kbdata, void *game)
 {
-	if (key == MLX_KEY_ESCAPE && action == MLX_PRESS)
+	if (kbdata.key == MLX_KEY_ESCAPE && kbdata.action == MLX_PRESS)
 		exit_game((t_game *)game, 0, NULL, NULL);
 }
 
