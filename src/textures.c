@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/29 20:47:47 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/27 17:39:03 by fbes          ########   odam.nl         */
+/*   Updated: 2022/02/22 16:33:17 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ unsigned int	get_color(t_mlx_texture *img, int x, int y)
 {
 	uint8_t	*dst;
 
-	dst = img->pixels + y * img->width + x;
+	dst = &img->pixels[(y * img->width + x) * sizeof(int32_t)];
 	return (*(unsigned int *)dst);
 }
 

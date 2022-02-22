@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/27 15:44:29 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/27 16:51:39 by fbes          ########   odam.nl         */
+/*   Updated: 2022/02/22 16:30:47 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void				free_texture(t_tex *tex);
 int					parse_textures(t_game *game);
 void				parse_sprites(t_game *game);
 void				render_sprites(t_game *game);
-unsigned int		get_color(t_mlx_texture *img, int x, int y);
+uint32_t			get_color(t_mlx_texture *img, int x, int y);
 int					parse_color_map(unsigned int *p, char **c);
 t_mlx_ctx			*get_mlx_context(t_map *map, char *win_title);
 void				*free_mlx_context(t_mlx_ctx *ctx);
