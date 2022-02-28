@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/31 15:38:00 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/27 17:38:52 by fbes          ########   odam.nl         */
+/*   Updated: 2022/02/28 19:04:43 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	put_rect(t_mlx_ctx *mlx, t_rect *rect)
 		while (pos.x < rect->w + rect->x)
 		{
 			// put_pixel(mlx, &pos, rect->c, 0);
-			mlx_putpixel(mlx->img, pos.x, pos.y, 0);
+			mlx_putpixel(mlx->img, pos.x, pos.y, rect->c);
 			pos.x++;
 		}
 		pos.y++;

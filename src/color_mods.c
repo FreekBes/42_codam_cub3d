@@ -6,34 +6,36 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/19 15:55:53 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/21 15:27:17 by fbes          ########   odam.nl         */
+/*   Updated: 2022/02/28 20:15:20 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <inttypes.h>
 
 // brighten and saturate a color by using bitwise operations
 // could have used calculations here, but that turned out to be
 // really slow really quickly, even for small resolutions
 
-unsigned int	brighten(unsigned int color)
+uint32_t	brighten(uint32_t color)
 {
-	unsigned int	saturate;
+	uint32_t	saturate;
 
 	saturate = ((color & 0x80808080) >> 7) * 255;
 	return (((color & 0x7F7F7F7F) << 1) | saturate | 0x01010101);
 }
 
-unsigned int	darken(unsigned int color)
+uint32_t	darken(uint32_t color)
 {
-	return ((color >> 1) & 8355711);
+	return (((color >> 1) & 0x7F7F7F7F) | 0x000000FF);
 }
 
 // convert between endians
 // from_endian defines which endian is used for c
 // if it is 1, it is big endian, if it is 0, it is little
 
-unsigned int	convert_endian(int from_endian, unsigned int c)
+uint32_t	convert_endian(int from_endian, uint32_t c)
 {
-	unsigned int	cc;
+	uint32_t	cc;
 
 	if (from_endian == 1)
 		cc = (c << 24) |((c << 8) & 0x00ff0000)

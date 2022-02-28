@@ -3,6 +3,7 @@ cub3D.bmp
 *.DS_Store
 lib/mlx_lin/test/mlx-test
 cub3d_destroyer/*
+.vscode/settings.json
 
 # MLX library
 *.dylib

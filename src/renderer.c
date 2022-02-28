@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/13 20:01:14 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/27 17:39:34 by fbes          ########   odam.nl         */
+/*   Updated: 2022/02/28 20:38:37 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	render_floor_ceil(t_game *game)
 void	render_next_frame(t_game *game)
 {
 	handle_key_presses(game);
-	check_mouse_movement(game);
+	// check_mouse_movement(game);
 	render_floor_ceil(game);
 	render_walls(game);
 	render_sprites(game);

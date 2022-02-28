@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/29 20:47:47 by fbes          #+#    #+#                 */
-/*   Updated: 2022/02/22 16:33:17 by fbes          ########   odam.nl         */
+/*   Updated: 2022/02/28 20:17:24 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,27 @@ int	init_texture(t_tex **tex, char *file_path)
 
 // get color at position x, y from a texture
 
-unsigned int	get_color(t_mlx_texture *img, int x, int y)
+uint32_t	get_color(t_mlx_texture *img, int x, int y)
 {
-	uint8_t	*dst;
+	uint32_t	dst2;
+	uint8_t		*dst;
+	uint32_t	temp;
+	uint8_t		*temp2;
+	int			n;
 
+	n = 1;
 	dst = &img->pixels[(y * img->width + x) * sizeof(int32_t)];
-	return (*(unsigned int *)dst);
+	if (*(char *)&n == 1)
+	{
+		temp2 = (uint8_t *)&temp;
+		dst2 = *(uint32_t *)dst;
+		*(temp2 + 0) = (uint8_t)(dst2 >> 24);
+		*(temp2 + 1) = (uint8_t)(dst2 >> 16);
+		*(temp2 + 2) = (uint8_t)(dst2 >> 8);
+		*(temp2 + 3) = (uint8_t)(dst2 >> 0);
+		return (temp);
+	}
+	return (*(uint32_t *)dst);
 }
 
 void	free_texture(t_tex *tex)

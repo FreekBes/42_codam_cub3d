@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/27 15:52:38 by fbes          #+#    #+#                 */
-/*   Updated: 2021/05/27 16:49:24 by fbes          ########   odam.nl         */
+/*   Updated: 2022/02/28 20:28:10 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_rect
 	int				y;
 	int				w;
 	int				h;
-	unsigned int	c;
+	uint32_t		c;
 }					t_rect;
 
 typedef struct s_tex
@@ -97,7 +97,7 @@ typedef struct s_render_holder_sprites
 	t_coords		tex_c;
 	int				d;
 	int				y;
-	unsigned int	color;
+	uint32_t		color;
 }					t_render_holder_sprites;
 
 typedef struct s_render_holder_walls
@@ -116,7 +116,7 @@ typedef struct s_render_holder_walls
 	int				line_height;
 	int				draw_start;
 	int				draw_end;
-	unsigned int	color;
+	uint32_t		color;
 	double			wall_x;
 	t_coords		tex_c;
 	double			tex_pos;
@@ -136,8 +136,8 @@ typedef struct s_map
 	t_tex			*tex_we;
 	t_tex			*tex_ea;
 	t_tex			*tex_sprite;
-	unsigned int	col_floor;
-	unsigned int	col_ceiling;
+	uint32_t		col_floor;
+	uint32_t		col_ceiling;
 }					t_map;
 
 typedef struct s_game

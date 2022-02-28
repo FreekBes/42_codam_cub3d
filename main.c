@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2022/02/22 16:25:27 by fbes          ########   odam.nl         */
+/*   Updated: 2022/02/28 20:58:56 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	exit_hook(t_mlx_key_cbdata kbdata, void *game)
 
 static void	init_game_win(t_game *game)
 {
-	mlx_set_cursor_mode(game->mlx->core, MLX_MOUSE_HIDDEN);
+	//mlx_set_cursor_mode(game->mlx->core, MLX_MOUSE_HIDDEN);
 	mlx_set_mouse_pos(game->mlx->core, game->map->res_x / 2, game->map->res_y / 2);
 	mlx_key_hook(game->mlx->core, &exit_hook, game);
 	// mlx_hook(game->mlx->win, 17, 1L << 17, &exit_hook, game);
@@ -57,6 +57,8 @@ static void	init_game_win(t_game *game)
 	// mlx_hook(game->mlx->win, 6, 1L << 6, &mousemove, game);
 	// mlx_expose_hook(game->mlx->win, win_focus, game);
 	mlx_loop_hook(game->mlx->core, draw_next_frame, game);
+	mlx_resize_hook(game->mlx->core, &win_resize, game);
+	mlx_image_to_window(game->mlx->core, game->mlx->img, 0, 0);
 }
 
 int	main(int argc, char **argv)

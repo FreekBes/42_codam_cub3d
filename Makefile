@@ -6,7 +6,7 @@
 #    By: fbes <fbes@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/04/21 20:02:11 by fbes          #+#    #+#                  #
-#    Updated: 2022/02/22 16:33:53 by fbes          ########   odam.nl          #
+#    Updated: 2022/02/28 20:37:16 by fbes          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ INCLUDES =	-I lib/libft -I includes -I lib/MLX42/include
 
 OBJS =		$(SRCS:.c=.o)
 
-CFLAGS =	-Wall -Werror -Wextra -fsanitize=address
+CFLAGS =	-Wall -Werror -Wextra -Ofast
 
 all: $(NAME)
 
