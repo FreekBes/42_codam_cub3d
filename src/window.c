@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/29 20:24:02 by fbes          #+#    #+#                 */
-/*   Updated: 2022/02/28 21:00:18 by fbes          ########   odam.nl         */
+/*   Updated: 2022/02/28 21:12:03 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,6 @@ t_mlx_ctx	*get_mlx_context(t_map *map, char *win_title)
 void	win_resize(int32_t w, int32_t h, void *game)
 {
 	mlx_resize_image(((t_game *)game)->mlx->img, w, h);
-	// ((t_game *)game)->mlx->img->width = w;
-	// ((t_game *)game)->mlx->img->heights = h;
+	((t_game *)game)->map->res_x = w;
+	((t_game *)game)->map->res_y = h;
 }
