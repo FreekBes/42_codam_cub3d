@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/29 20:47:47 by fbes          #+#    #+#                 */
-/*   Updated: 2022/02/28 20:17:24 by fbes          ########   odam.nl         */
+/*   Updated: 2022/03/03 16:38:59 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	init_texture(t_tex **tex, char *file_path)
 
 // get color at position x, y from a texture
 
-uint32_t	get_color(t_mlx_texture *img, int x, int y)
+uint32_t	get_color(mlx_texture_t *img, int x, int y)
 {
 	uint32_t	dst2;
 	uint8_t		*dst;

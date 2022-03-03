@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/13 19:54:55 by fbes          #+#    #+#                 */
-/*   Updated: 2022/02/28 19:30:20 by fbes          ########   odam.nl         */
+/*   Updated: 2022/03/03 16:39:05 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	render_sprite(t_game *game, t_render_holder_sprites *h)
 				h->color = get_color(&h->sprite->tex->xpm->texture,
 						h->tex_c.x, h->tex_c.y);
 				if ((h->color & 0x00FFFFFF) != 0)
-					mlx_putpixel(game->mlx->img, h->stripe, h->y, h->color);
+					mlx_put_pixel(game->mlx->img, h->stripe, h->y, h->color);
 				h->y++;
 			}
 		}

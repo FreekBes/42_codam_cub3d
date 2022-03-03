@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/24 16:40:50 by fbes          #+#    #+#                 */
-/*   Updated: 2022/02/28 20:58:56 by fbes          ########   odam.nl         */
+/*   Updated: 2022/03/03 16:55:13 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	exit_game(t_game *game, int exit_code, char *error_msg, char *m_error_msg)
 	return (exit_code);
 }
 
-static void	exit_hook(t_mlx_key_cbdata kbdata, void *game)
+static void	exit_hook(mlx_key_data_t kbdata, void *game)
 {
 	if (kbdata.key == MLX_KEY_ESCAPE && kbdata.action == MLX_PRESS)
 		exit_game((t_game *)game, 0, NULL, NULL);

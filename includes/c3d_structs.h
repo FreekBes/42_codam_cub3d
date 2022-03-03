@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/27 15:52:38 by fbes          #+#    #+#                 */
-/*   Updated: 2022/02/28 20:28:10 by fbes          ########   odam.nl         */
+/*   Updated: 2022/03/03 16:37:48 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_rect
 typedef struct s_tex
 {
 	char			*file_path;
-	t_xpm			*xpm;
+	xpm_t			*xpm;
 }					t_tex;
 
 typedef struct s_sprite
@@ -80,7 +80,7 @@ typedef struct s_cam
 typedef struct s_mlx_ctx
 {
 	void			*core;
-	t_mlx_image		*img;
+	mlx_image_t		*img;
 }					t_mlx_ctx;
 
 typedef struct s_render_holder_sprites
