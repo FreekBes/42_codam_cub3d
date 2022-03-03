@@ -10,6 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
+CC =		gcc
+
 NAME =		cub3D
 
 SRCS =		main.c src/helpers.c src/printer.c src/map.c src/map_reader.c \
@@ -25,13 +27,18 @@ INCLUDES =	-I lib/libft -I includes -I lib/MLX42/include
 
 OBJS =		$(SRCS:.c=.o)
 
-CFLAGS =	-Wall -Werror -Wextra -Ofast
+CFLAGS =	-Wall -Werror -Ofast
+
+ifeq ($(OS), Windows_NT)
+LIBFLAGS =	lib/libft/libft.a lib/MLX42/libmlx42.a -lglfw3dll -lopengl32 -lgdi32
+else
+LIBFLAGS =	lib/libft/libft.a lib/MLX42/libmlx42.a -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/"
+endif
 
 all: $(NAME)
 
 $(NAME): $(OBJS) lib/libft/libft.a lib/MLX42/libmlx42.a
-	$(CC) $(CFLAGS) $(INCLUDES) $(SRCS) \
-	lib/libft/libft.a lib/MLX42/libmlx42.a -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/" -o $(NAME)
+	$(CC) $(CFLAGS) $(INCLUDES) $(SRCS) $(LIBFLAGS) -o $(NAME)
 
 .c.o:
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $(<:.c=.o)
