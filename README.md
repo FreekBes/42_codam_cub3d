@@ -17,5 +17,4 @@ Compile by running `make all`, then open the engine by running `./cub3D <config_
 - Everything under a newline starting from the map is ignored, even faulty characters
 
 ## Grade
-
-[![94/100](https://badge42.herokuapp.com/api/project/fbes/cub3d)](https://github.com/JaeSeoKim/badge42)
+[![94/100](https://badge42.vercel.app/api/v2/cl1o16nym001109lewimxyxs8/project/2138146)](https://github.com/JaeSeoKim/badge42)
